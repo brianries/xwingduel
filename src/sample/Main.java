@@ -91,6 +91,18 @@ public class Main extends Application {
         root.getChildren().add(shipToken);
         root.getChildren().add(firingArc);
 
+        root.setOnMousePressed(event -> {
+            if (event.getTarget() instanceof Rectangle) {
+                ((Rectangle) event.getTarget()).setStroke(Color.YELLOW);
+            }
+        });
+
+        root.setOnMouseReleased(event -> {
+            if (event.getTarget() instanceof Rectangle) {
+                ((Rectangle) event.getTarget()).setStroke(Color.GRAY);
+            }
+        });
+
         firingArc.setLayoutX(SHIP_TEMPLATE_WIDTH / 2.0);
         firingArc.setLayoutY(SHIP_TEMPLATE_WIDTH / 2.0);
 
