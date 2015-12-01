@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
@@ -60,8 +61,9 @@ public class Main extends Application {
         //testBox.setDrawMode(DrawMode.FILL);
 
 
-        final Rectangle shipToken = getShipToken("resources/xwing.png");
-        MovementTemplate movementTemplate = getHardTurnTemplate(200, 200, 15, 100);
+        final Rectangle shipToken = getShipToken("resources/ywing.jpg");
+        MovementTemplate movementTemplate = getHardTurnTemplate(200, 200, 20, 100);
+        Path firingArc = getFiringArc(400);
 
         pathTransition.setDuration(Duration.millis(2000));
         pathTransition.setPath(movementTemplate.movementPath);
@@ -70,6 +72,8 @@ public class Main extends Application {
         pathTransition.setCycleCount(1);
         pathTransition.setAutoReverse(false);
         pathTransition.play();
+
+
 
         /*
         final KeyValue kvx = new KeyValue(ship.translateXProperty(), 500);
@@ -85,10 +89,17 @@ public class Main extends Application {
         root.getChildren().add(parallelCamera);
         root.getChildren().add(rectangle);
         root.getChildren().add(movementTemplate.movementTemplate);
-        //root.getChildren().add(movementTemplate.movementPath);
         root.getChildren().add(shipToken);
+        root.getChildren().add(firingArc);
 
+        firingArc.setLayoutX(SHIP_TEMPLATE_WIDTH / 2.0);
+        firingArc.setLayoutY(SHIP_TEMPLATE_WIDTH / 2.0);
 
+        Rotate rotate = new Rotate();
+        rotate.angleProperty().bind(shipToken.rotateProperty());
+        firingArc.getTransforms().add(rotate);
+        firingArc.translateXProperty().bind(shipToken.translateXProperty());
+        firingArc.translateYProperty().bind(shipToken.translateYProperty());
 
         // Use a SubScene
         SubScene subScene = new SubScene(root, 1200, 1200, true, null);
@@ -150,6 +161,26 @@ public class Main extends Application {
             this.movementPath = movementPath;
             this.movementTemplate = movementTemplate;
         }
+    }
+
+    public Path getFiringArc(double firingRadius) {
+        Path firingArc = new Path();
+
+        double x1 = firingRadius * Math.cos(45.0/180.0*Math.PI);
+        double y1 = -firingRadius * Math.sin(45.0/180.0*Math.PI);
+
+        double x2 = firingRadius * Math.cos(45.0/180.0*Math.PI);
+        double y2 = firingRadius * Math.sin(45.0/180.0*Math.PI);
+
+        firingArc.getElements().add(new MoveTo(0, 0));
+        firingArc.getElements().add(new LineTo(x1, y1));
+        firingArc.getElements().add(new ArcTo(firingRadius, firingRadius, 90, x2, y2, false, true));
+        firingArc.getElements().add(new LineTo(0, 0));
+        firingArc.setFill(Color.rgb(255, 0, 0, 0.5));
+        firingArc.setStroke(Color.rgb(255, 0, 0, 1.0));
+        firingArc.setFillRule(FillRule.NON_ZERO);
+
+        return firingArc;
     }
 
     public MovementTemplate getHardTurnTemplate(double x, double y, double width, double radius) {
