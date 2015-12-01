@@ -1,16 +1,13 @@
 package sample;
 
 import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
@@ -25,6 +22,8 @@ import javafx.util.Duration;
 public class Main extends Application {
 
     public static double SHIP_TEMPLATE_WIDTH = 100;
+    private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
+
 
     public Parent createContent(Stage stage, PathTransition pathTransition) throws Exception {
 
@@ -100,6 +99,7 @@ public class Main extends Application {
         firingArc.getTransforms().add(rotate);
         firingArc.translateXProperty().bind(shipToken.translateXProperty());
         firingArc.translateYProperty().bind(shipToken.translateYProperty());
+        firingArc.visibleProperty().bind(firingArcVisibile);
 
         // Use a SubScene
         SubScene subScene = new SubScene(root, 1200, 1200, true, null);
@@ -119,15 +119,16 @@ public class Main extends Application {
         PathTransition pathTransition = new PathTransition();
         Scene scene = new Scene(createContent(primaryStage, pathTransition));
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.SPACE) {
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case SPACE:
                     pathTransition.play();
-                }
+                    break;
+                case F:
+                    firingArcVisibile.set(!firingArcVisibile.get());
+                    break;
             }
         });
-
 
         primaryStage.setScene(scene);
         primaryStage.show();
