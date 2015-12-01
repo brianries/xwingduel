@@ -28,7 +28,7 @@ public class Main extends Application {
     public Parent createContent(Stage stage, PathTransition pathTransition) throws Exception {
 
         // Image
-        Image texture = new Image("file:C:/Users/Brian/Desktop/starfield.jpg");
+        Image texture = new Image("file:resources/starfield.jpg");
         ImagePattern imagePattern = new ImagePattern(texture);
 
         //Box testBox = new Box(1000, 1000, 500);
@@ -60,7 +60,7 @@ public class Main extends Application {
         //testBox.setDrawMode(DrawMode.FILL);
 
 
-        final Rectangle shipToken = getShipToken("C:/Users/Brian/Desktop/xwing.png");
+        final Rectangle shipToken = getShipToken("resources/xwing.png");
         MovementTemplate movementTemplate = getHardTurnTemplate(200, 200, 15, 100);
 
         pathTransition.setDuration(Duration.millis(2000));
