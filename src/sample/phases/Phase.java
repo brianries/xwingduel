@@ -8,6 +8,7 @@ public enum Phase {
     //   choose maneuver
     ACTIVATION,
     //   ships activate from lowest PS to highest
+    //   decloak
     //   pre-reveal
     //   reveal dial
     //   post-reveal
