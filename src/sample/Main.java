@@ -1,13 +1,19 @@
 package sample;
 
+import com.sun.javafx.fxml.builder.TriangleMeshBuilder;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Bounds;
 import javafx.scene.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
@@ -24,55 +30,54 @@ public class Main extends Application {
     public static double SHIP_TEMPLATE_WIDTH = 100;
     private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
 
+    private  TemplateTransition templateTransition;
 
-    public Parent createContent(Stage stage, PathTransition pathTransition) throws Exception {
+    private Path path;
+    private double x1, y1;
 
-        // Image
-        Image texture = new Image("file:resources/starfield.jpg");
-        ImagePattern imagePattern = new ImagePattern(texture);
-
-        //Box testBox = new Box(1000, 1000, 500);
-        Rectangle rectangle = new Rectangle(1000, 1000);
-        rectangle.heightProperty().bind(stage.heightProperty());
-        rectangle.widthProperty().bind(stage.widthProperty());
-        rectangle.setStroke(Color.GRAY);
-
-        PhongMaterial textureMaterial = new PhongMaterial();
-        textureMaterial.setDiffuseMap(texture);
-        //testBox.setMaterial(textureMaterial);
-        //testBox.setDrawMode(DrawMode.FILL);
-
-        rectangle.setFill(imagePattern);
-
-
-        ParallelCamera parallelCamera = new ParallelCamera();
-        //parallelCamera.getTransforms().add(transform3D);
-                //new Rotate(-20, Rotate.Y_AXIS),
-                //new Rotate(-20, Rotate.X_AXIS),
-                //new Translate(-500, -500, 0));
-          //      new Translate(0, 0, 0));*/
-
-
-        //PhongMaterial falconMaterial = new PhongMaterial();
-
-        //falconMaterial.setDiffuseMap(falcon);
-        //testBox.setMaterial(textureMaterial);
-        //testBox.setDrawMode(DrawMode.FILL);
-
+    public Parent createContent(Stage stage) throws Exception {
 
         final Rectangle shipToken = getShipToken("resources/ywing.jpg");
         MovementTemplate movementTemplate = getHardTurnTemplate(200, 200, 20, 100);
         Path firingArc = getFiringArc(400);
 
+      //  Group ship = new Group();
+     //   ship.getChildren().add(shipToken);
+      //  ship.getChildren().add(firingArc);
+
+        // TO DO -- look into this one!
+        //ship.contains(0, 0);
+
+
+
+
+        firingArc.translateXProperty().bind(shipToken.translateXProperty());
+        firingArc.translateYProperty().bind(shipToken.translateYProperty());
+        shipToken.setTranslateX(200);
+        shipToken.setTranslateY(200);
+
+
+        /*
         pathTransition.setDuration(Duration.millis(2000));
         pathTransition.setPath(movementTemplate.movementPath);
-        pathTransition.setNode(shipToken);
+        pathTransition.setNode(ship);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.setCycleCount(1);
         pathTransition.setAutoReverse(false);
         pathTransition.play();
+        */
 
+        templateTransition = new TemplateTransition(Duration.millis(4000), shipToken, firingArc);
+        //templateTransition.setPath(movementTemplate.movementPath);
+        //templateTransition.setNode(ship);
+        //templateTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        templateTransition.setCycleCount(1);
+        templateTransition.setAutoReverse(false);
+        templateTransition.play();
 
+        // Identity matrix
+       // Affine transformMatrix = new Affine();
+      //  ship.getTransforms().setAll(transformMatrix);
 
         /*
         final KeyValue kvx = new KeyValue(ship.translateXProperty(), 500);
@@ -85,11 +90,9 @@ public class Main extends Application {
 
         // Build the Scene Graph
         Group root = new Group();
-        root.getChildren().add(parallelCamera);
-        root.getChildren().add(rectangle);
         root.getChildren().add(movementTemplate.movementTemplate);
-        root.getChildren().add(shipToken);
         root.getChildren().add(firingArc);
+        root.getChildren().add(shipToken);
 
         root.setOnMousePressed(event -> {
             if (event.getTarget() instanceof Rectangle) {
@@ -103,38 +106,78 @@ public class Main extends Application {
             }
         });
 
-        firingArc.setLayoutX(SHIP_TEMPLATE_WIDTH / 2.0);
-        firingArc.setLayoutY(SHIP_TEMPLATE_WIDTH / 2.0);
 
-        Rotate rotate = new Rotate();
-        rotate.angleProperty().bind(shipToken.rotateProperty());
-        firingArc.getTransforms().add(rotate);
-        firingArc.translateXProperty().bind(shipToken.translateXProperty());
-        firingArc.translateYProperty().bind(shipToken.translateYProperty());
-        firingArc.visibleProperty().bind(firingArcVisibile);
 
-        // Use a SubScene
-        SubScene subScene = new SubScene(root, 1200, 1200, true, null);
-        subScene.setFill(Color.WHITE);
+        root.addEventHandler(MouseEvent.ANY, e -> {
+            if(e.getTarget() instanceof Node ) {
+                System.out.println("Mouse Event = " + e.getEventType());
+                Node node = (Node) e.getTarget();
+                if (e.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+                    if (!node.translateXProperty().isBound()) {
+                        node.setEffect(new DropShadow(20, Color.WHITESMOKE));
+                    }
+                }
+                else if (e.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
+                    node.setEffect(null);
+                }
+                else if (e.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                    x1 = e.getX();
+                    y1 = e.getY();
+                }
+                else if (e.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+                    // translate node
+                    if (!node.translateXProperty().isBound()) {
+                        node.setTranslateX(e.getX() - x1 + node.getTranslateX());
+                    }
+                    if (!node.translateYProperty().isBound()) {
+                        node.setTranslateY(e.getY() - y1 + node.getTranslateY());
+                    }
+                    x1 = e.getX();
+                    y1 = e.getY();
+                }
+                else if (e.getButton() == MouseButton.SECONDARY) {
+                    // right-click over the path to move it to its original position
+                    if (!node.translateXProperty().isBound()) {
+                        node.setTranslateX(0);
+                        node.setTranslateY(0);
+                    }
+                }
+            }
+        });
+
+
+        SubScene scene = createScene(root, stage);
+
+        Group group = new Group();
+        group.getChildren().add(scene);
+        return group;
+    }
+
+
+    private SubScene createScene(Group rootGroup, Stage stage) {
+        Image texture = new Image("file:resources/starfield.jpg");
+        ImagePattern imagePattern = new ImagePattern(texture);
+
+        ParallelCamera parallelCamera = new ParallelCamera();
+
+        SubScene subScene = new SubScene(rootGroup, 500, 500, true, null);
+        subScene.setFill(imagePattern);
         subScene.setCamera(parallelCamera);
         subScene.heightProperty().bind(stage.heightProperty());
         subScene.widthProperty().bind(stage.widthProperty());
 
-        Group group = new Group();
-        group.getChildren().add(subScene);
-        return group;
+        return subScene;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(true);
-        PathTransition pathTransition = new PathTransition();
-        Scene scene = new Scene(createContent(primaryStage, pathTransition));
+        Scene scene = new Scene(createContent(primaryStage));
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case SPACE:
-                    pathTransition.play();
+                    templateTransition.play();
                     break;
                 case F:
                     firingArcVisibile.set(!firingArcVisibile.get());
@@ -148,22 +191,47 @@ public class Main extends Application {
 
 
     public Rectangle getShipToken(String fileName) {
-        final Rectangle shipToken = new Rectangle (0, 0, 100, 100);
+        final Rectangle shipToken = new Rectangle (-50, -50, 100, 100);
         shipToken.setArcHeight(5);
         shipToken.setArcWidth(5);
-        shipToken.getTransforms().addAll(
-                new Translate(50, 50, 0),
-                new Rotate(90, 0, 0, 1),
-                new Translate(-50, -50, 0)
-        );
+        shipToken.setRotate(90);
         shipToken.setStroke(Color.GRAY);
         shipToken.setStrokeWidth(3.0);
-
-        Image shipTokenImage = new Image("file:"+fileName);
-        ImagePattern imagePattern = new ImagePattern(shipTokenImage);
-        shipToken.setFill(imagePattern);
-
+        shipToken.setFill(new ImagePattern(new Image("file:"+fileName)));
         return shipToken;
+    }
+
+    public MeshView getShipMeshView(String fileName) {
+
+        float[] points = {
+                -50f,   50f,  0.0f,
+                -50f,  -50f,  0.0f,
+                50f,   50f,  0.0f,
+                50f,  -50f,  0.0f,
+        };
+
+        float[] texCoords = {
+                0, 1,
+                0, 0,
+                1, 1,
+                1, 0
+        };
+        // p0, t0, p1, t1, etc
+        int[] faces = {
+                2, 2, 1, 1, 0, 0,
+                2, 2, 3, 3, 1, 1
+        };
+
+        final TriangleMesh shipMesh = new TriangleMesh();
+        shipMesh.getPoints().setAll(points);
+        shipMesh.getTexCoords().setAll(texCoords);
+        shipMesh.getFaces().setAll(faces);
+
+        PhongMaterial imageMaterial = new PhongMaterial();
+        imageMaterial.setDiffuseMap(new Image("file:"+fileName));
+        MeshView meshView = new MeshView(shipMesh);
+        meshView.setMaterial(imageMaterial);
+        return meshView;
     }
 
     public static class MovementTemplate {
@@ -192,6 +260,7 @@ public class Main extends Application {
         firingArc.setFill(Color.rgb(255, 0, 0, 0.5));
         firingArc.setStroke(Color.rgb(255, 0, 0, 1.0));
         firingArc.setFillRule(FillRule.NON_ZERO);
+        firingArc.visibleProperty().bind(firingArcVisibile);
 
         return firingArc;
     }
