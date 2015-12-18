@@ -23,11 +23,14 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
+import ship.FiringArc;
+import ship.ShipSize;
+import ship.ShipToken;
 
 
 public class Main extends Application {
 
-    public static double SHIP_TEMPLATE_WIDTH = 100;
+    public static double SHIP_TEMPLATE_WIDTH = 40.0;
     private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
 
     private  TemplateTransition templateTransition;
@@ -37,9 +40,9 @@ public class Main extends Application {
 
     public Parent createContent(Stage stage) throws Exception {
 
-        final Rectangle shipToken = getShipToken("resources/ywing.jpg");
-        MovementTemplate movementTemplate = getHardTurnTemplate(200, 200, 20, 100);
-        Path firingArc = getFiringArc(400);
+        final ShipToken shipToken = new ShipToken("resources/ywing.jpg", ShipSize.SMALL);
+        MovementTemplate movementTemplate = getHardTurnTemplate(80.0, 100.0, 45.0);
+        final FiringArc firingArc = new FiringArc(ShipSize.SMALL);
 
       //  Group ship = new Group();
      //   ship.getChildren().add(shipToken);
@@ -50,11 +53,14 @@ public class Main extends Application {
 
 
 
-
         firingArc.translateXProperty().bind(shipToken.translateXProperty());
         firingArc.translateYProperty().bind(shipToken.translateYProperty());
+        movementTemplate.movementTemplate.translateXProperty().bind(shipToken.translateXProperty());
+        movementTemplate.movementTemplate.translateYProperty().bind(shipToken.translateYProperty());
         shipToken.setTranslateX(200);
         shipToken.setTranslateY(200);
+
+
 
 
         /*
@@ -67,7 +73,7 @@ public class Main extends Application {
         pathTransition.play();
         */
 
-        templateTransition = new TemplateTransition(Duration.millis(4000), shipToken, firingArc);
+        templateTransition = new TemplateTransition(Duration.millis(4000), shipToken, firingArc, movementTemplate.movementTemplate);
         //templateTransition.setPath(movementTemplate.movementPath);
         //templateTransition.setNode(ship);
         //templateTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -160,7 +166,7 @@ public class Main extends Application {
 
         ParallelCamera parallelCamera = new ParallelCamera();
 
-        SubScene subScene = new SubScene(rootGroup, 500, 500, true, null);
+        SubScene subScene = new SubScene(rootGroup, 200, 200, true, null);
         subScene.setFill(imagePattern);
         subScene.setCamera(parallelCamera);
         subScene.heightProperty().bind(stage.heightProperty());
@@ -189,51 +195,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-    public Rectangle getShipToken(String fileName) {
-        final Rectangle shipToken = new Rectangle (-50, -50, 100, 100);
-        shipToken.setArcHeight(5);
-        shipToken.setArcWidth(5);
-        shipToken.setRotate(90);
-        shipToken.setStroke(Color.GRAY);
-        shipToken.setStrokeWidth(3.0);
-        shipToken.setFill(new ImagePattern(new Image("file:"+fileName)));
-        return shipToken;
-    }
-
-    public MeshView getShipMeshView(String fileName) {
-
-        float[] points = {
-                -50f,   50f,  0.0f,
-                -50f,  -50f,  0.0f,
-                50f,   50f,  0.0f,
-                50f,  -50f,  0.0f,
-        };
-
-        float[] texCoords = {
-                0, 1,
-                0, 0,
-                1, 1,
-                1, 0
-        };
-        // p0, t0, p1, t1, etc
-        int[] faces = {
-                2, 2, 1, 1, 0, 0,
-                2, 2, 3, 3, 1, 1
-        };
-
-        final TriangleMesh shipMesh = new TriangleMesh();
-        shipMesh.getPoints().setAll(points);
-        shipMesh.getTexCoords().setAll(texCoords);
-        shipMesh.getFaces().setAll(faces);
-
-        PhongMaterial imageMaterial = new PhongMaterial();
-        imageMaterial.setDiffuseMap(new Image("file:"+fileName));
-        MeshView meshView = new MeshView(shipMesh);
-        meshView.setMaterial(imageMaterial);
-        return meshView;
-    }
-
     public static class MovementTemplate {
         Path movementPath;
         Path movementTemplate;
@@ -244,59 +205,47 @@ public class Main extends Application {
         }
     }
 
-    public Path getFiringArc(double firingRadius) {
-        Path firingArc = new Path();
-
-        double x1 = firingRadius * Math.cos(45.0/180.0*Math.PI);
-        double y1 = -firingRadius * Math.sin(45.0/180.0*Math.PI);
-
-        double x2 = firingRadius * Math.cos(45.0/180.0*Math.PI);
-        double y2 = firingRadius * Math.sin(45.0/180.0*Math.PI);
-
-        firingArc.getElements().add(new MoveTo(0, 0));
-        firingArc.getElements().add(new LineTo(x1, y1));
-        firingArc.getElements().add(new ArcTo(firingRadius, firingRadius, 90, x2, y2, false, true));
-        firingArc.getElements().add(new LineTo(0, 0));
-        firingArc.setFill(Color.rgb(255, 0, 0, 0.5));
-        firingArc.setStroke(Color.rgb(255, 0, 0, 1.0));
-        firingArc.setFillRule(FillRule.NON_ZERO);
-        firingArc.visibleProperty().bind(firingArcVisibile);
-
-        return firingArc;
-    }
-
-    public MovementTemplate getHardTurnTemplate(double x, double y, double width, double radius) {
+    public MovementTemplate getHardTurnTemplate(double innerRadius, double outerRadius, double angleDegrees) {
         Path movementPath = new Path();
         Path movementTemplate = new Path();
 
-        double outerRadius = radius + width;
-        double innerRadius = radius - width;
+        double rads = angleDegrees * Math.PI / 180.0;
 
-        double x0 = x;
-        double y0 = y-width;
+        double width = outerRadius - innerRadius;
+        double centerRadius = outerRadius - innerRadius;
 
-        double x1 = x0 + outerRadius;
-        double y1 = y0 + outerRadius;
+        double pivotX = 0 - innerRadius - width/2.0;
+        double pivotY = 0.0;
 
-        double x2 = x1 - width*2;
-        double y2 = y1;
+        double startX = 0.0 - width / 2.0;
+        double startY = 0.0;
 
-        double x3 = x2 - innerRadius;
-        double y3 = y2 - innerRadius;
+        double innerX = pivotX + Math.cos(rads) * innerRadius;
+        double innerY = pivotY + Math.sin(rads) * innerRadius;
 
-        movementTemplate.getElements().add(new MoveTo(x0, y0));
-        movementTemplate.getElements().add(new ArcTo(outerRadius, outerRadius, 90, x1, y1, false, true));
-        movementTemplate.getElements().add(new LineTo(x2, y2));
-        movementTemplate.getElements().add(new ArcTo(innerRadius, innerRadius, 90, x3, y3, false, false));
-        movementTemplate.getElements().add(new LineTo(x0, y0));
+        double outerX = pivotX + Math.cos(rads) * outerRadius;
+        double outerY = pivotY + Math.sin(rads) * outerRadius;
+
+        double centerX = pivotX + Math.cos(rads) * centerRadius;
+        double centerY = pivotY + Math.sin(rads) * centerRadius;
+
+        double endX = 0.0 + width / 2.0;
+        double endY = 0.0;
+
+        movementTemplate.getElements().add(new MoveTo(startX, startY));
+        movementTemplate.getElements().add(new ArcTo(innerRadius, innerRadius, angleDegrees, innerX, innerY, false, true));
+        movementTemplate.getElements().add(new LineTo(outerX, outerY));
+        movementTemplate.getElements().add(new ArcTo(outerRadius, outerRadius, angleDegrees, endX, endY, false, false));
+        movementTemplate.getElements().add(new LineTo(startX, startY));
         movementTemplate.setFill(Color.DARKGREEN);
         movementTemplate.setStroke(Color.WHITE);
         movementTemplate.setFillRule(FillRule.NON_ZERO);
 
-        movementPath.getElements().add(new MoveTo(x - SHIP_TEMPLATE_WIDTH/2.0, y));
-        movementPath.getElements().add(new LineTo(x, y));
-        movementPath.getElements().add(new ArcTo(radius, radius, 90, x+radius, y+radius, false, true));
-        movementPath.getElements().add(new LineTo(x+radius, y+radius + SHIP_TEMPLATE_WIDTH/2.0));
+        movementPath.getElements().add(new MoveTo(-SHIP_TEMPLATE_WIDTH/2.0, 0));
+        movementPath.getElements().add(new LineTo(0, 0));
+        movementPath.getElements().add(new ArcTo(centerRadius, centerRadius, angleDegrees, centerX, centerY, false, true));
+        // TODO : fix this for the 45 degree template
+        //movementPath.getElements().add(new LineTo(x+radius, y+radius + SHIP_TEMPLATE_WIDTH/2.0));
         movementPath.setStroke(Color.WHITE);
         movementPath.getStrokeDashArray().setAll(5d, 5d);
 
