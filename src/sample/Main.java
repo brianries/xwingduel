@@ -23,6 +23,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
+import movement.*;
 import ship.FiringArc;
 import ship.ShipSize;
 import ship.ShipToken;
@@ -30,38 +31,24 @@ import ship.ShipToken;
 
 public class Main extends Application {
 
-    public static double SHIP_TEMPLATE_WIDTH = 40.0;
     private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
-
-    private  TemplateTransition templateTransition;
-
-    private Path path;
+    private TemplateTransition templateTransition;
     private double x1, y1;
 
     public Parent createContent(Stage stage) throws Exception {
 
         final ShipToken shipToken = new ShipToken("resources/ywing.jpg", ShipSize.SMALL);
-        MovementTemplate movementTemplate = getHardTurnTemplate(80.0, 100.0, 45.0);
+        final MovementTemplate movementTemplate = new MovementTemplateHardTurn(MovementDifficulty.GREEN, MovementLength.THREE, MovementTurnDirection.LEFT);
         final FiringArc firingArc = new FiringArc(ShipSize.SMALL);
-
-      //  Group ship = new Group();
-     //   ship.getChildren().add(shipToken);
-      //  ship.getChildren().add(firingArc);
-
-        // TO DO -- look into this one!
-        //ship.contains(0, 0);
-
 
 
         firingArc.translateXProperty().bind(shipToken.translateXProperty());
         firingArc.translateYProperty().bind(shipToken.translateYProperty());
-        movementTemplate.movementTemplate.translateXProperty().bind(shipToken.translateXProperty());
-        movementTemplate.movementTemplate.translateYProperty().bind(shipToken.translateYProperty());
+        firingArc.visibleProperty().bind(firingArcVisibile);
+        movementTemplate.translateXProperty().bind(shipToken.translateXProperty());
+        movementTemplate.translateYProperty().bind(shipToken.translateYProperty());
         shipToken.setTranslateX(200);
         shipToken.setTranslateY(200);
-
-
-
 
         /*
         pathTransition.setDuration(Duration.millis(2000));
@@ -73,7 +60,7 @@ public class Main extends Application {
         pathTransition.play();
         */
 
-        templateTransition = new TemplateTransition(Duration.millis(4000), shipToken, firingArc, movementTemplate.movementTemplate);
+        templateTransition = new TemplateTransition(Duration.millis(4000), shipToken, firingArc, movementTemplate);
         //templateTransition.setPath(movementTemplate.movementPath);
         //templateTransition.setNode(ship);
         //templateTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -82,8 +69,8 @@ public class Main extends Application {
         templateTransition.play();
 
         // Identity matrix
-       // Affine transformMatrix = new Affine();
-      //  ship.getTransforms().setAll(transformMatrix);
+        // Affine transformMatrix = new Affine();
+        //  ship.getTransforms().setAll(transformMatrix);
 
         /*
         final KeyValue kvx = new KeyValue(ship.translateXProperty(), 500);
@@ -96,7 +83,7 @@ public class Main extends Application {
 
         // Build the Scene Graph
         Group root = new Group();
-        root.getChildren().add(movementTemplate.movementTemplate);
+        root.getChildren().add(movementTemplate);
         root.getChildren().add(firingArc);
         root.getChildren().add(shipToken);
 
@@ -193,63 +180,6 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static class MovementTemplate {
-        Path movementPath;
-        Path movementTemplate;
-
-        public MovementTemplate(Path movementPath, Path movementTemplate) {
-            this.movementPath = movementPath;
-            this.movementTemplate = movementTemplate;
-        }
-    }
-
-    public MovementTemplate getHardTurnTemplate(double innerRadius, double outerRadius, double angleDegrees) {
-        Path movementPath = new Path();
-        Path movementTemplate = new Path();
-
-        double rads = angleDegrees * Math.PI / 180.0;
-
-        double width = outerRadius - innerRadius;
-        double centerRadius = outerRadius - innerRadius;
-
-        double pivotX = 0 - innerRadius - width/2.0;
-        double pivotY = 0.0;
-
-        double startX = 0.0 - width / 2.0;
-        double startY = 0.0;
-
-        double innerX = pivotX + Math.cos(rads) * innerRadius;
-        double innerY = pivotY + Math.sin(rads) * innerRadius;
-
-        double outerX = pivotX + Math.cos(rads) * outerRadius;
-        double outerY = pivotY + Math.sin(rads) * outerRadius;
-
-        double centerX = pivotX + Math.cos(rads) * centerRadius;
-        double centerY = pivotY + Math.sin(rads) * centerRadius;
-
-        double endX = 0.0 + width / 2.0;
-        double endY = 0.0;
-
-        movementTemplate.getElements().add(new MoveTo(startX, startY));
-        movementTemplate.getElements().add(new ArcTo(innerRadius, innerRadius, angleDegrees, innerX, innerY, false, true));
-        movementTemplate.getElements().add(new LineTo(outerX, outerY));
-        movementTemplate.getElements().add(new ArcTo(outerRadius, outerRadius, angleDegrees, endX, endY, false, false));
-        movementTemplate.getElements().add(new LineTo(startX, startY));
-        movementTemplate.setFill(Color.DARKGREEN);
-        movementTemplate.setStroke(Color.WHITE);
-        movementTemplate.setFillRule(FillRule.NON_ZERO);
-
-        movementPath.getElements().add(new MoveTo(-SHIP_TEMPLATE_WIDTH/2.0, 0));
-        movementPath.getElements().add(new LineTo(0, 0));
-        movementPath.getElements().add(new ArcTo(centerRadius, centerRadius, angleDegrees, centerX, centerY, false, true));
-        // TODO : fix this for the 45 degree template
-        //movementPath.getElements().add(new LineTo(x+radius, y+radius + SHIP_TEMPLATE_WIDTH/2.0));
-        movementPath.setStroke(Color.WHITE);
-        movementPath.getStrokeDashArray().setAll(5d, 5d);
-
-        return new MovementTemplate(movementPath, movementTemplate);
     }
 
     /**

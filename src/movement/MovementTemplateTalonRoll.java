@@ -6,10 +6,10 @@ import javafx.scene.transform.Transform;
 /**
  * Created by Brian on 12/7/2015.
  */
-public class MovementTemplateTalonRoll extends MovementTemplateHardTurnBase {
+public class MovementTemplateTalonRoll extends MovementTemplateTurnBase {
 
     public MovementTemplateTalonRoll(MovementTurnDirection direction, MovementDifficulty difficulty, MovementLength length) {
-        super(direction, difficulty, length);
+        super(difficulty, length, direction, MovementTurnType.TALON);
     }
 
     @Override
@@ -17,8 +17,4 @@ public class MovementTemplateTalonRoll extends MovementTemplateHardTurnBase {
         return null;
     }
 
-    @Override
-    public Node getDisplayToken() {
-        return null;
-    }
 }

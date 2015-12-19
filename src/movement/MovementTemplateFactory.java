@@ -2,7 +2,6 @@ package movement;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import ship.ShipToken;
 
 /**
  * Created by Brian on 12/5/2015.
@@ -10,6 +9,18 @@ import ship.ShipToken;
 public class MovementTemplateFactory {
 
     public static double MOVEMENT_TEMPLATE_WIDTH_MM = 20.0;
+
+    // Firing arc
+    //range in mm: 100.0, 200.0, 300.0
+
+    // Forward movement
+    //size in mm: 40.0, 80.0, 120.0, 160.0, 200.0
+
+    //Turn inside radii in mm: 25.0, 53.0, 80.0
+    //Turn outside radii in mm: 45.0, 73.0, 100.0
+
+    //Bank inside radii in mm: 70.0, 120.0, 170.0
+    //Bank outside radii in mm: 90.0, 140.0, 190.0
 
     public MovementTemplateFactory() {
 
@@ -83,7 +94,7 @@ public class MovementTemplateFactory {
         }
     }
 
-    public MovementTemplate constructTemplate(MovementType type, MovementDifficulty difficulty) {
+    public MovementTransform constructTemplate(MovementType type, MovementDifficulty difficulty) {
         switch (type) {
             case STOP:
             case LEFT_HARD_1:
