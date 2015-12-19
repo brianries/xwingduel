@@ -38,7 +38,8 @@ public class Main extends Application {
     public Parent createContent(Stage stage) throws Exception {
 
         final ShipToken shipToken = new ShipToken("resources/ywing.jpg", ShipSize.SMALL);
-        final MovementTemplate movementTemplate = new MovementTemplateHardTurn(MovementDifficulty.GREEN, MovementLength.THREE, MovementTurnDirection.LEFT);
+       // final MovementTemplate movementTemplate = new MovementTemplateHardTurn(MovementDifficulty.WHITE, MovementLength.THREE, MovementTurnDirection.LEFT);
+        final MovementTemplate movementTemplate = new MovementTemplateForward(MovementDifficulty.RED, MovementLength.FIVE);
         final FiringArc firingArc = new FiringArc(ShipSize.SMALL);
 
 

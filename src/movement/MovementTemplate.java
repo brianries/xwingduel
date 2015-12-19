@@ -11,6 +11,8 @@ public abstract class MovementTemplate extends Path implements MovementTransform
     private MovementType type;
     private MovementDifficulty difficulty;
 
+    protected static double TEMPLATE_WIDTH = 20.0;
+
     public MovementTemplate(MovementDifficulty difficulty, MovementType type) {
         this.difficulty = difficulty;
         this.type = type;
