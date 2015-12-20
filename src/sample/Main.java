@@ -5,6 +5,7 @@ import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.scene.*;
 import javafx.scene.effect.DropShadow;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Affine;
+import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
 
 import javafx.scene.Parent;
@@ -24,9 +26,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import movement.*;
-import ship.FiringArc;
-import ship.ShipSize;
-import ship.ShipToken;
+import ship.*;
 
 
 public class Main extends Application {
@@ -37,19 +37,72 @@ public class Main extends Application {
 
     public Parent createContent(Stage stage) throws Exception {
 
-        final ShipToken shipToken = new ShipToken("resources/ywing.jpg", ShipSize.SMALL);
+        final ShipToken shipToken = new ShipToken("resources/ywing_rotated.jpg", ShipSize.SMALL);
        // final MovementTemplate movementTemplate = new MovementTemplateHardTurn(MovementDifficulty.WHITE, MovementLength.THREE, MovementTurnDirection.LEFT);
-        final MovementTemplate movementTemplate = new MovementTemplateForward(MovementDifficulty.RED, MovementLength.FIVE);
-        final FiringArc firingArc = new FiringArc(ShipSize.SMALL);
+        final MovementTemplate movementTemplate = new MovementTemplateBankTurn(MovementDifficulty.RED, MovementLength.THREE, MovementTurnDirection.LEFT);
+        final FiringArc firingArc = new FiringArc(FiringArcRange.THREE, ShipSize.SMALL);
 
 
-        firingArc.translateXProperty().bind(shipToken.translateXProperty());
-        firingArc.translateYProperty().bind(shipToken.translateYProperty());
-        firingArc.visibleProperty().bind(firingArcVisibile);
-        movementTemplate.translateXProperty().bind(shipToken.translateXProperty());
-        movementTemplate.translateYProperty().bind(shipToken.translateYProperty());
-        shipToken.setTranslateX(200);
-        shipToken.setTranslateY(200);
+        final MovementTemplate movementTemplate2 = new MovementTemplateHardTurn(MovementDifficulty.GREEN, MovementLength.TWO, MovementTurnDirection.RIGHT);
+
+        final MovementTemplate movementTemplate3 = new MovementTemplateForward(MovementDifficulty.WHITE, MovementLength.FIVE);
+
+     //   firingArc.translateXProperty().bind(shipToken.translateXProperty());
+      //  firingArc.translateYProperty().bind(shipToken.translateYProperty());
+       // firingArc.visibleProperty().bind(firingArcVisibile);
+
+//        movementTemplate.translateXProperty().bind(shipToken.translateXProperty());
+//        movementTemplate.translateYProperty().bind(shipToken.translateYProperty());
+        //shipToken.setTranslateX(200);
+        //shipToken.setTranslateY(200);
+
+        //Transform t = shipToken.getLocalToSceneTransform();
+
+        Translate baseTranslate = new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0.0);
+
+
+        Translate translate = new Translate(200,200);
+        Rotate rotate = new Rotate(10);
+
+        shipToken.getTransforms().add(translate);
+        shipToken.getTransforms().add(rotate);
+
+        final ShipOutlineToken outlineToken1 = new ShipOutlineToken(ShipSize.SMALL);
+        outlineToken1.getTransforms().setAll(shipToken.getTransforms());
+
+        movementTemplate.getTransforms().setAll(shipToken.getTransforms());
+        movementTemplate.getTransforms().add(baseTranslate);
+
+
+        shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
+        shipToken.getTransforms().add(movementTemplate.getEndTransform());
+        shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
+
+        final ShipOutlineToken outlineToken2 = new ShipOutlineToken(ShipSize.SMALL);
+        outlineToken2.getTransforms().setAll(shipToken.getTransforms());
+
+        movementTemplate2.getTransforms().setAll(shipToken.getTransforms());
+        movementTemplate2.getTransforms().add(baseTranslate);
+
+        shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
+        shipToken.getTransforms().add(movementTemplate2.getEndTransform());
+        shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
+
+
+        final ShipOutlineToken outlineToken3 = new ShipOutlineToken(ShipSize.SMALL);
+        outlineToken3.getTransforms().setAll(shipToken.getTransforms());
+
+        movementTemplate3.getTransforms().setAll(shipToken.getTransforms());
+        movementTemplate3.getTransforms().add(baseTranslate);
+
+        shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
+        shipToken.getTransforms().add(movementTemplate3.getEndTransform());
+        shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
+
+        //movementTemplate.getTransforms().addAll(shipToken.getTransforms());
+        firingArc.getTransforms().setAll(shipToken.getTransforms());
+
+
 
         /*
         pathTransition.setDuration(Duration.millis(2000));
@@ -84,9 +137,15 @@ public class Main extends Application {
 
         // Build the Scene Graph
         Group root = new Group();
-        root.getChildren().add(movementTemplate);
-        root.getChildren().add(firingArc);
         root.getChildren().add(shipToken);
+        root.getChildren().add(outlineToken1);
+        root.getChildren().add(outlineToken2);
+        root.getChildren().add(outlineToken3);
+        root.getChildren().add(movementTemplate);
+        root.getChildren().add(movementTemplate2);
+        root.getChildren().add(movementTemplate3);
+        root.getChildren().add(firingArc);
+
 
         root.setOnMousePressed(event -> {
             if (event.getTarget() instanceof Rectangle) {

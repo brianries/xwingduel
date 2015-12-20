@@ -2,7 +2,8 @@ package movement;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.transform.Transform;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 
 /**
  * Created by Brian on 12/19/2015.
@@ -11,7 +12,7 @@ public abstract class MovementTemplateForwardBase extends MovementTemplate {
 
     public MovementTemplateForwardBase(MovementDifficulty difficulty, MovementLength length, MovementForwardType forwardType) {
         super(difficulty, getMovementType(length, forwardType));
-        initTemplateToken(difficulty, length);
+        init(difficulty, length);
     }
 
     private static MovementType getMovementType(MovementLength length, MovementForwardType forwardType) {
@@ -48,14 +49,17 @@ public abstract class MovementTemplateForwardBase extends MovementTemplate {
         }
     }
 
-    private void initTemplateToken(MovementDifficulty difficulty, MovementLength movementLength) {
+    private void init(MovementDifficulty difficulty, MovementLength movementLength) {
         double length = getLengthMM(movementLength);
-        this.getElements().add(new MoveTo(0, -TEMPLATE_WIDTH/2.0));
-        this.getElements().add(new LineTo(length, -TEMPLATE_WIDTH/2.0));
-        this.getElements().add(new LineTo(length, TEMPLATE_WIDTH/2.0));
-        this.getElements().add(new LineTo(0, TEMPLATE_WIDTH/2.0));
+        this.getElements().add(new MoveTo(0, -MOVEMENT_TEMPLATE_WIDTH /2.0));
+        this.getElements().add(new LineTo(length, -MOVEMENT_TEMPLATE_WIDTH /2.0));
+        this.getElements().add(new LineTo(length, MOVEMENT_TEMPLATE_WIDTH /2.0));
+        this.getElements().add(new LineTo(0, MOVEMENT_TEMPLATE_WIDTH /2.0));
         this.setFill(getColorForDifficulty(difficulty));
         this.setStroke(Color.WHITE);
         this.setFillRule(FillRule.NON_ZERO);
+
+        Translate translate = new Translate(length, 0);
+        endTransform.append(translate);
     }
 }

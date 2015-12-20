@@ -10,9 +10,4 @@ public class MovementTemplateKoiganTurn extends MovementTemplateForwardBase {
     public MovementTemplateKoiganTurn(MovementDifficulty difficulty, MovementLength length) {
         super(difficulty, length, MovementForwardType.KTURN);
     }
-
-    @Override
-    public Transform getEndTransform() {
-        return null;
-    }
 }

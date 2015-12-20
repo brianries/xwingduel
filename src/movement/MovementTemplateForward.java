@@ -10,9 +10,4 @@ public class MovementTemplateForward extends MovementTemplateForwardBase {
     public MovementTemplateForward(MovementDifficulty difficulty, MovementLength length) {
         super(difficulty, length, MovementForwardType.FORWARD);
     }
-
-    @Override
-    public Transform getEndTransform() {
-        return null;
-    }
 }

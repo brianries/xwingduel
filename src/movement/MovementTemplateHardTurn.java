@@ -10,9 +10,4 @@ public class MovementTemplateHardTurn extends MovementTemplateTurnBase {
     public MovementTemplateHardTurn(MovementDifficulty difficulty, MovementLength length, MovementTurnDirection direction) {
         super(difficulty, length, direction, MovementTurnType.HARD);
     }
-
-    @Override
-    public Transform getEndTransform() {
-        return null;
-    }
 }

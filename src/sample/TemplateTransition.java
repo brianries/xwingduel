@@ -21,7 +21,7 @@ public class TemplateTransition extends Transition {
     protected void interpolate(double frac) {
         Rotate rotate = new Rotate(frac * 360.0, 0, 0);
         for (Node node : nodes) {
-            node.getTransforms().setAll(rotate);
+       //     node.getTransforms().setAll(rotate);
         }
     }
 }

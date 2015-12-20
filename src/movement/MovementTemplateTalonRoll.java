@@ -11,10 +11,4 @@ public class MovementTemplateTalonRoll extends MovementTemplateTurnBase {
     public MovementTemplateTalonRoll(MovementTurnDirection direction, MovementDifficulty difficulty, MovementLength length) {
         super(difficulty, length, direction, MovementTurnType.TALON);
     }
-
-    @Override
-    public Transform getEndTransform() {
-        return null;
-    }
-
 }

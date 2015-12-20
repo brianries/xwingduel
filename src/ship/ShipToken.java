@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 /**
  * Created by Brian on 12/17/2015.
@@ -21,7 +22,6 @@ public class ShipToken extends Rectangle {
         this.setHeight(templateWidth);
         this.setArcHeight(5);
         this.setArcWidth(5);
-        this.setRotate(90);
         this.setStroke(Color.GRAY);
         this.setStrokeWidth(3.0);
         this.setFill(new ImagePattern(new Image("file:" + fileName)));

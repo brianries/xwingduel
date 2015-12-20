@@ -2,6 +2,8 @@ package movement;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 
 /**
  * Created by Brian on 12/19/2015.
@@ -10,7 +12,7 @@ public abstract class MovementTemplateTurnBase extends MovementTemplate {
 
     public MovementTemplateTurnBase(MovementDifficulty difficulty, MovementLength length, MovementTurnDirection direction, MovementTurnType turnType) {
         super(difficulty, getMovementType(turnType, direction, length));
-        initTemplateToken(direction, difficulty, length, turnType);
+        init(direction, difficulty, length, turnType);
     }
 
     private static MovementType getMovementType(MovementTurnType turnType, MovementTurnDirection direction, MovementLength length) {
@@ -105,33 +107,34 @@ public abstract class MovementTemplateTurnBase extends MovementTemplate {
         }
     }
 
-    private void initTemplateToken(MovementTurnDirection direction, MovementDifficulty difficulty, MovementLength length, MovementTurnType turnType) {
+    private void init(MovementTurnDirection direction, MovementDifficulty difficulty, MovementLength length, MovementTurnType turnType) {
         double angleDegrees = getAngleInDegrees(turnType);
         double[] radii = getRadiiForTurn(turnType, length);
 
         double innerRadius = radii[0];
         double outerRadius = radii[1];
+        double centerRadius = (outerRadius + innerRadius) / 2.0;
 
         double dir = direction == MovementTurnDirection.LEFT ? -1.0 : 1.0;
-
         double rads = angleDegrees * Math.PI / 180.0;
 
-        double width = outerRadius - innerRadius;
-
         double pivotX = 0.0;
-        double pivotY = 0 + dir * (innerRadius + width/2.0);
+        double pivotY = 0 + dir * (innerRadius + MOVEMENT_TEMPLATE_WIDTH /2.0);
 
         double startX = 0.0;
-        double startY = 0.0 + dir * width / 2.0;
+        double startY = 0.0 + dir * MOVEMENT_TEMPLATE_WIDTH / 2.0;
 
         double innerX = pivotX + Math.sin(rads) * innerRadius;
         double innerY = pivotY - dir * Math.cos(rads) * innerRadius;
+
+        double centerX = pivotX + Math.sin(rads) * centerRadius;
+        double centerY = pivotY - dir * Math.cos(rads) * centerRadius;
 
         double outerX = pivotX + Math.sin(rads) * outerRadius;
         double outerY = pivotY - dir * Math.cos(rads) * outerRadius;
 
         double endX = 0.0;
-        double endY = 0.0 - dir * width / 2.0;
+        double endY = 0.0 - dir * MOVEMENT_TEMPLATE_WIDTH / 2.0;
 
         boolean sweepDirection = (direction == MovementTurnDirection.LEFT) ? false : true;
         this.getElements().add(new MoveTo(startX, startY));
@@ -142,6 +145,10 @@ public abstract class MovementTemplateTurnBase extends MovementTemplate {
         this.setFill(getColorForDifficulty(difficulty));
         this.setStroke(Color.WHITE);
         this.setFillRule(FillRule.NON_ZERO);
-    }
 
-}
+        Translate translate = new Translate(centerX, centerY);
+        Rotate rotate = new Rotate(dir * angleDegrees);
+        endTransform.append(translate);
+        endTransform.append(rotate);
+    }
+ }

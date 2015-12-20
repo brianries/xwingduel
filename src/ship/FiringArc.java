@@ -8,10 +8,23 @@ import javafx.scene.shape.*;
  */
 public class FiringArc extends Path {
 
-    public FiringArc(ShipSize shipSize) {
-        double[] lengths = new double[] { 100.0, 200.0, 300.0};
+    public FiringArc(FiringArcRange range, ShipSize shipSize) {
+        double[] lengths = getLengths(range);
         for (double length : lengths) {
             init(length, ShipToken.getShipTemplateWidth(shipSize));
+        }
+    }
+
+    private double[] getLengths(FiringArcRange range) {
+        switch (range) {
+            case ONE:
+                return new double[] { 100.0 };
+            case TWO:
+                return new double[] { 100.0, 200.0 };
+            case THREE:
+                return new double[] { 100.0, 200.0, 300.0 };
+            default:
+                throw new RuntimeException("Invalid firing range " + range);
         }
     }
 
