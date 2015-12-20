@@ -8,7 +8,7 @@ import javafx.scene.transform.Transform;
  */
 public class MovementTemplateTalonRoll extends MovementTemplateTurnBase {
 
-    public MovementTemplateTalonRoll(MovementTurnDirection direction, MovementDifficulty difficulty, MovementLength length) {
+    public MovementTemplateTalonRoll(MovementDifficulty difficulty, MovementLength length, MovementTurnDirection direction) {
         super(difficulty, length, direction, MovementTurnType.TALON);
     }
 }
