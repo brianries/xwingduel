@@ -41,7 +41,7 @@ public class Main extends Application {
         final ShipToken shipToken = new ShipToken("resources/ywing_rotated.jpg", ShipSize.SMALL);
         final FiringArc firingArc = new FiringArc(FiringArcRange.THREE, ShipSize.SMALL);
 
-        final MovementTemplate movementTemplate1 = factory.constructMovementTemplate(MovementDifficulty.GREEN, MovementType.LEFT_BANK_2);
+        final MovementTemplate movementTemplate1 = factory.constructMovementTemplate(MovementDifficulty.GREEN, MovementType.LEFT_BANK_1);
         final MovementTemplate movementTemplate2 = factory.constructMovementTemplate(MovementDifficulty.RED, MovementType.RIGHT_HARD_3);
         final MovementTemplate movementTemplate3 = factory.constructMovementTemplate(MovementDifficulty.WHITE, MovementType.FORWARD_5);
 
@@ -86,9 +86,18 @@ public class Main extends Application {
         shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
 
         firingArc.getTransforms().setAll(shipToken.getTransforms());
+        firingArc.visibleProperty().bind(firingArcVisibile);
 
         // Build the Scene Graph
         Group root = new Group();
+
+        Group background = new Group();
+        background.getChildren().add(getPlayableArea());
+        SubScene subScene = new SubScene(background, 1000, 1000, true, SceneAntialiasing.DISABLED);
+        subScene.widthProperty().bind(stage.widthProperty());
+        subScene.heightProperty().bind(stage.heightProperty());
+        root.getChildren().add(subScene);
+
         root.getChildren().add(shipToken);
         root.getChildren().add(outlineToken1);
         root.getChildren().add(outlineToken2);
@@ -100,21 +109,19 @@ public class Main extends Application {
 
 
         root.setOnMousePressed(event -> {
-            if (event.getTarget() instanceof Rectangle) {
+            if (event.getTarget() instanceof ShipToken) {
                 ((Rectangle) event.getTarget()).setStroke(Color.YELLOW);
             }
         });
 
         root.setOnMouseReleased(event -> {
-            if (event.getTarget() instanceof Rectangle) {
+            if (event.getTarget() instanceof ShipToken) {
                 ((Rectangle) event.getTarget()).setStroke(Color.GRAY);
             }
         });
 
-
-
         root.addEventHandler(MouseEvent.ANY, e -> {
-            if(e.getTarget() instanceof Node ) {
+            if(e.getTarget() instanceof ShipToken ) {
                 System.out.println("Mouse Event = " + e.getEventType());
                 Node node = (Node) e.getTarget();
                 if (e.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
@@ -150,34 +157,31 @@ public class Main extends Application {
             }
         });
 
-
-        SubScene scene = createScene(root, stage);
-
-        Group group = new Group();
-        group.getChildren().add(scene);
-        return group;
+        root.setTranslateX(100);
+        root.setTranslateY(100);
+        return root;
     }
 
-
-    private SubScene createScene(Group rootGroup, Stage stage) {
+    public Rectangle getPlayableArea() {
+        Rectangle rectangle = new Rectangle(914.4, 914.4);
+        rectangle.setTranslateZ(1);
         Image texture = new Image("file:resources/starfield.jpg");
         ImagePattern imagePattern = new ImagePattern(texture);
-
-        ParallelCamera parallelCamera = new ParallelCamera();
-
-        SubScene subScene = new SubScene(rootGroup, 200, 200, true, null);
-        subScene.setFill(imagePattern);
-        subScene.setCamera(parallelCamera);
-        subScene.heightProperty().bind(stage.heightProperty());
-        subScene.widthProperty().bind(stage.widthProperty());
-
-        return subScene;
+        rectangle.setFill(imagePattern);
+        return rectangle;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(true);
-        Scene scene = new Scene(createContent(primaryStage));
+        Scene scene = new Scene(createContent(primaryStage), 1114.4, 1114.4, true, SceneAntialiasing.BALANCED);
+
+        Image texture = new Image("file:resources/wood-table.jpg");
+        ImagePattern imagePattern = new ImagePattern(texture);
+        scene.setFill(imagePattern);
+
+        ParallelCamera parallelCamera = new ParallelCamera();
+        scene.setCamera(parallelCamera);
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
