@@ -1,6 +1,6 @@
 package expansions.core.ships;
 
-import base.Action;
+import base.Actions;
 import base.Ship;
 
 import java.util.EnumSet;
@@ -14,7 +14,7 @@ public class TieFighter extends Ship {
         setAgility(3);
         setHull(3);
         setShields(0);
-        setActions(EnumSet.of(Action.BARREL_ROLL, Action.EVADE, Action.FOCUS));
+        setActions(EnumSet.of(Actions.BARREL_ROLL, Actions.EVADE, Actions.FOCUS));
 //        setUpgrades(null);
     }
 }

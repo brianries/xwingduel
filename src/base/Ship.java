@@ -1,7 +1,6 @@
 package base;
 
 import java.util.EnumSet;
-import java.util.Set;
 
 /**
  * Created by dsayles on 12/19/15.
@@ -13,7 +12,7 @@ public abstract class Ship {
     int agility;
     int hull;
     int shields;
-    EnumSet<Action> actions;
+    EnumSet<Actions> actions;
 
     public Ship() {}
 
@@ -35,5 +34,5 @@ public abstract class Ship {
     public void setShields(int shields) { this.shields = shields; }
     public int getShields() { return this.shields; }
 
-    public void setActions(EnumSet<Action> actions) { this.actions = actions; }
+    public void setActions(EnumSet<Actions> actions) { this.actions = actions; }
 }

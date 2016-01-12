@@ -1,6 +1,6 @@
 package expansions.core.ships;
 
-import base.Action;
+import base.Actions;
 import base.Ship;
 
 import java.util.EnumSet;
@@ -14,7 +14,7 @@ public class XWing extends Ship {
         setAgility(2);
         setHull(3);
         setShields(2);
-        setActions(EnumSet.of(Action.FOCUS, Action.TARGET_LOCK));
+        setActions(EnumSet.of(Actions.FOCUS, Actions.TARGET_LOCK));
     }
 
 
