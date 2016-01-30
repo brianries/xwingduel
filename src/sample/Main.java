@@ -1,39 +1,40 @@
 package sample;
 
-import com.sun.javafx.fxml.builder.TriangleMeshBuilder;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.*;
-import javafx.scene.transform.Affine;
-import javafx.scene.transform.Transform;
-import javafx.stage.Stage;
-
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
-import javafx.util.Duration;
-import movement.*;
+import javafx.stage.Stage;
+import movement.MovementDifficulty;
+import movement.MovementTemplate;
+import movement.MovementTemplateFactory;
+import movement.MovementType;
 import ship.*;
 
 
 public class Main extends Application {
 
+    private static final double BATTLE_GROUND_WIDTH_MM = 914.4;
+
     private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
-    private TemplateTransition templateTransition;
     private double x1, y1;
+
+    private Group root = new Group();
+    private Group world = new Group();
+
+    private final PerspectiveCamera camera = new PerspectiveCamera(true);
+    //private final Xform cameraXform = new Xform();
 
     public Parent createContent(Stage stage) throws Exception {
 
@@ -50,7 +51,6 @@ public class Main extends Application {
         Rotate rotate = new Rotate(10);
         shipToken.getTransforms().add(translate);
         shipToken.getTransforms().add(rotate);
-
 
         Translate baseTranslate = new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0.0);
 
@@ -73,7 +73,7 @@ public class Main extends Application {
         shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
         shipToken.getTransforms().add(movementTemplate2.getEndTransform());
         shipToken.getTransforms().add(new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0));
-
+        shipToken.getTransforms().add(new Translate(0, 0, -0.01));      // IF NOT ADDED - ZCLIPPING DOES WEIRD THINGS TO TEXTURE
 
         final ShipOutlineToken outlineToken3 = new ShipOutlineToken(ShipSize.SMALL);
         outlineToken3.getTransforms().setAll(shipToken.getTransforms());
@@ -87,40 +87,34 @@ public class Main extends Application {
 
         firingArc.getTransforms().setAll(shipToken.getTransforms());
         firingArc.visibleProperty().bind(firingArcVisibile);
+        firingArc.getTransforms().add(new Translate(0, 0, -0.05)); // make sure it appears over the rest of the items (and doesn't get Z-clipped)
 
-        // Build the Scene Graph
-        Group root = new Group();
+        Rectangle playableArea = getPlayableArea();
+        playableArea.getTransforms().add(new Translate(0, 0, 0.01));
 
-        Group background = new Group();
-        background.getChildren().add(getPlayableArea());
-        SubScene subScene = new SubScene(background, 1000, 1000, true, SceneAntialiasing.DISABLED);
-        subScene.widthProperty().bind(stage.widthProperty());
-        subScene.heightProperty().bind(stage.heightProperty());
-        root.getChildren().add(subScene);
+        world.getChildren().add(playableArea);
+        world.getChildren().add(shipToken);
+        world.getChildren().add(outlineToken1);
+        world.getChildren().add(outlineToken2);
+        world.getChildren().add(outlineToken3);
+        world.getChildren().add(movementTemplate1);
+        world.getChildren().add(movementTemplate2);
+        world.getChildren().add(movementTemplate3);
+        world.getChildren().add(firingArc);
 
-        root.getChildren().add(shipToken);
-        root.getChildren().add(outlineToken1);
-        root.getChildren().add(outlineToken2);
-        root.getChildren().add(outlineToken3);
-        root.getChildren().add(movementTemplate1);
-        root.getChildren().add(movementTemplate2);
-        root.getChildren().add(movementTemplate3);
-        root.getChildren().add(firingArc);
-
-
-        root.setOnMousePressed(event -> {
+        world.setOnMousePressed(event -> {
             if (event.getTarget() instanceof ShipToken) {
                 ((Rectangle) event.getTarget()).setStroke(Color.YELLOW);
             }
         });
 
-        root.setOnMouseReleased(event -> {
+        world.setOnMouseReleased(event -> {
             if (event.getTarget() instanceof ShipToken) {
                 ((Rectangle) event.getTarget()).setStroke(Color.GRAY);
             }
         });
 
-        root.addEventHandler(MouseEvent.ANY, e -> {
+        world.addEventHandler(MouseEvent.ANY, e -> {
             if(e.getTarget() instanceof ShipToken ) {
                 System.out.println("Mouse Event = " + e.getEventType());
                 Node node = (Node) e.getTarget();
@@ -156,37 +150,54 @@ public class Main extends Application {
                 }
             }
         });
-
-        root.setTranslateX(100);
-        root.setTranslateY(100);
-        return root;
+        return world;
     }
 
     public Rectangle getPlayableArea() {
-        Rectangle rectangle = new Rectangle(914.4, 914.4);
-        rectangle.setTranslateZ(1);
+        Rectangle rectangle = new Rectangle(BATTLE_GROUND_WIDTH_MM, BATTLE_GROUND_WIDTH_MM);
         Image texture = new Image("file:resources/starfield.jpg");
         ImagePattern imagePattern = new ImagePattern(texture);
         rectangle.setFill(imagePattern);
         return rectangle;
     }
 
+    private void buildCamera() {
+        root.getChildren().add(camera);
+        //cameraXform.getChildren().add(camera);
+
+        camera.setNearClip(100);
+        camera.setFarClip(1000.0);
+        camera.setTranslateX(BATTLE_GROUND_WIDTH_MM / 2.0);
+        camera.setTranslateY(BATTLE_GROUND_WIDTH_MM / 2.0);
+        camera.setTranslateZ(-(BATTLE_GROUND_WIDTH_MM / 2.0));
+        camera.setFieldOfView(90.0);
+        camera.setVerticalFieldOfView(true);
+
+        //cameraXform.setTx(BATTLE_GROUND_WIDTH_MM / 2.0);
+        //cameraXform.ry.setAngle(0.0);
+        //cameraXform.rx.setAngle(0.0);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(true);
-        Scene scene = new Scene(createContent(primaryStage), 1114.4, 1114.4, true, SceneAntialiasing.BALANCED);
 
+        root.getChildren().add(world);
+        root.setDepthTest(DepthTest.ENABLE);
+
+        buildCamera();
+        createContent(primaryStage);
+
+        Scene scene = new Scene(root, 1200, 1200, true, SceneAntialiasing.BALANCED);
         Image texture = new Image("file:resources/wood-table.jpg");
         ImagePattern imagePattern = new ImagePattern(texture);
         scene.setFill(imagePattern);
-
-        ParallelCamera parallelCamera = new ParallelCamera();
-        scene.setCamera(parallelCamera);
+        scene.setCamera(camera);
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case SPACE:
-                    templateTransition.play();
+                    // Do nothing
                     break;
                 case F:
                     firingArcVisibile.set(!firingArcVisibile.get());
@@ -194,8 +205,32 @@ public class Main extends Application {
             }
         });
 
+        // Ensure we change the field of view for skinny wide or tall windows appropriately
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double width = newValue.doubleValue();
+            double height = primaryStage.getHeight();
+            setOptimalFieldOfView(width > height);
+        });
+
+        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double width = primaryStage.getWidth();
+            double height = newValue.doubleValue();
+            setOptimalFieldOfView(width > height);
+        });
+
+
+        primaryStage.setTitle("XWing Duel");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void setOptimalFieldOfView(boolean widthGreaterThanHeight) {
+        if (widthGreaterThanHeight) {
+            camera.setVerticalFieldOfView(true);
+        }
+        else {
+            camera.setVerticalFieldOfView(false);
+        }
     }
 
     /**
