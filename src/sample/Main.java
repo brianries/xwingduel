@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -92,6 +94,14 @@ public class Main extends Application {
         Rectangle playableArea = getPlayableArea();
         playableArea.getTransforms().add(new Translate(0, 0, 0.01));
 
+        Text shipLabel = new Text();
+        shipLabel.setText("Gold Sq Pilot 1");
+        shipLabel.setFont(Font.font("Verdana", 12));
+        shipLabel.setFill(Color.ANTIQUEWHITE);
+        double width = shipLabel.getLayoutBounds().getWidth();
+        shipLabel.getTransforms().setAll(shipToken.getTransforms());
+        shipLabel.getTransforms().add(new Translate(-width/2.0, -22.0, -1.0));
+
         world.getChildren().add(playableArea);
         world.getChildren().add(shipToken);
         world.getChildren().add(outlineToken1);
@@ -101,6 +111,7 @@ public class Main extends Application {
         world.getChildren().add(movementTemplate2);
         world.getChildren().add(movementTemplate3);
         world.getChildren().add(firingArc);
+        world.getChildren().add(shipLabel);
 
         world.setOnMousePressed(event -> {
             if (event.getTarget() instanceof ShipToken) {
@@ -162,7 +173,7 @@ public class Main extends Application {
     }
 
     private void buildCamera() {
-        root.getChildren().add(camera);
+        //root.getChildren().add(camera);
         //cameraXform.getChildren().add(camera);
 
         camera.setNearClip(100);
