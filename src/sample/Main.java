@@ -5,11 +5,16 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -208,13 +213,53 @@ public class Main extends Application {
         buildCamera();
         createContent(primaryStage);
 
-        Scene scene = new Scene(root, 1200, 1200, true, SceneAntialiasing.BALANCED);
+        //StackPane rootPane = new StackPane();
+        BorderPane borderPane = new BorderPane();
+
+        Pane pane1 = new Pane();
+        pane1.setStyle("-fx-background-color: red");
+        Button testButton1 = new Button("Top Panel");
+        pane1.getChildren().add(testButton1);
+        borderPane.setTop(pane1);
+
+
+        Pane pane2 = new Pane();
+        pane2.setStyle("-fx-background-color: blue");
+        Button testButton2 = new Button("Bottom Panel");
+        pane2.getChildren().add(testButton2);
+        borderPane.setBottom(pane2);
+
+        Pane pane3 = new Pane();
+        pane3.setStyle("-fx-background-color: green");
+        Button testButton3 = new Button("Right Panel");
+        pane3.getChildren().add(testButton3);
+        borderPane.setRight(pane3);
+
+        Pane pane4 = new Pane();
+        pane4.setStyle("-fx-background-color: yellow");
+        Button testButton4 = new Button("Left Panel");
+        pane4.getChildren().add(testButton4);
+        borderPane.setLeft(pane4);
+
+
+        SubScene subScene = new SubScene(root, 600, 600, true, SceneAntialiasing.BALANCED);
+
+        StackPane centerPane = new StackPane();
+        centerPane.getChildren().add(subScene);
+        centerPane.setMinSize(0, 0);
+        centerPane.setAlignment(subScene, Pos.CENTER);
+        subScene.heightProperty().bind(centerPane.heightProperty());
+        subScene.widthProperty().bind(centerPane.widthProperty());
+
         Image texture = new Image("file:resources/wood-table.jpg");
         ImagePattern imagePattern = new ImagePattern(texture);
-        scene.setFill(imagePattern);
-        scene.setCamera(camera);
+        subScene.setFill(Color.rgb(30, 30, 30));
+        subScene.setCamera(camera);
+        borderPane.setCenter(centerPane);
 
-        scene.setOnKeyPressed(event -> {
+        Scene topScene = new Scene(borderPane, 1200, 1200, false, SceneAntialiasing.BALANCED);
+
+        topScene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case SPACE:
                     // Do nothing
@@ -240,7 +285,7 @@ public class Main extends Application {
 
 
         primaryStage.setTitle("XWing Duel");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(topScene);
         primaryStage.show();
     }
 
