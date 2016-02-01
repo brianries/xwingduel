@@ -272,14 +272,14 @@ public class Main extends Application {
         });
 
         // Ensure we change the field of view for skinny wide or tall windows appropriately
-        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+        centerPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
-            double height = primaryStage.getHeight();
+            double height = centerPane.getHeight();
             setOptimalFieldOfView(width > height);
         });
 
-        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
-            double width = primaryStage.getWidth();
+        centerPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double width = centerPane.getWidth();
             double height = newValue.doubleValue();
             setOptimalFieldOfView(width > height);
         });
