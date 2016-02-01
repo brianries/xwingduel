@@ -216,34 +216,35 @@ public class Main extends Application {
         //StackPane rootPane = new StackPane();
         BorderPane borderPane = new BorderPane();
 
-        Pane pane1 = new Pane();
+        StackPane pane1 = new StackPane();
         pane1.setStyle("-fx-background-color: red");
         Button testButton1 = new Button("Top Panel");
         pane1.getChildren().add(testButton1);
+        pane1.setAlignment(testButton1, Pos.CENTER);
         borderPane.setTop(pane1);
 
-
-        Pane pane2 = new Pane();
+        StackPane pane2 = new StackPane();
         pane2.setStyle("-fx-background-color: blue");
         Button testButton2 = new Button("Bottom Panel");
         pane2.getChildren().add(testButton2);
+        pane2.setAlignment(testButton2, Pos.CENTER);
         borderPane.setBottom(pane2);
 
-        Pane pane3 = new Pane();
+        StackPane pane3 = new StackPane();
         pane3.setStyle("-fx-background-color: green");
         Button testButton3 = new Button("Right Panel");
         pane3.getChildren().add(testButton3);
+        pane3.setAlignment(testButton3, Pos.CENTER);
         borderPane.setRight(pane3);
 
-        Pane pane4 = new Pane();
+        StackPane pane4 = new StackPane();
         pane4.setStyle("-fx-background-color: yellow");
         Button testButton4 = new Button("Left Panel");
         pane4.getChildren().add(testButton4);
+        pane4.setAlignment(testButton4, Pos.CENTER);
         borderPane.setLeft(pane4);
 
-
         SubScene subScene = new SubScene(root, 600, 600, true, SceneAntialiasing.BALANCED);
-
         StackPane centerPane = new StackPane();
         centerPane.getChildren().add(subScene);
         centerPane.setMinSize(0, 0);
@@ -251,8 +252,8 @@ public class Main extends Application {
         subScene.heightProperty().bind(centerPane.heightProperty());
         subScene.widthProperty().bind(centerPane.widthProperty());
 
-        Image texture = new Image("file:resources/wood-table.jpg");
-        ImagePattern imagePattern = new ImagePattern(texture);
+        //Image texture = new Image("file:resources/wood-table.jpg");
+        //ImagePattern imagePattern = new ImagePattern(texture);
         subScene.setFill(Color.rgb(30, 30, 30));
         subScene.setCamera(camera);
         borderPane.setCenter(centerPane);
