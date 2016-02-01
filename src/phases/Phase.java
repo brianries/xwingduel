@@ -1,4 +1,4 @@
-package sample.phases;
+package phases;
 
 /**
  * Created by dsayles on 12/1/15.
