@@ -5,7 +5,10 @@ package base;
  */
 public enum Action {
     BARREL_ROLL,
+    BOOST,
+    CLOAK,
     EVADE,
     FOCUS,
+    SLAM,
     TARGET_LOCK;
 }
