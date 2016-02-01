@@ -15,7 +15,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import movement.MovementDifficulty;
@@ -99,8 +101,15 @@ public class Main extends Application {
         shipLabel.setFont(Font.font("Verdana", 12));
         shipLabel.setFill(Color.ANTIQUEWHITE);
         double width = shipLabel.getLayoutBounds().getWidth();
-        shipLabel.getTransforms().setAll(shipToken.getTransforms());
-        shipLabel.getTransforms().add(new Translate(-width/2.0, -22.0, -1.0));
+
+        // Construct the final result of the ship transformations, so the translates can be extracted
+        Affine result = new Affine();
+        for (Transform transform : shipToken.getTransforms()) {
+            result.append(transform);
+        }
+        shipLabel.setTranslateX(result.getTx());
+        shipLabel.setTranslateY(result.getTy());
+        shipLabel.getTransforms().add(new Translate(-width/2.0, 30.0, -1.0));
 
         world.getChildren().add(playableArea);
         world.getChildren().add(shipToken);
