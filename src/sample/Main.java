@@ -129,48 +129,47 @@ public class Main extends Application {
 
         world.setOnMousePressed(event -> {
             if (event.getTarget() instanceof ShipToken) {
-                ((Rectangle) event.getTarget()).setStroke(Color.YELLOW);
+                ((ShipToken) event.getTarget()).setSelected(true);
             }
         });
 
         world.setOnMouseReleased(event -> {
             if (event.getTarget() instanceof ShipToken) {
-                ((Rectangle) event.getTarget()).setStroke(Color.GRAY);
+                ((ShipToken) event.getTarget()).setSelected(false);
             }
         });
 
-        world.addEventHandler(MouseEvent.ANY, e -> {
-            if(e.getTarget() instanceof ShipToken ) {
-                System.out.println("Mouse Event = " + e.getEventType());
-                Node node = (Node) e.getTarget();
-                if (e.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-                    if (!node.translateXProperty().isBound()) {
-                        node.setEffect(new DropShadow(20, Color.WHITESMOKE));
+        world.addEventHandler(MouseEvent.ANY, event -> {
+            if(event.getTarget() instanceof ShipToken ) {
+                ShipToken shipToken1 = (ShipToken) event.getTarget();
+                if (event.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+                    if (!shipToken1.translateXProperty().isBound()) {
+                        shipToken.setHightlighted(true);
                     }
                 }
-                else if (e.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
-                    node.setEffect(null);
+                else if (event.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
+                    shipToken.setHightlighted(false);
                 }
-                else if (e.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                    x1 = e.getX();
-                    y1 = e.getY();
+                else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                    x1 = event.getX();
+                    y1 = event.getY();
                 }
-                else if (e.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+                else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
                     // translate node
-                    if (!node.translateXProperty().isBound()) {
-                        node.setTranslateX(e.getX() - x1 + node.getTranslateX());
+                    if (!shipToken1.translateXProperty().isBound()) {
+                        shipToken1.setTranslateX(event.getX() - x1 + shipToken1.getTranslateX());
                     }
-                    if (!node.translateYProperty().isBound()) {
-                        node.setTranslateY(e.getY() - y1 + node.getTranslateY());
+                    if (!shipToken1.translateYProperty().isBound()) {
+                        shipToken1.setTranslateY(event.getY() - y1 + shipToken1.getTranslateY());
                     }
-                    x1 = e.getX();
-                    y1 = e.getY();
+                    x1 = event.getX();
+                    y1 = event.getY();
                 }
-                else if (e.getButton() == MouseButton.SECONDARY) {
+                else if (event.getButton() == MouseButton.SECONDARY) {
                     // right-click over the path to move it to its original position
-                    if (!node.translateXProperty().isBound()) {
-                        node.setTranslateX(0);
-                        node.setTranslateY(0);
+                    if (!shipToken1.translateXProperty().isBound()) {
+                        shipToken1.setTranslateX(0);
+                        shipToken1.setTranslateY(0);
                     }
                 }
             }

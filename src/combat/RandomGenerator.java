@@ -28,4 +28,8 @@ public class RandomGenerator {
     public int nextInt(int bound) {
         return random.nextInt(bound);
     }
+
+    public long getSeed() {
+        return seed;
+    }
 }
