@@ -8,7 +8,9 @@ import java.util.Random;
  * Created by dsayles on 5/14/15.
  */
 public class Roller {
-    static Random rand = new Random(System.nanoTime());
+    static long seed = 544321211l;
+//    static Random rand = new Random(System.nanoTime());
+    static Random rand = new Random(seed);
     static RedDie redDie = new RedDie();
     static BlackDie blackDie = new BlackDie();
     static BlueDie blueDie = new BlueDie();
@@ -48,11 +50,11 @@ public class Roller {
 
 
         System.out.println("");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             System.out.println("XRed: "+rollXRedDie());
         }
         System.out.println("");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             System.out.println("XGrn: "+rollXGreenDie());
         }
     }
