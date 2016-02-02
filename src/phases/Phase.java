@@ -6,9 +6,11 @@ package phases;
 public enum Phase {
     PLANNING,
     //   choose maneuver
-    ACTIVATION,
+    DECLOAK,
     //   ships activate from lowest PS to highest
     //   decloak
+    ACTIVATION,
+    //   ships activate from lowest PS to highest
     //   pre-reveal
     //   reveal dial
     //   post-reveal
