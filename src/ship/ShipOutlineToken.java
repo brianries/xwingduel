@@ -19,8 +19,10 @@ public class ShipOutlineToken extends Rectangle {
         this.setHeight(templateWidth);
         this.setArcHeight(5);
         this.setArcWidth(5);
+        this.setFill(Color.rgb(0, 0, 0, 0));
         this.setStroke(Color.rgb(255, 255, 255, 0.5));
         this.setStrokeWidth(1.0);
+        this.getStrokeDashArray().addAll(3d, 3d);
     }
 
     public static double getShipTemplateWidth(ShipSize shipSize) {

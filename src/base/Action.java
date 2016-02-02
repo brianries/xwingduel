@@ -1,7 +1,14 @@
 package base;
 
 /**
- * Created by dsayles on 1/11/16.
+ * Created by dsayles on 12/19/15.
  */
-public interface Action {
+public enum Action {
+    BARREL_ROLL,
+    BOOST,
+    CLOAK,
+    EVADE,
+    FOCUS,
+    SLAM,
+    TARGET_LOCK;
 }

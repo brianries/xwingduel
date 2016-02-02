@@ -1,4 +1,4 @@
-package sample.phases;
+package phases;
 
 /**
  * Created by dsayles on 12/1/15.
@@ -6,9 +6,11 @@ package sample.phases;
 public enum Phase {
     PLANNING,
     //   choose maneuver
-    ACTIVATION,
+    DECLOAK,
     //   ships activate from lowest PS to highest
     //   decloak
+    ACTIVATION,
+    //   ships activate from lowest PS to highest
     //   pre-reveal
     //   reveal dial
     //   post-reveal
