@@ -9,5 +9,7 @@ public enum DieFace {
     HIT,
     CRITICAL,
     DOUBLE_HIT,
-    HIT_AND_CRIT;
+    HIT_AND_CRIT,
+    FOCUS,
+    EVADE;
 }

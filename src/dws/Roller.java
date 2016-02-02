@@ -1,5 +1,7 @@
 package dws;
 
+import com.oracle.javafx.jmx.SGMXBean;
+
 import java.util.Random;
 
 /**
@@ -10,6 +12,8 @@ public class Roller {
     static RedDie redDie = new RedDie();
     static BlackDie blackDie = new BlackDie();
     static BlueDie blueDie = new BlueDie();
+    static XRedDie xRedDie = new XRedDie();
+    static XGreenDie xGreenDie = new XGreenDie();
 
     public static DieFace rollRedDie() {
         return roll(redDie);
@@ -21,22 +25,35 @@ public class Roller {
         return roll(blackDie);
     }
 
+    public static DieFace rollXRedDie() { return roll(xRedDie);}
+    public static DieFace rollXGreenDie() { return roll(xGreenDie);}
+
     public static DieFace roll(Die die) {
         return die.result(rand.nextInt(die.faces.length));
     }
 
 
     public static void main(String[] args) {
+//        for (int i = 0; i < 3; i++) {
+//            System.out.println("RedD: "+rollRedDie());
+//        }
+//        System.out.println("");
+//        for (int i = 0; i < 3; i++) {
+//            System.out.println("BlkD: "+rollBlackDie());
+//        }
+//        System.out.println("");
+//        for (int i = 0; i < 3; i++) {
+//            System.out.println("BluD: "+rollBlueDie());
+//        }
+
+
+        System.out.println("");
         for (int i = 0; i < 3; i++) {
-            System.out.println("RedD: "+rollRedDie());
+            System.out.println("XRed: "+rollXRedDie());
         }
         System.out.println("");
         for (int i = 0; i < 3; i++) {
-            System.out.println("BlkD: "+rollBlackDie());
-        }
-        System.out.println("");
-        for (int i = 0; i < 3; i++) {
-            System.out.println("BluD: "+rollBlueDie());
+            System.out.println("XGrn: "+rollXGreenDie());
         }
     }
 }
