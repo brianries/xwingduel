@@ -3,17 +3,13 @@ package sample;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -30,6 +26,7 @@ import movement.MovementTemplate;
 import movement.MovementTemplateFactory;
 import movement.MovementType;
 import ship.*;
+import ship.ShipTokenPart;
 
 
 public class Main extends Application {
@@ -127,32 +124,19 @@ public class Main extends Application {
         world.getChildren().add(firingArc);
         world.getChildren().add(shipLabel);
 
-        world.setOnMousePressed(event -> {
-            if (event.getTarget() instanceof ShipToken) {
-                ((ShipToken) event.getTarget()).setSelected(true);
-            }
-        });
-
-        world.setOnMouseReleased(event -> {
-            if (event.getTarget() instanceof ShipToken) {
-                ((ShipToken) event.getTarget()).setSelected(false);
-            }
-        });
-
         world.addEventHandler(MouseEvent.ANY, event -> {
-            if(event.getTarget() instanceof ShipToken ) {
-                ShipToken shipToken1 = (ShipToken) event.getTarget();
+            if (ShipTokenPart.class.isAssignableFrom(event.getTarget().getClass())) {
+                ShipToken shipToken1 = ((ShipTokenPart)event.getTarget()).getShipToken();
                 if (event.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-                    if (!shipToken1.translateXProperty().isBound()) {
-                        shipToken.setHightlighted(true);
-                    }
+                    shipToken1.setHighlighted(true);
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
-                    shipToken.setHightlighted(false);
+                    shipToken1.setHighlighted(false);
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
                     x1 = event.getX();
                     y1 = event.getY();
+                    shipToken1.setSelected(true);
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
                     // translate node
@@ -165,6 +149,9 @@ public class Main extends Application {
                     x1 = event.getX();
                     y1 = event.getY();
                 }
+                else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+                    shipToken1.setSelected(false);
+                }
                 else if (event.getButton() == MouseButton.SECONDARY) {
                     // right-click over the path to move it to its original position
                     if (!shipToken1.translateXProperty().isBound()) {
@@ -172,6 +159,7 @@ public class Main extends Application {
                         shipToken1.setTranslateY(0);
                     }
                 }
+
             }
         });
         return world;
