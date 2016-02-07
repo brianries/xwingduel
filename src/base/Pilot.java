@@ -1,5 +1,7 @@
 package base;
 
+import expansions.core.abilities.PilotAbility;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +14,7 @@ public abstract class Pilot {
     protected Set<Ship> pilotableShips = new HashSet<>();
     protected Faction faction;
     protected int skill;
-    protected boolean unique;
+    protected PilotAbility pilotAbility;
 
     public Pilot() {
         initialize();
