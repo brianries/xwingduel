@@ -7,6 +7,8 @@ import state.BoardState;
 
 /**
  * Created by Brian on 2/1/2016.
+ *
+ * This will be the giant interface class that every upgrade card / pilot skill will have to implement.
  */
 public interface RuleException {
 

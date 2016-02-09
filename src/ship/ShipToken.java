@@ -16,7 +16,7 @@ public class ShipToken extends Group implements Selectable, Highlightable {
 
     public static double SMALL_SHIP_TEMPLATE_WIDTH_MM = 40.0;
     public static double LARGE_SHIP_TEMPLATE_WIDTH_MM = 80.0;
-    public static float OUTLINE_WIDTH_MM = 2.0f;
+    public static float OUTLINE_WIDTH_MM = 4.0f;
 
     PhongMaterial shipTextureMaterial = new PhongMaterial();
     PhongMaterial outlineMaterial = new PhongMaterial();
@@ -53,8 +53,7 @@ public class ShipToken extends Group implements Selectable, Highlightable {
 
         Image image = new Image("file:"+fileName);
         shipTextureMaterial.setDiffuseMap(image);
-        shipTextureMaterial.setDiffuseColor(Color.WHITE);
-        outlineMaterial.setDiffuseColor(Color.BLACK);
+        outlineMaterial.setDiffuseColor(Color.rgb(0,0,0,0));
 
         float shipWidth = (float)getShipTemplateWidth(shipSize);
 
@@ -80,7 +79,7 @@ public class ShipToken extends Group implements Selectable, Highlightable {
                 outlineMaterial.setDiffuseColor(Color.WHITE);
             }
             else {
-                outlineMaterial.setDiffuseColor(Color.BLACK);
+                outlineMaterial.setDiffuseColor(Color.rgb(0,0,0,0));
             }
         }
     }
