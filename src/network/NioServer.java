@@ -182,22 +182,24 @@ public class NioServer implements Runnable {
         synchronized (this.pendingData) {
             List queue = (List) this.pendingData.get(socketChannel);
 
-            // Write until there's not more data ...
-            while (!queue.isEmpty()) {
-                ByteBuffer buf = (ByteBuffer) queue.get(0);
-                socketChannel.write(buf);
-                if (buf.remaining() > 0) {
-                    // ... or the socket's buffer fills up
-                    break;
+            if (queue != null) {
+                // Write until there's not more data ...
+                while (!queue.isEmpty()) {
+                    ByteBuffer buf = (ByteBuffer) queue.get(0);
+                    socketChannel.write(buf);
+                    if (buf.remaining() > 0) {
+                        // ... or the socket's buffer fills up
+                        break;
+                    }
+                    queue.remove(0);
                 }
-                queue.remove(0);
-            }
 
-            if (queue.isEmpty()) {
-                // We wrote away all data, so we're no longer interested
-                // in writing on this socket. Switch back to waiting for
-                // data.
-                key.interestOps(SelectionKey.OP_READ);
+                if (queue.isEmpty()) {
+                    // We wrote away all data, so we're no longer interested
+                    // in writing on this socket. Switch back to waiting for
+                    // data.
+                    key.interestOps(SelectionKey.OP_READ);
+                }
             }
         }
     }
