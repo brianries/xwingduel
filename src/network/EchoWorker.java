@@ -23,12 +23,15 @@ public class EchoWorker implements Runnable {
     }
 
     public void processData(NioServer server, SocketChannel channel, byte[] data, int count) {
-        byte[] dataCopy = new byte[count];
-        System.arraycopy(data, 0, dataCopy, 0, count);
-        synchronized(queue) {
-            queue.add(new ServerDataEvent(server, channel, dataCopy));
-            queue.notify();
-        }
+        try {
+            SerializationUtil.PayLoad payLoad = SerializationUtil.deserialize(data);
+            byte[] dataCopy = SerializationUtil.serialize(payLoad.command, payLoad.object);
+            synchronized(queue) {
+                queue.add(new ServerDataEvent(server, channel, dataCopy));
+                queue.notify();
+            }
+            System.out.println();
+        } catch (Exception ignored) { }
     }
 
     public void run() {

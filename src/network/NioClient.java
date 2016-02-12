@@ -32,8 +32,8 @@ public class NioClient implements Runnable {
     // Maps a SocketChannel to a list of ByteBuffer instances
     private Map pendingData = new HashMap();
 
-    // Maps a SocketChannel to a RspHandler
-    private Map rspHandlers = Collections.synchronizedMap(new HashMap());
+    // Maps a SocketChannel to a ResponseHandler
+    private Map responseHandlers = Collections.synchronizedMap(new HashMap());
 
     private SocketChannel socket;
 
@@ -161,9 +161,9 @@ public class NioClient implements Runnable {
         }
     }
 
-    public void send(byte[] data, RspHandler handler) throws IOException {
+    public void send(byte[] data, ResponseHandler handler) throws IOException {
         // Register the response handler
-        this.rspHandlers.put(socket, handler);
+        this.responseHandlers.put(socket, handler);
 
         synchronized (pendingChanges) {
             // Indicate we want the interest ops set changed
@@ -220,7 +220,7 @@ public class NioClient implements Runnable {
         System.arraycopy(data, 0, rspData, 0, numRead);
 
         // Look up the handler for this channel
-        RspHandler handler = (RspHandler) this.rspHandlers.get(socketChannel);
+        ResponseHandler handler = (ResponseHandler) this.responseHandlers.get(socketChannel);
 
         // And pass the response to it
         handler.handleResponse(rspData);
@@ -230,44 +230,9 @@ public class NioClient implements Runnable {
         socket.close();
     }
 
-    private static class RspHandler {
-        String response;
 
-        public synchronized boolean handleResponse(byte[] rsp) {
-            this.response = new String(rsp);
-            this.notify();
-            return true;
-        }
-
-        public synchronized void waitForResponse() {
-            while(this.response == null) {
-                try {
-                    this.wait();
-                } catch (InterruptedException e) {
-                }
-            }
-
-            System.out.println(response);
-        }
+    public interface ResponseHandler {
+        boolean handleResponse(byte[] response);
     }
 
-    public static void main(String[] args) {
-        try {
-            NioClient client = new NioClient(InetAddress.getByName("localhost"), 9090);
-            Thread t = new Thread(client);
-            t.setDaemon(true);
-            t.start();
-            RspHandler handler = new RspHandler();
-            client.send("Hello World".getBytes(), handler);
-            handler.waitForResponse();
-
-            RspHandler handler2 = new RspHandler();
-            client.send("Hello World2".getBytes(), handler2);
-            handler2.waitForResponse();
-
-            client.shutdown();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
