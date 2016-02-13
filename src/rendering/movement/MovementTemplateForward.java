@@ -1,6 +1,8 @@
-package movement;
+package rendering.movement;
 
-import javafx.scene.transform.Transform;
+import movement.MovementDifficulty;
+import movement.MovementForwardType;
+import movement.MovementLength;
 
 /**
  * Created by Brian on 12/19/2015.

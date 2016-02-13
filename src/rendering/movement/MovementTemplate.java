@@ -1,11 +1,11 @@
-package movement;
+package rendering.movement;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
-
-import java.awt.geom.AffineTransform;
+import movement.MovementDifficulty;
+import movement.MovementType;
 
 /**
  * Created by Brian on 12/17/2015.

@@ -6,13 +6,11 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -22,16 +20,18 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import movement.MovementDifficulty;
-import movement.MovementTemplate;
-import movement.MovementTemplateFactory;
+import rendering.movement.MovementTemplate;
+import rendering.movement.MovementTemplateFactory;
 import movement.MovementType;
+import rendering.firingarc.FiringArc;
+import rendering.playarea.PlayArea;
+import rendering.ship.ShipOutlineToken;
+import rendering.ship.ShipToken;
 import ship.*;
-import ship.ShipTokenPart;
+import rendering.ship.ShipTokenPart;
 
 
 public class Main extends Application {
-
-    private static final double BATTLE_GROUND_WIDTH_MM = 914.4;
 
     private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
     private double x1, y1;
@@ -95,7 +95,7 @@ public class Main extends Application {
         firingArc.visibleProperty().bind(firingArcVisibile);
         firingArc.getTransforms().add(new Translate(0, 0, -0.05)); // make sure it appears over the rest of the items (and doesn't get Z-clipped)
 
-        Rectangle playableArea = getPlayableArea();
+        Rectangle playableArea = new PlayArea();
         playableArea.getTransforms().add(new Translate(0, 0, 0.01));
 
         Text shipLabel = new Text();
@@ -165,13 +165,7 @@ public class Main extends Application {
         return world;
     }
 
-    public Rectangle getPlayableArea() {
-        Rectangle rectangle = new Rectangle(BATTLE_GROUND_WIDTH_MM, BATTLE_GROUND_WIDTH_MM);
-        Image texture = new Image("file:resources/starfield.jpg");
-        ImagePattern imagePattern = new ImagePattern(texture);
-        rectangle.setFill(imagePattern);
-        return rectangle;
-    }
+
 
     private void buildCamera() {
         //root.getChildren().add(camera);
@@ -179,9 +173,9 @@ public class Main extends Application {
 
         camera.setNearClip(100);
         camera.setFarClip(1000.0);
-        camera.setTranslateX(BATTLE_GROUND_WIDTH_MM / 2.0);
-        camera.setTranslateY(BATTLE_GROUND_WIDTH_MM / 2.0);
-        camera.setTranslateZ(-(BATTLE_GROUND_WIDTH_MM / 2.0));
+        camera.setTranslateX(PlayArea.BATTLE_GROUND_WIDTH_MM / 2.0);
+        camera.setTranslateY(PlayArea.BATTLE_GROUND_WIDTH_MM / 2.0);
+        camera.setTranslateZ(-(PlayArea.BATTLE_GROUND_WIDTH_MM / 2.0));
         camera.setFieldOfView(90.0);
         camera.setVerticalFieldOfView(true);
 

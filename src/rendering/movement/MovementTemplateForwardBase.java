@@ -1,9 +1,12 @@
-package movement;
+package rendering.movement;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
+import movement.MovementDifficulty;
+import movement.MovementForwardType;
+import movement.MovementLength;
+import movement.MovementType;
 
 /**
  * Created by Brian on 12/19/2015.

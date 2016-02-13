@@ -1,4 +1,4 @@
-package ship;
+package rendering.ship;
 
 import javafx.scene.shape.Mesh;
 import javafx.scene.shape.MeshView;

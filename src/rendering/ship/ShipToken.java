@@ -1,4 +1,4 @@
-package ship;
+package rendering.ship;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Mesh;
 import javafx.scene.shape.TriangleMesh;
+import ship.ShipSize;
 import util.Highlightable;
 import util.Selectable;
 

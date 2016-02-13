@@ -1,6 +1,4 @@
-package ship;
-
-import ship.ShipToken;
+package rendering.ship;
 
 /**
  * Created by Brian on 2/2/2016.

@@ -1,7 +1,8 @@
-package ship;
+package rendering.ship;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import ship.ShipSize;
 
 /**
  * Created by Brian on 12/19/2015.

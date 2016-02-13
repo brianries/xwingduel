@@ -1,7 +1,10 @@
-package ship;
+package rendering.firingarc;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import rendering.ship.ShipToken;
+import ship.FiringArcRange;
+import ship.ShipSize;
 
 /**
  * Created by Brian on 12/17/2015.

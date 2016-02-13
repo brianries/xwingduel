@@ -1,4 +1,4 @@
-package movement;
+package rendering.movement;
 
 import javafx.scene.transform.Transform;
 

@@ -1,7 +1,9 @@
-package movement;
+package rendering.movement;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import movement.MovementDifficulty;
+import movement.MovementLength;
+import movement.MovementTurnDirection;
+import movement.MovementType;
 
 /**
  * Created by Brian on 12/5/2015.
