@@ -14,13 +14,13 @@ public class NightBeast extends Pilot implements Unique {
     }
     @Override
     public void initialize() {
-        name = "Academy Pilot";
-        pointCost = 12;
+        name = "Night Beast";
+        pointCost = 15;
         pilotableShips.add(new TieFighter());
         pilotableShips.forEach(
             ship -> {
                 ship.setPilot(this);
-                skill = 1;
+                skill = 5;
             }
         );
     }

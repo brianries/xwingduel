@@ -16,13 +16,13 @@ public class DarkCurse extends Pilot implements Unique {
 
     @Override
     public void initialize() {
-        name = "Academy Pilot";
-        pointCost = 12;
+        name = "Dark Curse";
+        pointCost = 16;
         pilotableShips.add(new TieFighter());
         pilotableShips.forEach(
             ship -> {
                 ship.setPilot(this);
-                skill = 1;
+                skill = 6;
             }
         );
     }

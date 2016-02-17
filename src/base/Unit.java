@@ -25,4 +25,7 @@ public class Unit {
     public Faction getFaction() {
         return faction;
     }
+    public int getPilotSkill() {
+        return this.getPilotSkill();
+    }
 }

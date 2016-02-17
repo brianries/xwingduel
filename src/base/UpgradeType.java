@@ -9,7 +9,7 @@ public enum UpgradeType {
     CANNON,
     CARGO,
     CREW,
-    ELITE,
+    ELITE_PILOT_TALENT,
     HARDPOINT,
     ILLICIT,
     MISSILE,
@@ -19,6 +19,6 @@ public enum UpgradeType {
     TEAM,
     TECH,
     TITLE,
-    TORPEDO,
+    TORPEDOES,
     TURRET;
 }

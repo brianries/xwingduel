@@ -10,13 +10,13 @@ public class ObsidianSquadronPilot extends Pilot {
 
     @Override
     public void initialize() {
-        name = "Academy Pilot";
-        pointCost = 12;
+        name = "Obsidian Squadron Pilot";
+        pointCost = 13;
         pilotableShips.add(new TieFighter());
         pilotableShips.forEach(
             ship -> {
                 ship.setPilot(this);
-                skill = 1;
+                skill = 3;
             }
         );
     }
