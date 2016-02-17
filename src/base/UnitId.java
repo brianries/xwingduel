@@ -9,7 +9,7 @@ public class UnitId implements Comparable<UnitId> {
     Faction faction;
     Unit unit;
     final int uniqueId;
-    private int nextAvailableId = 0;
+    private static int nextAvailableId = 0;
 
     public static UnitId createUnitId(Unit unit) {
         return new UnitId(unit);

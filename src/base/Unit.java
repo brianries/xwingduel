@@ -22,10 +22,13 @@ public class Unit {
         return actionPool.contains(action);
     }
 
+    public UnitId getUnitId() { return unitId; }
     public Faction getFaction() {
         return faction;
     }
     public int getPilotSkill() {
-        return this.getPilotSkill();
+        return this.pilot.skill;
     }
+    public Pilot getPilot() { return this.pilot; }
+    public Ship getShip() { return this.ship; }
 }

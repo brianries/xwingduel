@@ -1,5 +1,10 @@
 package base;
 
+import expansions.core.pilots.AcademyPilot;
+import expansions.core.pilots.RookiePilot;
+import expansions.core.ships.TieFighter;
+import expansions.core.ships.XWing;
+
 import java.util.*;
 
 /**
@@ -7,8 +12,19 @@ import java.util.*;
  */
 public class Squadron {
     boolean hasInitiative = false;
+    Faction faction;
     Map<UnitId, Unit> squadron = new HashMap<>();
     Set<UnitId> unitIdSetByPilotSkill;
+
+
+    public Squadron(Faction faction) {
+        this.faction = faction;
+    }
+
+    public void addUnit(Unit unit) {
+        squadron.put(unit.getUnitId(), unit);
+    }
+
 
     public void setPilotSkillOrder() {
         SortedSet<UnitId> sortedUnitIdSet = new TreeSet<UnitId>();
@@ -40,6 +56,28 @@ public class Squadron {
     }
 
 
+    public void showUnits() {
+        for (Map.Entry<UnitId, Unit> entry : squadron.entrySet()) {
+            System.out.println(entry.getKey().uniqueId + " " + entry.getValue().getPilotSkill() + " "
+                + entry.getValue().getPilot().name + " " + entry.getValue().getShip().name
+            );
+        }
+    }
+
+    public static void main(String[] args) {
+        Squadron rebels = new Squadron(Faction.REBEL_ALLIANCE);
+        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new RookiePilot(), new XWing()));
+        rebels.setPilotSkillOrder();
+        System.out.println("Rebels:");
+        rebels.showUnits();
+
+        Squadron imperial = new Squadron(Faction.GALACTIC_EMPIRE);
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
+        imperial.setPilotSkillOrder();
+        System.out.println("\nEmpire");
+        imperial.showUnits();
 
 
+    }
 }

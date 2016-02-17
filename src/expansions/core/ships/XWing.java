@@ -15,6 +15,7 @@ public class XWing extends Ship {
         setHull(3);
         setShields(2);
         setActions(EnumSet.of(Actions.FOCUS, Actions.TARGET_LOCK));
+        name = "T-65 X-Wing";
     }
 
 
