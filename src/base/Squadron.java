@@ -4,6 +4,7 @@ import expansions.core.pilots.AcademyPilot;
 import expansions.core.pilots.RookiePilot;
 import expansions.core.ships.TieFighter;
 import expansions.core.ships.XWing;
+import javafx.collections.transformation.SortedList;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class Squadron {
     boolean hasInitiative = false;
     Faction faction;
     Map<UnitId, Unit> squadron = new HashMap<>();
-    Set<UnitId> unitIdSetByPilotSkill;
+    List<UnitId> unitIdSetByPilotSkill;
 
 
     public Squadron(Faction faction) {
@@ -27,30 +28,43 @@ public class Squadron {
 
 
     public void setPilotSkillOrder() {
-        SortedSet<UnitId> sortedUnitIdSet = new TreeSet<UnitId>();
-        sortedUnitIdSet.addAll(squadron.keySet());
-        unitIdSetByPilotSkill = sortedUnitIdSet;
+        List<UnitId> sortedUnitIdList = new ArrayList<>();
+        sortedUnitIdList.addAll(squadron.keySet());
+        Collections.sort(sortedUnitIdList);
+        unitIdSetByPilotSkill = sortedUnitIdList;
     }
 
+    public List<UnitId>[] pilotSkillOrderAscending(Squadron altSquadron) {
+        List<UnitId>[] fullListAscending = new ArrayList[13];
+        for (int i = 0; i <= 12; i++) {
+            fullListAscending[i] = new ArrayList<>();
+        }
 
-    public List<List<Unit>> pilotSkillOrderAscending(Squadron altSquadron) {
-        List<List<Unit>> fullListAscending = new ArrayList<>();
+        List<UnitId> initiativeSquadron = (hasInitiative) ? unitIdSetByPilotSkill : altSquadron.unitIdSetByPilotSkill;
+        List<UnitId> nonInitiativeSquadron = (hasInitiative) ? altSquadron.unitIdSetByPilotSkill : unitIdSetByPilotSkill;
 
-        Set<Map.Entry<UnitId, Unit>> initiativeSquadronSet;
-        Set<Map.Entry<UnitId, Unit>> nonInitiativeSquadronSet;
-
-        initiativeSquadronSet = hasInitiative ? squadron.entrySet() : altSquadron.squadron.entrySet();
-        nonInitiativeSquadronSet = hasInitiative ? altSquadron.squadron.entrySet() : squadron.entrySet();
-
-
-
+        for (int i = 0; i <= 12; i++) {
+            for (UnitId uid : initiativeSquadron) {
+                if (uid.unit.getPilotSkill() == i) { fullListAscending[i].add(uid); }
+            }
+            for (UnitId uid : nonInitiativeSquadron) {
+                if (uid.unit.getPilotSkill() == i) { fullListAscending[i].add(uid); }
+            }
+        }
         return fullListAscending;
     }
 
-    public List<List<Unit>> pilotSkillOrderDescending(Squadron altSquadron) {
-        List<List<Unit>> fullListDescending = new ArrayList<>();
+    public List<UnitId>[] pilotSkillOrderDescending(Squadron altSquadron) {
+        List<UnitId>[] fullListDescending = new ArrayList[13];
+        for (int i = 0; i <= 12; i++) {
+            fullListDescending[i] = new ArrayList<>();
+        }
 
+        List<UnitId>[] fullListAscending = pilotSkillOrderAscending(altSquadron);
 
+        for (int i = fullListAscending.length-1, j=0; i >= 0; i--, j++) {
+            fullListDescending[j] = fullListAscending[i];
+        }
 
         return fullListDescending;
     }
@@ -61,6 +75,17 @@ public class Squadron {
             System.out.println(entry.getKey().uniqueId + " " + entry.getValue().getPilotSkill() + " "
                 + entry.getValue().getPilot().name + " " + entry.getValue().getShip().name
             );
+        }
+    }
+
+    public static void showUnits(List<UnitId>[] list) {
+        int i = 0;
+        for (List<UnitId> listu : list) {
+            System.out.println("PS: "+ i);
+            for (UnitId uid : listu) {
+                System.out.println("\t"+uid+" "+uid.unit.getPilotSkill()+" "+uid.unit.getPilot().name+" "+uid.unit.getShip().name);
+            }
+            i++;
         }
     }
 
@@ -78,6 +103,12 @@ public class Squadron {
         System.out.println("\nEmpire");
         imperial.showUnits();
 
+        List<UnitId>[] ascending = rebels.pilotSkillOrderAscending(imperial);
+        System.out.println("\nAscending");
+        showUnits(ascending);
 
+        List<UnitId>[] descending = imperial.pilotSkillOrderDescending(rebels);
+        System.out.println("\nDescending");
+        showUnits(descending);
     }
 }

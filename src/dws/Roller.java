@@ -6,9 +6,8 @@ import java.util.Random;
  * Created by dsayles on 5/14/15.
  */
 public class Roller {
-    static long seed = 544321211l;
+    static long seed = 544321211l; static Random rand = new Random(seed);
 //    static Random rand = new Random(System.nanoTime());
-    static Random rand = new Random(seed);
     static RedDie redDie = new RedDie();
     static BlackDie blackDie = new BlackDie();
     static BlueDie blueDie = new BlueDie();
