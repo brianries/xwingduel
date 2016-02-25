@@ -1,5 +1,8 @@
 package base;
 
+import phases.Phase;
+import phases.PhaseStateManager;
+
 /**
  * Created by dsayles on 2/7/16.
  */
@@ -17,6 +20,15 @@ public class Unit {
         this.pilot = pilot;
         this.ship = ship;
         this.unitId = UnitRegistry.registerUnit(this);
+    }
+
+    public void registerPhases() {
+        PhaseStateManager.registerUnitIdForPhase(Phase.PLANNING, unitId);
+        PhaseStateManager.registerUnitIdForPhase(Phase.ACTIVATION, unitId);
+        PhaseStateManager.registerUnitIdForPhase(Phase.COMBAT, unitId);
+        PhaseStateManager.registerUnitIdForPhase(Phase.END, unitId);
+
+
     }
 
     public boolean containsAction(Action action) {

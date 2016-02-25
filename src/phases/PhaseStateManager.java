@@ -4,13 +4,21 @@ import base.Squadron;
 import base.UnitId;
 import events.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dsayles on 2/24/16.
  */
 public class PhaseStateManager {
+    static Map<Phase, Set<UnitId>> phaseSetMap = new HashMap<>();
+
+    static {
+        for (Phase phase : Phase.values()) {
+            phaseSetMap.put(phase, new HashSet<>());
+        }
+    }
+
+
     public enum Side {
         LEFT, RIGHT
     }
@@ -62,7 +70,9 @@ public class PhaseStateManager {
                         new PlanningPhaseEvent(uid);
                         break;
                     case DECLOAK:
-                        new DecloakPhaseEvent(uid);
+                        if (phaseSetMap.get(Phase.DECLOAK).contains(uid)) {
+                            new DecloakPhaseEvent(uid);
+                        }
                         break;
                     case ACTIVATION:
                         new ActivationPhaseEvent(uid);
@@ -73,8 +83,59 @@ public class PhaseStateManager {
                     case END:
                         new EndPhaseEvent(uid);
                         break;
+                    case PRE_REVEAL_MANEUVER:
+                        if (phaseSetMap.get(Phase.PRE_REVEAL_MANEUVER).contains(uid)) {
+                            new PreRevealManeuverEvent(uid);
+                        }
+                        break;
+                    case PRE_MANEUVER:
+                        if (phaseSetMap.get(Phase.PRE_MANEUVER).contains(uid)) {
+                            new PreManeuverEvent(uid);
+                        }
+                        break;
+                    case PRE_SELECT_ACTION:
+                        if (phaseSetMap.get(Phase.PRE_SELECT_ACTION).contains(uid)) {
+                            new PreSelectActionEvent(uid);
+                        }
+                        break;
+                    case REVEAL_MANEUVER:
+                        if (phaseSetMap.get(Phase.REVEAL_MANEUVER).contains(uid)) {
+                            new RevealManeuverEvent(uid);
+                        }
+                        break;
+                    case MANEUVER:
+                        if (phaseSetMap.get(Phase.MANEUVER).contains(uid)) {
+                            new ManeuverEvent(uid);
+                        }
+                        break;
+                    case SELECT_ACTION:
+                        if (phaseSetMap.get(Phase.SELECT_ACTION).contains(uid)) {
+                            new SelectActionEvent(uid);
+                        }
+                        break;
+                    case POST_REVEAL_MANEUVER:
+                        if (phaseSetMap.get(Phase.POST_REVEAL_MANEUVER).contains(uid)) {
+                            new PostRevealManeuverEvent(uid);
+                        }
+                        break;
+                    case POST_MANEUVER:
+                        if (phaseSetMap.get(Phase.POST_MANEUVER).contains(uid)) {
+                            new PreManeuverEvent(uid);
+                        }
+                        break;
+                    case POST_SELECT_ACTION:
+                        if (phaseSetMap.get(Phase.POST_SELECT_ACTION).contains(uid)) {
+                            new PostSelectActionEvent(uid);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
+    }
+
+    public static void registerUnitIdForPhase(Phase phase, UnitId uid) {
+        phaseSetMap.get(phase).add(uid);
     }
 }

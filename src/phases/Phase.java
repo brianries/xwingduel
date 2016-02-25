@@ -12,14 +12,23 @@ public enum Phase {
     ACTIVATION(),
     //   ships activate from lowest PS to highest
     //   pre-reveal
+    PRE_REVEAL_MANEUVER(),
     //   reveal dial
+    REVEAL_MANEUVER(),
     //   post-reveal
+    POST_REVEAL_MANEUVER(),
     //   pre-maneuver
+    PRE_MANEUVER(),
     //   maneuver
+    MANEUVER(),
     //   post-maneuver
+    POST_MANEUVER(),
     //   pre-action
+    PRE_SELECT_ACTION(),
     //   action
+    SELECT_ACTION(),
     //   post-action
+    POST_SELECT_ACTION(),
     //
     COMBAT(),
     //   ships fire from highest PS to lowest
