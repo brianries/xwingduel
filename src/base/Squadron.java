@@ -1,10 +1,8 @@
 package base;
 
-import expansions.core.pilots.AcademyPilot;
-import expansions.core.pilots.RookiePilot;
+import expansions.core.pilots.*;
 import expansions.core.ships.TieFighter;
 import expansions.core.ships.XWing;
-import javafx.collections.transformation.SortedList;
 
 import java.util.*;
 
@@ -26,6 +24,7 @@ public class Squadron {
         squadron.put(unit.getUnitId(), unit);
     }
 
+    public void toggleHasInitiative() {hasInitiative=!hasInitiative;}
 
     public void setPilotSkillOrder() {
         List<UnitId> sortedUnitIdList = new ArrayList<>();
@@ -92,6 +91,9 @@ public class Squadron {
     public static void main(String[] args) {
         Squadron rebels = new Squadron(Faction.REBEL_ALLIANCE);
         rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new RookiePilot(), new XWing()));
+        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new BiggsDarklighter(), new XWing()));
+        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new LukeSkywalker(), new XWing()));
+//        rebels.toggleHasInitiative();
         rebels.setPilotSkillOrder();
         System.out.println("Rebels:");
         rebels.showUnits();
@@ -99,6 +101,11 @@ public class Squadron {
         Squadron imperial = new Squadron(Faction.GALACTIC_EMPIRE);
         imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
         imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new DarkCurse(), new TieFighter()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new NightBeast(), new TieFighter()));
+        imperial.toggleHasInitiative();
         imperial.setPilotSkillOrder();
         System.out.println("\nEmpire");
         imperial.showUnits();
