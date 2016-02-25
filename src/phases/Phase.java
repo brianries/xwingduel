@@ -4,12 +4,12 @@ package phases;
  * Created by dsayles on 12/1/15.
  */
 public enum Phase {
-    PLANNING,
+    PLANNING(),
     //   choose maneuver
-    DECLOAK,
+    DECLOAK(),
     //   ships activate from lowest PS to highest
     //   decloak
-    ACTIVATION,
+    ACTIVATION(),
     //   ships activate from lowest PS to highest
     //   pre-reveal
     //   reveal dial
@@ -21,7 +21,7 @@ public enum Phase {
     //   action
     //   post-action
     //
-    COMBAT,
+    COMBAT(),
     //   ships fire from highest PS to lowest
 //    Declare Target
     //   choose target
@@ -50,7 +50,9 @@ public enum Phase {
     //   suffer damage/crits to shields
     //   suffer damage to hull
     //   suffer crits to hull
-    END
+    END()
     // clear unused tokens as needed
     ;
+
+    private Phase(){}
 }

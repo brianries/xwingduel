@@ -4,6 +4,7 @@ package base;
  * Created by dsayles on 2/7/16.
  */
 public class Unit {
+    private boolean active=true;
     private UnitId unitId;
     private Faction faction;
     private Pilot pilot;
@@ -31,4 +32,7 @@ public class Unit {
     }
     public Pilot getPilot() { return this.pilot; }
     public Ship getShip() { return this.ship; }
+    public void toggleActive() { active = !active; }
+    public boolean isActive() { return active; }
+    public void addAction(Action action) { actionPool.addAction(action); }
 }

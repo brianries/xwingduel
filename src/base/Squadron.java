@@ -25,7 +25,7 @@ public class Squadron {
     }
 
     public void toggleHasInitiative() {hasInitiative=!hasInitiative;}
-
+    public boolean hasInitiative() {return hasInitiative;}
     public void setPilotSkillOrder() {
         List<UnitId> sortedUnitIdList = new ArrayList<>();
         sortedUnitIdList.addAll(squadron.keySet());
@@ -44,10 +44,10 @@ public class Squadron {
 
         for (int i = 0; i <= 12; i++) {
             for (UnitId uid : initiativeSquadron) {
-                if (uid.unit.getPilotSkill() == i) { fullListAscending[i].add(uid); }
+                if (uid.unit.getPilotSkill() == i && uid.unit.isActive()) { fullListAscending[i].add(uid); }
             }
             for (UnitId uid : nonInitiativeSquadron) {
-                if (uid.unit.getPilotSkill() == i) { fullListAscending[i].add(uid); }
+                if (uid.unit.getPilotSkill() == i && uid.unit.isActive()) { fullListAscending[i].add(uid); }
             }
         }
         return fullListAscending;
@@ -72,7 +72,8 @@ public class Squadron {
     public void showUnits() {
         for (Map.Entry<UnitId, Unit> entry : squadron.entrySet()) {
             System.out.println(entry.getKey().uniqueId + " " + entry.getValue().getPilotSkill() + " "
-                + entry.getValue().getPilot().name + " " + entry.getValue().getShip().name
+                + entry.getValue().getPilot().name + " " + entry.getValue().getShip().name + " "
+                + entry.getKey()
             );
         }
     }
@@ -91,10 +92,12 @@ public class Squadron {
     public static void main(String[] args) {
         Squadron rebels = new Squadron(Faction.REBEL_ALLIANCE);
         rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new RookiePilot(), new XWing()));
-        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new BiggsDarklighter(), new XWing()));
+        Unit test = new Unit(Faction.REBEL_ALLIANCE, new BiggsDarklighter(), new XWing());
+        rebels.addUnit(test);
         rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new LukeSkywalker(), new XWing()));
 //        rebels.toggleHasInitiative();
         rebels.setPilotSkillOrder();
+
         System.out.println("Rebels:");
         rebels.showUnits();
 
@@ -113,6 +116,9 @@ public class Squadron {
         List<UnitId>[] ascending = rebels.pilotSkillOrderAscending(imperial);
         System.out.println("\nAscending");
         showUnits(ascending);
+
+        System.out.println("Make Biggs inactive");
+        test.toggleActive();
 
         List<UnitId>[] descending = imperial.pilotSkillOrderDescending(rebels);
         System.out.println("\nDescending");

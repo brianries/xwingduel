@@ -36,4 +36,7 @@ public abstract class Ship {
     public int getShields() { return this.shields; }
 
     public void setActions(EnumSet<Actions> actions) { this.actions = actions; }
+    public boolean hasAction(Actions actions) {
+        return this.actions.contains(actions);
+    }
 }

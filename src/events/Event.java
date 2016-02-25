@@ -1,5 +1,7 @@
 package events;
 
+import base.UnitId;
+
 /**
  * Created by dsayles on 2/8/16.
  *
@@ -7,5 +9,5 @@ package events;
  *
  */
 public class Event {
-
+    public Event(UnitId uid) {}
 }
