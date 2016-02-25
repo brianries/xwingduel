@@ -33,6 +33,22 @@ public class Squadron {
         unitIdSetByPilotSkill = sortedUnitIdList;
     }
 
+
+    public boolean containsUnitId(UnitId uid) {
+        return squadron.containsKey(uid);
+    }
+
+    public Set<UnitId> getActiveUnitIdList() {
+        Set<UnitId> activeUnits = new HashSet<>();
+
+        for (UnitId uid : squadron.keySet()) {
+            if (uid.unit.isActive()) {
+                activeUnits.add(uid);
+            }
+        }
+        return activeUnits;
+    }
+
     public List<UnitId>[] pilotSkillOrderAscending(Squadron altSquadron) {
         List<UnitId>[] fullListAscending = new ArrayList[13];
         for (int i = 0; i <= 12; i++) {

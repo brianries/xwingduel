@@ -10,7 +10,7 @@ public class Unit {
     private Pilot pilot;
     private Ship ship;
 
-    private ActionPool actionPool;
+    private ActionPool actionPool = new ActionPool();
 
     public Unit(Faction faction, Pilot pilot, Ship ship) {
         this.faction = faction;

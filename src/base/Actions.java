@@ -7,6 +7,7 @@ import base.actions.*;
  * Created by dsayles on 12/19/15.
  */
 public enum Actions implements Action {
+    NO_ACTION(null),
     BARREL_ROLL(new BarrelRoll()),
     EVADE(new Evade()),
     FOCUS(new Focus()),

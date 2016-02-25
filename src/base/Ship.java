@@ -39,4 +39,5 @@ public abstract class Ship {
     public boolean hasAction(Actions actions) {
         return this.actions.contains(actions);
     }
+    public EnumSet<Actions> getActions() { return this.actions; }
 }

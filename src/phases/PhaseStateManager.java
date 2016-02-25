@@ -5,6 +5,7 @@ import base.UnitId;
 import events.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dsayles on 2/24/16.
@@ -33,6 +34,13 @@ public class PhaseStateManager {
             case LEFT: leftSquadron=squadron; break;
             case RIGHT: rightSquadron=squadron; break;
         }
+    }
+
+    public static Set<UnitId> getEnemySquadSet(UnitId uid) {
+        if (leftSquadron.containsUnitId(uid)) {
+            return rightSquadron.getActiveUnitIdList();
+        }
+        return leftSquadron.getActiveUnitIdList();
     }
 
     public static void cyclePhase() {

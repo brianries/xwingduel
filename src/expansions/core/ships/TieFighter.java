@@ -14,7 +14,7 @@ public class TieFighter extends Ship {
         setAgility(3);
         setHull(3);
         setShields(0);
-        setActions(EnumSet.of(Actions.BARREL_ROLL, Actions.EVADE, Actions.FOCUS));
+        setActions(EnumSet.of(Actions.NO_ACTION, Actions.BARREL_ROLL, Actions.EVADE, Actions.FOCUS));
 //        setUpgrades(null);
         name = "Tie/ln";
     }
