@@ -3,6 +3,9 @@ package base;
 import phases.Phase;
 import phases.PhaseStateManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by dsayles on 2/7/16.
  */
@@ -18,6 +21,7 @@ public class Unit {
     private int shields;
 
     private ActionPool actionPool = new ActionPool();
+    private List<Upgrade> upgrades = new ArrayList<>();
 
     public Unit(Faction faction, Pilot pilot, Ship ship) {
         this.faction = faction;
@@ -33,8 +37,9 @@ public class Unit {
         PhaseStateManager.registerUnitIdForPhase(Phase.ACTIVATION, unitId);
         PhaseStateManager.registerUnitIdForPhase(Phase.COMBAT, unitId);
         PhaseStateManager.registerUnitIdForPhase(Phase.END, unitId);
-
-
+        for (Upgrade upgrade : upgrades) {
+            upgrade.registerPhase(unitId);
+        }
     }
 
     public boolean containsAction(Action action) {

@@ -140,4 +140,10 @@ public class Squadron {
         System.out.println("\nDescending");
         showUnits(descending);
     }
+
+    public void registerPhases() {
+        for (Map.Entry<UnitId, Unit> entry : squadron.entrySet()) {
+            entry.getValue().registerPhases();
+        }
+    }
 }

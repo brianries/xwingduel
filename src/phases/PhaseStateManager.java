@@ -35,6 +35,7 @@ public class PhaseStateManager {
         } else {
             setSquadron(squadron, Side.RIGHT);
         }
+        squadron.registerPhases();
     }
 
     public static void setSquadron(Squadron squadron, Side side) {
