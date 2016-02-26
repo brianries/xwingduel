@@ -62,6 +62,10 @@ public class PhaseStateManager {
         processPhase(Phase.END, ascending);
     }
 
+    public static boolean phaseContainsUnitId(Phase phase, UnitId unitId) {
+        return phaseSetMap.get(phase).contains(unitId);
+    }
+
     public static void processPhase(Phase phase, List<UnitId>[] unitIds) {
         for (List<UnitId> units: unitIds) {
             for (UnitId uid: units) {
