@@ -1,11 +1,12 @@
 package base;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 
 /**
  * Created by dsayles on 12/19/15.
  */
-public abstract class Ship {
+public abstract class Ship implements Serializable {
     public String name;
     Pilot pilot;
     Faction faction;

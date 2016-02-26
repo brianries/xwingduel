@@ -35,6 +35,7 @@ public class Main extends Application {
     private BooleanProperty firingArcVisibile = new SimpleBooleanProperty(true);
     private double x1, y1;
 
+    @Deprecated
     public void populateBoardScene(BoardScene boardScene) throws Exception {
         final MovementTemplateFactory factory = new MovementTemplateFactory();
         final ShipToken shipToken = new ShipToken("resources/ywing_rotated.jpg", ShipSize.SMALL);

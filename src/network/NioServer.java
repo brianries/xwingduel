@@ -37,13 +37,17 @@ public class NioServer implements Runnable {
     // Maps a SocketChannel to a list of ByteBuffer instances
     private Map pendingData = new HashMap();
 
-    private EchoWorker worker;
+    private IncomingDataProcessor incomingDataProcessor;
 
-    public NioServer(InetAddress hostAddress, int port, EchoWorker worker) throws IOException {
+    public interface IncomingDataProcessor {
+        void processData(SocketChannel sourceChannel, byte[] data, int count);
+    }
+
+    public NioServer(InetAddress hostAddress, int port, IncomingDataProcessor dataProcessor) throws IOException {
         this.hostAddress = hostAddress;
         this.port = port;
         this.selector = this.initSelector();
-        this.worker = worker;
+        this.incomingDataProcessor = dataProcessor;
     }
 
     private Selector initSelector() throws IOException {
@@ -153,7 +157,7 @@ public class NioServer implements Runnable {
         }
 
         // Hand the data off to our worker thread
-        this.worker.processData(this, socketChannel, this.readBuffer.array(), numRead);
+        this.incomingDataProcessor.processData(socketChannel, this.readBuffer.array(), numRead);
     }
 
     public void send(SocketChannel socket, byte[] data) {
@@ -201,16 +205,6 @@ public class NioServer implements Runnable {
                     key.interestOps(SelectionKey.OP_READ);
                 }
             }
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            EchoWorker worker = new EchoWorker();
-            new Thread(worker).start();
-            new Thread(new NioServer(null, 9090, worker)).start();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

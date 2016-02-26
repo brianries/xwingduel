@@ -77,4 +77,4 @@ public class GameBoardPane extends StackPane {
     public BoardScene getBoardScene() {
         return boardScene;
     }
-}
+ }

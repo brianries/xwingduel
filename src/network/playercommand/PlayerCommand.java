@@ -1,10 +1,11 @@
-package network;
+package network.playercommand;
 
 /**
  * Created by Brian on 2/11/2016.
  * Enumeration for the type of command being sent to the server / clients
  */
-public enum Command {
+public enum PlayerCommand {
+    ADD_SHIP,
     SHIP_PLACEMENT,
     DECLOAK,
     MANEUVER,

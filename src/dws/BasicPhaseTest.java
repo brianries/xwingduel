@@ -14,7 +14,7 @@ import phases.PhaseStateManager;
 public class BasicPhaseTest {
     public static void main(String[] args) {
         Squadron rebels = new Squadron(Faction.REBEL_ALLIANCE);
-        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new RookiePilot(), new XWing()));
+        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new XWing(), new RookiePilot()));
 //        Unit test = new Unit(Faction.REBEL_ALLIANCE, new BiggsDarklighter(), new XWing());
 //        rebels.addUnit(test);
 //        rebels.addUnit(new Unit(Faction.REBEL_ALLIANCE, new LukeSkywalker(), new XWing()));
@@ -25,8 +25,8 @@ public class BasicPhaseTest {
         rebels.showUnits();
 
         Squadron imperial = new Squadron(Faction.GALACTIC_EMPIRE);
-        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
-        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
+        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE,  new TieFighter(), new AcademyPilot()));
 //        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
 //        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new AcademyPilot(), new TieFighter()));
 //        imperial.addUnit(new Unit(Faction.GALACTIC_EMPIRE, new DarkCurse(), new TieFighter()));

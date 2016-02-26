@@ -1,5 +1,8 @@
 package network;
 
+import network.playercommand.PlayerCommand;
+import network.playercommand.RollDice;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -60,7 +63,7 @@ public class GameClient {
     }
 
 
-    public void sendCommand(Command command, Object payload) throws IOException {
+    public void sendCommand(PlayerCommand command, Object payload) throws IOException {
         byte[] bytes = SerializationUtil.serialize(command, payload);
         SerializedResponseHandler handler = new SerializedResponseHandler();
         client.send(bytes, handler);
@@ -75,7 +78,7 @@ public class GameClient {
     public static void main(String[] args) {
         try {
             GameClient client = new GameClient();
-            client.sendCommand(Command.ROLL_DICE, new RollDiceCommand(2));
+            client.sendCommand(PlayerCommand.ROLL_DICE, new RollDice(2));
             client.shutdown();
         } catch (Exception e) {
             e.printStackTrace();

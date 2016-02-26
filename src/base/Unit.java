@@ -13,8 +13,8 @@ public class Unit {
     private boolean active=true;
     private UnitId unitId;
     private Faction faction;
-    private Pilot pilot;
     private Ship ship;
+    private Pilot pilot;
 
     private int agility;
     private int hull;
@@ -23,10 +23,10 @@ public class Unit {
     private ActionPool actionPool = new ActionPool();
     private List<Upgrade> upgrades = new ArrayList<>();
 
-    public Unit(Faction faction, Pilot pilot, Ship ship) {
+    public Unit(Faction faction, Ship ship, Pilot pilot) {
         this.faction = faction;
-        this.pilot = pilot;
         this.ship = ship;
+        this.pilot = pilot;
         this.unitId = UnitRegistry.registerUnit(this);
         this.hull = ship.getHull();
         this.shields = ship.getShields();
@@ -46,18 +46,17 @@ public class Unit {
         return actionPool.contains(action);
     }
 
+    public void addAction(Action action) {
+        actionPool.addAction(action);
+    }
+
+    public Faction getFaction() { return faction; }
     public UnitId getUnitId() { return unitId; }
-    public Faction getFaction() {
-        return faction;
-    }
-    public int getPilotSkill() {
-        return this.pilot.skill;
-    }
+    public int getPilotSkill() { return this.pilot.skill; }
     public Pilot getPilot() { return this.pilot; }
     public Ship getShip() { return this.ship; }
     public void toggleActive() { active = !active; }
     public boolean isActive() { return active; }
-    public void addAction(Action action) { actionPool.addAction(action); }
     public int getHull() { return this.hull; }
     public int getShields() { return this.shields; }
     public void incrementShields() { this.shields++; }
