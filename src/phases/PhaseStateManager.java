@@ -55,6 +55,8 @@ public class PhaseStateManager {
         List<UnitId>[] ascending = leftSquadron.pilotSkillOrderAscending(rightSquadron);
         List<UnitId>[] descending = leftSquadron.pilotSkillOrderDescending(rightSquadron);
 
+        // Basic phases, that all ships use...
+        // sub phases are in each of them
         processPhase(Phase.PLANNING, ascending);
         processPhase(Phase.DECLOAK, ascending);
         processPhase(Phase.ACTIVATION, ascending);

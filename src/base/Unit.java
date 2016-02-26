@@ -13,6 +13,10 @@ public class Unit {
     private Pilot pilot;
     private Ship ship;
 
+    private int agility;
+    private int hull;
+    private int shields;
+
     private ActionPool actionPool = new ActionPool();
 
     public Unit(Faction faction, Pilot pilot, Ship ship) {
@@ -20,6 +24,8 @@ public class Unit {
         this.pilot = pilot;
         this.ship = ship;
         this.unitId = UnitRegistry.registerUnit(this);
+        this.hull = ship.getHull();
+        this.shields = ship.getShields();
     }
 
     public void registerPhases() {
@@ -47,4 +53,8 @@ public class Unit {
     public void toggleActive() { active = !active; }
     public boolean isActive() { return active; }
     public void addAction(Action action) { actionPool.addAction(action); }
+    public int getHull() { return this.hull; }
+    public int getShields() { return this.shields; }
+    public void incrementShields() { this.shields++; }
+
 }

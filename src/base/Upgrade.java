@@ -5,4 +5,6 @@ package base;
  */
 public interface Upgrade {
     UpgradeType getType();
+
+    public void registerPhase(UnitId unitId);
 }
