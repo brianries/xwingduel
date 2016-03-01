@@ -1,11 +1,18 @@
 package network;
 
+import base.Faction;
+import base.Player;
+import expansions.core.pilots.AcademyPilot;
+import expansions.core.ships.TieFighter;
+import network.playercommand.AddShipCommand;
 import network.playercommand.PlayerCommand;
 import network.playercommand.RollDice;
+import network.update.UpdateMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 
 /**
@@ -13,7 +20,7 @@ import java.net.UnknownHostException;
  */
 public class GameClient {
 
-    public static int port = 9090;
+    private static final Logger log = LogManager.getLogger(GameClient.class);
 
     private NioClient client;
     private Thread clientThread;
@@ -21,12 +28,10 @@ public class GameClient {
     public GameClient() {
         try {
             InetAddress address = InetAddress.getByName("localhost"); // fix later
-            client = new NioClient(address, port);
+            client = new NioClient(address, GameServer.SERVER_PORT);
         }
-        catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        catch (Exception e) {
+            log.error("Exception creating Game client! Stack trace: ", e);
         }
 
         clientThread = new Thread(client);
@@ -35,16 +40,16 @@ public class GameClient {
     }
 
     public static class SerializedResponseHandler implements NioClient.ResponseHandler {
-        SerializationUtil.PayLoad payLoad = null;
+        SerializationUtil.UpdatePayLoad payLoad = null;
 
         public synchronized boolean handleResponse(byte[] response) {
             try {
-                payLoad = SerializationUtil.deserialize(response);
+                payLoad = SerializationUtil.deserializeUpdatePayLoad(response);
                 this.notify();
                 return true;
             }
             catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error serializing response! Stack trace:", e);
             }
 
             return false;
@@ -54,11 +59,15 @@ public class GameClient {
             while(this.payLoad == null) {
                 try {
                     this.wait();
-                } catch (InterruptedException e) {
-                }
+                } catch (InterruptedException e) { }
             }
+            log.debug("Payload (" + payLoad.command.toString() + ") received");
 
-            System.out.println(payLoad.command.toString());
+            switch (payLoad.command) {
+                case UPDATE_MESSAGE:
+                    log.info("Received update message: " + payLoad.object);
+                    break;
+            }
         }
     }
 
@@ -77,11 +86,13 @@ public class GameClient {
 
     public static void main(String[] args) {
         try {
+            log.debug("Creating game client...");
             GameClient client = new GameClient();
+            client.sendCommand(PlayerCommand.ADD_SHIP, new AddShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
             client.sendCommand(PlayerCommand.ROLL_DICE, new RollDice(2));
             client.shutdown();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error: Stack trace: ", e);
         }
     }
 }

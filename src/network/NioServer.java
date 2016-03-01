@@ -1,5 +1,8 @@
 package network;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -12,11 +15,14 @@ import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.*;
 
+
 /**
  * Created by Brian on 2/8/2016.
  * Borrowing 99% of this code from http://rox-xmlrpc.sourceforge.net/niotut/#Introduction
  */
 public class NioServer implements Runnable {
+
+    private static final Logger log = LogManager.getLogger(NioServer.class);
 
     // The host:port combination to listen on
     private InetAddress hostAddress;
@@ -36,6 +42,8 @@ public class NioServer implements Runnable {
 
     // Maps a SocketChannel to a list of ByteBuffer instances
     private Map pendingData = new HashMap();
+
+    private ArrayList<SocketChannel> connections = new ArrayList<>();
 
     private IncomingDataProcessor incomingDataProcessor;
 
@@ -70,6 +78,7 @@ public class NioServer implements Runnable {
     }
 
     public void run() {
+        log.debug("Starting NIO run thread...");
         while (true) {
             try {
                 // Process any pending changes
@@ -111,12 +120,13 @@ public class NioServer implements Runnable {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Exception in main NioServer loop. Stack trace:", e);
             }
         }
     }
 
     private void accept(SelectionKey key) throws IOException {
+        log.debug("Handling new connection...");
         // For an accept to be pending the channel must be a server socket channel.
         ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
 
@@ -125,9 +135,13 @@ public class NioServer implements Runnable {
         Socket socket = socketChannel.socket();
         socketChannel.configureBlocking(false);
 
+        log.debug("Accepted new connection from " + socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
+        connections.add(socketChannel);
+
         // Register the new SocketChannel with our Selector, indicating
         // we'd like to be notified when there's data waiting to be read
         socketChannel.register(this.selector, SelectionKey.OP_READ);
+        log.debug("Connection complete ");
     }
 
     private void read(SelectionKey key) throws IOException {
@@ -157,6 +171,7 @@ public class NioServer implements Runnable {
         }
 
         // Hand the data off to our worker thread
+        log.debug("Data received -- calling incoming data processor");
         this.incomingDataProcessor.processData(socketChannel, this.readBuffer.array(), numRead);
     }
 
@@ -178,6 +193,12 @@ public class NioServer implements Runnable {
 
         // Finally, wake up our selecting thread so it can make the required changes
         this.selector.wakeup();
+    }
+
+    public void sendAll(byte[] data) {
+        for (SocketChannel channel : connections) {
+            send(channel, data);
+        }
     }
 
     private void write(SelectionKey key) throws IOException {

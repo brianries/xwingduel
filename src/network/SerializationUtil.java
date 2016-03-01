@@ -1,6 +1,7 @@
 package network;
 
 import network.playercommand.PlayerCommand;
+import network.update.UpdateCommand;
 
 import java.io.*;
 
@@ -8,6 +9,16 @@ import java.io.*;
  * Created by Brian on 2/11/2016.
  */
 public class SerializationUtil {
+
+    public static class PlayerPayLoad {
+        public PlayerCommand command;
+        public Object object;
+    }
+
+    public static class UpdatePayLoad {
+        public UpdateCommand command;
+        public Object object;
+    }
 
     public static byte[] serialize(Object command, Object object) throws IOException {
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream((bos))) {
@@ -17,16 +28,21 @@ public class SerializationUtil {
         }
     }
 
-    public static class PayLoad {
-        public PlayerCommand command;
-        public Object object;
-    }
-
-    public static PayLoad deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+    public static PlayerPayLoad deserializePlayerPayLoad(byte[] bytes) throws IOException, ClassNotFoundException {
         // try with resources -- auto closes these objects when finished
         try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes); ObjectInput in = new ObjectInputStream(bis)) {
-            PayLoad payLoad = new PayLoad();
+            PlayerPayLoad payLoad = new PlayerPayLoad();
             payLoad.command = (PlayerCommand)in.readObject();
+            payLoad.object = in.readObject();
+            return payLoad;
+        }
+    }
+
+    public static UpdatePayLoad deserializeUpdatePayLoad(byte[] bytes) throws IOException, ClassNotFoundException {
+        // try with resources -- auto closes these objects when finished
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes); ObjectInput in = new ObjectInputStream(bis)) {
+            UpdatePayLoad payLoad = new UpdatePayLoad();
+            payLoad.command = (UpdateCommand)in.readObject();
             payLoad.object = in.readObject();
             return payLoad;
         }

@@ -1,6 +1,7 @@
 package state;
 
 import base.*;
+import network.update.UpdateMessage;
 
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -15,12 +16,8 @@ public class ServerBoardState implements BoardState {
 
     private CopyOnWriteArrayList<UpdateListener> updateListeners;
 
-    public static class Update {
-
-    }
-
     public interface UpdateListener {
-        void handleUpdate(Update update);
+        void handleUpdate(UpdateMessage update);
     }
 
     public ServerBoardState() {
@@ -37,10 +34,10 @@ public class ServerBoardState implements BoardState {
         else {
             playerTwoUnitMap.put(unit.getUnitId(), unit);
         }
-        handleUpdateEvent(new Update());
+        handleUpdateEvent(new UpdateMessage("Added new ship to board"));
     }
 
-    public synchronized void handleUpdateEvent(Update update) {
+    public synchronized void handleUpdateEvent(UpdateMessage update) {
         for (UpdateListener listener : updateListeners) {
             listener.handleUpdate(update);
         }

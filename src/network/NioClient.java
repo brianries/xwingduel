@@ -1,5 +1,8 @@
 package network;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -15,6 +18,8 @@ import java.util.*;
  * Borrowing 99% of this code from http://rox-xmlrpc.sourceforge.net/niotut/#Introduction
  */
 public class NioClient implements Runnable {
+
+    private static final Logger log = LogManager.getLogger(NioClient.class);
 
     // The host:port combination to listen on
     private InetAddress hostAddress;
@@ -54,6 +59,7 @@ public class NioClient implements Runnable {
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
 
+        log.debug("Attempting connection to " + this.hostAddress + ":" + this.port);
         // Kick off connection establishment
         socketChannel.connect(new InetSocketAddress(this.hostAddress, this.port));
 
@@ -113,7 +119,7 @@ public class NioClient implements Runnable {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error in main NioClient run loop. Stack Trace: ", e);
             }
         }
     }
@@ -154,7 +160,9 @@ public class NioClient implements Runnable {
         // this will raise an IOException.
         try {
             socketChannel.finishConnect();
+            log.debug("Successfully connected to " + hostAddress + ":" + port);
         } catch (IOException e) {
+            log.error("Failed to finish connection. Stack trace: ", e);
             // Cancel the channel's registration with our selector
             key.cancel();
             return;

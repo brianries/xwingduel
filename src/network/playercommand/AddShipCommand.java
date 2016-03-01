@@ -17,7 +17,7 @@ public class AddShipCommand implements Serializable {
     private Ship ship;
     private Pilot pilot;
 
-    public void AddShip(Player player, Faction faction, Ship ship, Pilot pilot) {
+    public AddShipCommand(Player player, Faction faction, Ship ship, Pilot pilot) {
         this.player = player;
         this.faction = faction;
         this.ship = ship;
