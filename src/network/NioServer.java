@@ -132,10 +132,9 @@ public class NioServer implements Runnable {
 
         // Accept the connection and make it non-blocking
         SocketChannel socketChannel = serverSocketChannel.accept();
-        Socket socket = socketChannel.socket();
         socketChannel.configureBlocking(false);
 
-        log.debug("Accepted new connection from " + socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
+        log.debug("Accepted new connection from " + socketChannel.getRemoteAddress().toString());
         connections.add(socketChannel);
 
         // Register the new SocketChannel with our Selector, indicating
@@ -167,6 +166,7 @@ public class NioServer implements Runnable {
             // same from our end and cancel the channel.
             key.channel().close();
             key.cancel();
+            connections.remove(socketChannel);
             return;
         }
 
@@ -175,17 +175,17 @@ public class NioServer implements Runnable {
         this.incomingDataProcessor.processData(socketChannel, this.readBuffer.array(), numRead);
     }
 
-    public void send(SocketChannel socket, byte[] data) {
+    public void send(SocketChannel socketChannel, byte[] data) {
         synchronized (this.changeRequests) {
             // Indicate we want the interest ops set changed
-            this.changeRequests.add(new ChangeRequest(socket, ChangeRequest.CHANGEOPS, SelectionKey.OP_WRITE));
+            this.changeRequests.add(new ChangeRequest(socketChannel, ChangeRequest.CHANGEOPS, SelectionKey.OP_WRITE));
 
             // And queue the data we want written
             synchronized (this.pendingData) {
-                List queue = (List) this.pendingData.get(socket);
+                List queue = (List) this.pendingData.get(socketChannel);
                 if (queue == null) {
                     queue = new ArrayList();
-                    this.pendingData.put(socket, queue);
+                    this.pendingData.put(socketChannel, queue);
                 }
                 queue.add(ByteBuffer.wrap(data));
             }
