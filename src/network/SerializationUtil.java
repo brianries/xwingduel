@@ -1,7 +1,7 @@
 package network;
 
 import network.playercommand.PlayerCommand;
-import network.update.UpdateCommand;
+import network.servercommand.ServerCommand;
 
 import java.io.*;
 
@@ -16,7 +16,7 @@ public class SerializationUtil {
     }
 
     public static class UpdatePayLoad {
-        public UpdateCommand command;
+        public ServerCommand command;
         public Object object;
     }
 
@@ -42,7 +42,7 @@ public class SerializationUtil {
         // try with resources -- auto closes these objects when finished
         try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes); ObjectInput in = new ObjectInputStream(bis)) {
             UpdatePayLoad payLoad = new UpdatePayLoad();
-            payLoad.command = (UpdateCommand)in.readObject();
+            payLoad.command = (ServerCommand)in.readObject();
             payLoad.object = in.readObject();
             return payLoad;
         }

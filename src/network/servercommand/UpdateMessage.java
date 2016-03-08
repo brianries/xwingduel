@@ -1,4 +1,4 @@
-package network.update;
+package network.servercommand;
 
 import java.io.Serializable;
 

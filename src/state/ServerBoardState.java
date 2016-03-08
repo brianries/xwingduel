@@ -1,8 +1,11 @@
 package state;
 
 import base.*;
-import network.update.UpdateMessage;
+import network.servercommand.BoardStateUpdate;
+import network.servercommand.UpdateMessage;
+import rendering.obstacles.Obstacle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -11,16 +14,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class ServerBoardState implements BoardState {
 
+    private ArrayList<Obstacle> obstacleList;
     private HashMap<UnitId, Unit> playerOneUnitMap;
     private HashMap<UnitId, Unit> playerTwoUnitMap;
 
     private CopyOnWriteArrayList<UpdateListener> updateListeners;
 
     public interface UpdateListener {
-        void handleUpdate(UpdateMessage update);
+        void handleUpdate(BoardStateUpdate update);
     }
 
     public ServerBoardState() {
+        this.obstacleList = new ArrayList<>();
         this.playerOneUnitMap = new HashMap<>();
         this.playerTwoUnitMap = new HashMap<>();
         this.updateListeners = new CopyOnWriteArrayList<>();
@@ -30,14 +35,13 @@ public class ServerBoardState implements BoardState {
         Unit unit = new Unit(faction, ship, pilot);
         if (player == Player.PLAYER_ONE) {
             playerOneUnitMap.put(unit.getUnitId(), unit);
-        }
-        else {
+        } else {
             playerTwoUnitMap.put(unit.getUnitId(), unit);
         }
-        handleUpdateEvent(new UpdateMessage("Added new ship to board"));
+        handleUpdateEvent(new BoardStateUpdate());
     }
 
-    public synchronized void handleUpdateEvent(UpdateMessage update) {
+    public synchronized void handleUpdateEvent(BoardStateUpdate update) {
         for (UpdateListener listener : updateListeners) {
             listener.handleUpdate(update);
         }

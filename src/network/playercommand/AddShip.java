@@ -10,14 +10,14 @@ import java.io.Serializable;
 /**
  * Created by Brian on 2/15/2016.
  */
-public class AddShipCommand implements Serializable {
+public class AddShip implements Serializable {
 
     private Player player;
     private Faction faction;
     private Ship ship;
     private Pilot pilot;
 
-    public AddShipCommand(Player player, Faction faction, Ship ship, Pilot pilot) {
+    public AddShip(Player player, Faction faction, Ship ship, Pilot pilot) {
         this.player = player;
         this.faction = faction;
         this.ship = ship;

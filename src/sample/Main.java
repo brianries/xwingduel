@@ -22,6 +22,8 @@ import rendering.movement.MovementTemplate;
 import rendering.movement.MovementTemplateFactory;
 import movement.MovementType;
 import rendering.firingarc.FiringArc;
+import rendering.obstacles.ObstacleToken;
+import rendering.obstacles.ObstacleType;
 import rendering.playarea.PlayArea;
 import rendering.ship.ShipOutlineToken;
 import rendering.ship.ShipToken;
@@ -38,8 +40,9 @@ public class Main extends Application {
     @Deprecated
     public void populateBoardScene(BoardScene boardScene) throws Exception {
         final MovementTemplateFactory factory = new MovementTemplateFactory();
-        final ShipToken shipToken = new ShipToken("resources/ywing_rotated.jpg", ShipSize.SMALL);
+        final ShipToken shipToken = new ShipToken("resources/ships/tie-fighter.png", ShipSize.SMALL);
         final FiringArc firingArc = new FiringArc(FiringArcRange.THREE, ShipSize.SMALL);
+        final ObstacleToken asteroid = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_0);
 
         final MovementTemplate movementTemplate1 = factory.constructMovementTemplate(MovementDifficulty.GREEN, MovementType.LEFT_BANK_1);
         final MovementTemplate movementTemplate2 = factory.constructMovementTemplate(MovementDifficulty.RED, MovementType.RIGHT_HARD_3);
@@ -50,6 +53,8 @@ public class Main extends Application {
         Rotate rotate = new Rotate(10);
         shipToken.getTransforms().add(translate);
         shipToken.getTransforms().add(rotate);
+
+        asteroid.getTransforms().add(new Translate(300,300));
 
         Translate baseTranslate = new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0.0);
 
@@ -107,6 +112,7 @@ public class Main extends Application {
         shipLabel.getTransforms().add(new Translate(-width/2.0, 30.0, -1.0));
 
         boardScene.getChildren().add(playableArea);
+        boardScene.getChildren().add(asteroid);
         boardScene.getChildren().add(shipToken);
         boardScene.getChildren().add(outlineToken1);
         boardScene.getChildren().add(outlineToken2);

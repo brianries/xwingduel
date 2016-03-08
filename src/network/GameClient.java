@@ -4,10 +4,9 @@ import base.Faction;
 import base.Player;
 import expansions.core.pilots.AcademyPilot;
 import expansions.core.ships.TieFighter;
-import network.playercommand.AddShipCommand;
+import network.playercommand.AddShip;
 import network.playercommand.PlayerCommand;
 import network.playercommand.RollDice;
-import network.update.UpdateMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,7 +64,7 @@ public class GameClient {
 
             switch (payLoad.command) {
                 case UPDATE_MESSAGE:
-                    log.info("Received update message: " + payLoad.object);
+                    log.info("Received servercommand message: " + payLoad.object);
                     break;
             }
         }
@@ -88,7 +87,7 @@ public class GameClient {
         try {
             log.debug("Creating game client...");
             GameClient client = new GameClient();
-            client.sendCommand(PlayerCommand.ADD_SHIP, new AddShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
+            client.sendCommand(PlayerCommand.ADD_SHIP, new AddShip(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
             client.sendCommand(PlayerCommand.ROLL_DICE, new RollDice(2));
             client.shutdown();
         } catch (Exception e) {

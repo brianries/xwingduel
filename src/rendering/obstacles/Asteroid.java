@@ -7,7 +7,7 @@ import base.Unit;
  */
 public class Asteroid extends ObstacleImpl {
 
-    public Asteroid() {
-        super();
+    public Asteroid(ObstacleType type) {
+        super(type);
     }
 }

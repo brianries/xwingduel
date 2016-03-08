@@ -1,9 +1,10 @@
 package network;
 
 
-import network.playercommand.AddShipCommand;
-import network.update.UpdateMessage;
-import network.update.UpdateCommand;
+import network.playercommand.AddShip;
+import network.servercommand.BoardStateUpdate;
+import network.servercommand.UpdateMessage;
+import network.servercommand.ServerCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import state.ServerBoardState;
@@ -93,13 +94,13 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
             switch (payLoad.command) {
 
                 case ADD_SHIP:
-                    AddShipCommand addShipCommand = (AddShipCommand)payLoad.object;
+                    AddShip addShipCommand = (AddShip)payLoad.object;
                     this.serverBoardState.addShip(addShipCommand.getPlayer(), addShipCommand.getFaction(), addShipCommand.getShip(), addShipCommand.getPilot());
                     //this.handleUpdate(new UpdateMessage("State Update Response!"));
                     break;
 
                 case ROLL_DICE:
-                    byte[] data = SerializationUtil.serialize(UpdateCommand.UPDATE_MESSAGE, new UpdateMessage("Roll Dice response!"));
+                    byte[] data = SerializationUtil.serialize(ServerCommand.UPDATE_MESSAGE, new UpdateMessage("Roll Dice response!"));
                     nioServer.send(serverData.channel, data);
                     break;
             }
@@ -108,12 +109,12 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
 
 
     @Override
-    public void handleUpdate(UpdateMessage update) {
+    public void handleUpdate(BoardStateUpdate update) {
         byte[] data;
         try {
-            data = SerializationUtil.serialize(UpdateCommand.UPDATE_MESSAGE, update);
+            data = SerializationUtil.serialize(ServerCommand.BOARD_STATE_UPDATE, update);
         } catch (IOException e) {
-            log.error("Failure to serialize update " + update + " Stack trace: ", e);
+            log.error("Failure to serialize servercommand " + update + " Stack trace: ", e);
             return;
         }
         nioServer.sendAll(data);

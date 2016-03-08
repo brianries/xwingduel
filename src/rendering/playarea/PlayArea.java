@@ -13,7 +13,7 @@ public class PlayArea extends Rectangle {
 
     public PlayArea() {
         super(BATTLE_GROUND_WIDTH_MM, BATTLE_GROUND_WIDTH_MM);
-        Image texture = new Image("file:resources/starfield.jpg");
+        Image texture = new Image("file:resources/deep-space-field.jpg");
         ImagePattern imagePattern = new ImagePattern(texture);
         this.setFill(imagePattern);
     }
