@@ -23,6 +23,7 @@ import rendering.movement.MovementTemplateFactory;
 import movement.MovementType;
 import rendering.firingarc.FiringArc;
 import rendering.obstacles.ObstacleToken;
+import rendering.obstacles.ObstacleTokenPart;
 import rendering.obstacles.ObstacleType;
 import rendering.playarea.PlayArea;
 import rendering.ship.ShipOutlineToken;
@@ -42,7 +43,13 @@ public class Main extends Application {
         final MovementTemplateFactory factory = new MovementTemplateFactory();
         final ShipToken shipToken = new ShipToken("resources/ships/tie-fighter.png", ShipSize.SMALL);
         final FiringArc firingArc = new FiringArc(FiringArcRange.THREE, ShipSize.SMALL);
-        final ObstacleToken asteroid = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_0);
+        final ObstacleToken asteroid0 = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_0);
+        final ObstacleToken asteroid1 = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_1);
+        final ObstacleToken asteroid2 = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_2);
+        final ObstacleToken asteroid3 = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_3);
+        final ObstacleToken asteroid4 = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_4);
+        final ObstacleToken asteroid5 = new ObstacleToken(ObstacleType.ASTEROID_BASE_CORE_5);
+
 
         final MovementTemplate movementTemplate1 = factory.constructMovementTemplate(MovementDifficulty.GREEN, MovementType.LEFT_BANK_1);
         final MovementTemplate movementTemplate2 = factory.constructMovementTemplate(MovementDifficulty.RED, MovementType.RIGHT_HARD_3);
@@ -54,7 +61,13 @@ public class Main extends Application {
         shipToken.getTransforms().add(translate);
         shipToken.getTransforms().add(rotate);
 
-        asteroid.getTransforms().add(new Translate(300,300));
+        asteroid0.getTransforms().add(new Translate(450,100));
+        asteroid1.getTransforms().add(new Translate(300,300));
+        asteroid2.getTransforms().add(new Translate(400,450));
+        asteroid3.getTransforms().add(new Translate(700,200));
+        asteroid4.getTransforms().add(new Translate(150,700));
+        asteroid5.getTransforms().add(new Translate(600,600));
+
 
         Translate baseTranslate = new Translate(ShipToken.SMALL_SHIP_TEMPLATE_WIDTH_MM / 2.0, 0.0);
 
@@ -97,7 +110,7 @@ public class Main extends Application {
         playableArea.getTransforms().add(new Translate(0, 0, 0.01));
 
         Text shipLabel = new Text();
-        shipLabel.setText("Gold Sq Pilot 1");
+        shipLabel.setText("Tie Academy Pilot 1");
         shipLabel.setFont(Font.font("Verdana", 12));
         shipLabel.setFill(Color.ANTIQUEWHITE);
         double width = shipLabel.getLayoutBounds().getWidth();
@@ -112,7 +125,12 @@ public class Main extends Application {
         shipLabel.getTransforms().add(new Translate(-width/2.0, 30.0, -1.0));
 
         boardScene.getChildren().add(playableArea);
-        boardScene.getChildren().add(asteroid);
+        boardScene.getChildren().add(asteroid0);
+        boardScene.getChildren().add(asteroid1);
+        boardScene.getChildren().add(asteroid2);
+        boardScene.getChildren().add(asteroid3);
+        boardScene.getChildren().add(asteroid4);
+        boardScene.getChildren().add(asteroid5);
         boardScene.getChildren().add(shipToken);
         boardScene.getChildren().add(outlineToken1);
         boardScene.getChildren().add(outlineToken2);
@@ -124,38 +142,38 @@ public class Main extends Application {
         boardScene.getChildren().add(shipLabel);
 
         boardScene.addEventHandler(MouseEvent.ANY, event -> {
-            if (ShipTokenPart.class.isAssignableFrom(event.getTarget().getClass())) {
-                ShipToken shipToken1 = ((ShipTokenPart)event.getTarget()).getShipToken();
+            if (ObstacleTokenPart.class.isAssignableFrom(event.getTarget().getClass())) {
+                ObstacleToken obstacleToken = ((ObstacleTokenPart)event.getTarget()).getObstacleToken();
                 if (event.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-                    shipToken1.setHighlighted(true);
+                    obstacleToken.setHighlighted(true);
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
-                    shipToken1.setHighlighted(false);
+                    obstacleToken.setHighlighted(false);
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
                     x1 = event.getX();
                     y1 = event.getY();
-                    shipToken1.setSelected(true);
+                    obstacleToken.setSelected(true);
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
                     // translate node
-                    if (!shipToken1.translateXProperty().isBound()) {
-                        shipToken1.setTranslateX(event.getX() - x1 + shipToken1.getTranslateX());
+                    if (!obstacleToken.translateXProperty().isBound()) {
+                        obstacleToken.setTranslateX(event.getX() - x1 + obstacleToken.getTranslateX());
                     }
-                    if (!shipToken1.translateYProperty().isBound()) {
-                        shipToken1.setTranslateY(event.getY() - y1 + shipToken1.getTranslateY());
+                    if (!obstacleToken.translateYProperty().isBound()) {
+                        obstacleToken.setTranslateY(event.getY() - y1 + obstacleToken.getTranslateY());
                     }
                     x1 = event.getX();
                     y1 = event.getY();
                 }
                 else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-                    shipToken1.setSelected(false);
+                    obstacleToken.setSelected(false);
                 }
                 else if (event.getButton() == MouseButton.SECONDARY) {
                     // right-click over the path to move it to its original position
-                    if (!shipToken1.translateXProperty().isBound()) {
-                        shipToken1.setTranslateX(0);
-                        shipToken1.setTranslateY(0);
+                    if (!obstacleToken.translateXProperty().isBound()) {
+                        obstacleToken.setTranslateX(0);
+                        obstacleToken.setTranslateY(0);
                     }
                 }
 
