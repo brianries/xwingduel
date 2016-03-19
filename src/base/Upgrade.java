@@ -1,10 +1,15 @@
 package base;
 
+import java.io.Serializable;
+
 /**
  * Created by dsayles on 2/16/16.
  */
-public interface Upgrade {
+public interface Upgrade extends Serializable {
+
     UpgradeType getType();
 
-    public void registerPhase(UnitId unitId);
+    int getPointCost();
+
+    void registerPhase(UnitId unitId);
 }

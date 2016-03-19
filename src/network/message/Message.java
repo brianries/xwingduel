@@ -18,16 +18,16 @@ public interface Message extends Serializable {
 
     enum Type {
         ACTION,
-        ADD_SHIP,
-        ADD_OBSTACLE,
+        ADD_SQUADRON,
         BOARD_STATE_UPDATE,
         DECLARE_TARGET,
         DECLOAK,
         MANEUVER,
         MODIFY_DICE,
+        PLACE_OBSTACLE,
+        PLACE_SHIP,
         REROLL_DICE,
         ROLL_DICE,
-        SHIP_PLACEMENT,
         UPDATE_MESSAGE,
     }
 }

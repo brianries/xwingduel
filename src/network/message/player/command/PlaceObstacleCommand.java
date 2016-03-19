@@ -7,16 +7,16 @@ import rendering.obstacles.Obstacle;
 /**
  * Created by Brian on 3/6/2016.
  */
-public class AddObstacleCommand extends PlayerCommand {
+public class PlaceObstacleCommand extends PlayerCommand {
 
     private Obstacle obstacle;
 
-    public AddObstacleCommand(Obstacle obstacle) {
+    public PlaceObstacleCommand(Obstacle obstacle) {
 
     }
 
     @Override
     public Message.Type getMessageType() {
-        return Message.Type.ADD_OBSTACLE;
+        return Message.Type.PLACE_OBSTACLE;
     }
 }

@@ -12,12 +12,6 @@ import phases.PhaseStateManager;
  * Created by dsayles on 2/7/16.
  */
 public class Determination implements Upgrade, ElitePilotTalent {
-    public UpgradeType getType() {return UpgradeType.ELITE_PILOT_TALENT;}
-
-    @Override
-    public void registerPhase(UnitId unitId) {
-        PhaseStateManager.registerUnitIdForPhase(Phase.SUFFER_CRIT_TO_HULL, unitId);
-    }
 
     public Damage interceptPilotCritical(Damage damage) {
         if (damage.affectsPilot()) {
@@ -25,4 +19,20 @@ public class Determination implements Upgrade, ElitePilotTalent {
         }
         return damage;
     }
+
+    @Override
+    public UpgradeType getType() {
+        return UpgradeType.ELITE_PILOT_TALENT;
+    }
+
+    @Override
+    public int getPointCost() {
+        return 1;
+    }
+
+    @Override
+    public void registerPhase(UnitId unitId) {
+        PhaseStateManager.registerUnitIdForPhase(Phase.SUFFER_CRIT_TO_HULL, unitId);
+    }
+
 }

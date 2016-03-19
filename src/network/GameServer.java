@@ -1,14 +1,16 @@
 package network;
 
 
+import base.Player;
 import network.message.*;
 import network.message.player.PlayerCommand;
-import network.message.player.command.AddShipCommand;
+import network.message.player.command.AddSquadronCommand;
+import network.message.player.command.PlaceShipCommand;
 import network.message.player.command.RollDiceCommand;
 import network.message.server.ServerResponse;
 import network.message.server.command.BoardStateUpdateCommand;
-import network.message.server.command.UpdateMessage;
-import network.message.server.response.AddShipResponse;
+import network.message.server.response.AddSquadronResponse;
+import network.message.server.response.PlaceShipResponse;
 import network.message.server.response.RollDiceResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,17 +33,11 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     private NioServer nioServer;
     private ServerBoardState serverBoardState;
 
-
-    private LinkedList<ServerData> queue = new LinkedList<>();
+    private LinkedList<NioData> queue = new LinkedList<>();
     private AtomicBoolean shutdown = new AtomicBoolean();
 
     private Thread handleDataThread;
     private Thread nioServerThread;
-
-    private static class ServerData {
-        public SocketChannel channel;
-        public byte[] data;
-    }
 
     public GameServer() throws IOException {
         this.serverBoardState = new ServerBoardState();
@@ -73,7 +69,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     public void processData(SocketChannel socketChannel, byte[] data, int count) {
         synchronized(queue) {
             log.debug("processData called...");
-            ServerData serverData = new ServerData();
+            NioData serverData = new NioData();
             serverData.channel = socketChannel;
             serverData.data = data.clone();
             queue.add(serverData);
@@ -84,7 +80,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     public void handleData() throws IOException, ClassNotFoundException {
         while(!shutdown.get()) {
             // Wait for data to become available
-            ServerData serverData;
+            NioData serverData;
             synchronized(queue) {
                 while (queue.isEmpty()) {
                     try {
@@ -110,12 +106,23 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
         }
     }
 
+    // TODO work on the player registration
+    private Player getPlayerFromChannel(SocketChannel channel) {
+        return Player.PLAYER_ONE;
+    }
+
     private void handlePlayerCommand(SocketChannel channel, PlayerCommand playerCommand) {
+        log.debug("Handling player command data (" + playerCommand.getMessageType().toString() + ")");
         switch (playerCommand.getMessageType()) {
-            case ADD_SHIP:
-                AddShipCommand addShipCommand = (AddShipCommand) playerCommand;
-                this.serverBoardState.addShip(addShipCommand.getPlayer(), addShipCommand.getFaction(), addShipCommand.getShip(), addShipCommand.getPilot());
-                sendResponse(channel, new AddShipResponse());
+            case ADD_SQUADRON:
+                AddSquadronCommand addSquadronCommand = (AddSquadronCommand) playerCommand;
+                sendResponse(channel, new AddSquadronResponse());
+                this.serverBoardState.addSquadron(getPlayerFromChannel(channel), addSquadronCommand.getFaction(), addSquadronCommand.getUnitSubmissions());
+                break;
+
+            case PLACE_SHIP:
+                PlaceShipCommand addShipCommand = (PlaceShipCommand) playerCommand;
+                sendResponse(channel, new PlaceShipResponse());
                 break;
 
             case ROLL_DICE:
@@ -127,6 +134,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     }
 
     public void sendResponse(SocketChannel channel, ServerResponse response) {
+        log.debug("Sending server response (" + response.getMessageType().toString() + ")");
         byte[] data;
         try {
             data = MessageSerializationUtil.serialize(response);
@@ -160,6 +168,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
         try {
             log.debug("Creating game server...");
             GameServer gameServer = new GameServer();
+            gameServer.shutdown();
         } catch (Exception e) {
             log.error("Error: Stack trace: ", e);
         }

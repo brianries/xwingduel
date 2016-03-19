@@ -30,7 +30,13 @@ public class ServerBoardState implements BoardState {
         this.updateListeners = new CopyOnWriteArrayList<>();
     }
 
-    public void addShip(Player player, Faction faction, Ship ship, Pilot pilot) {
+    public void addSquadron(Player player, Faction faction, ArrayList<UnitSubmission> unitSubmissions) {
+        for (UnitSubmission unitSubmission : unitSubmissions) {
+            addShip(player, faction, unitSubmission.getShip(), unitSubmission.getPilot());
+        }
+    }
+
+    private void addShip(Player player, Faction faction, Ship ship, Pilot pilot) {
         Unit unit = new Unit(faction, ship, pilot);
         if (player == Player.PLAYER_ONE) {
             playerOneUnitMap.put(unit.getUnitId(), unit);

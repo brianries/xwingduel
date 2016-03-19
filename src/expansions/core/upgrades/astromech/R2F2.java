@@ -11,7 +11,16 @@ import phases.PhaseStateManager;
  * Created by dsayles on 2/7/16.
  */
 public class R2F2 implements Unique, Upgrade, Astromech {
-    public UpgradeType getType() {return UpgradeType.ASTROMECH;}
+
+    @Override
+    public UpgradeType getType() {
+        return UpgradeType.ASTROMECH;
+    }
+
+    @Override
+    public int getPointCost() {
+        return 3;
+    }
 
     @Override
     public void registerPhase(UnitId unitId) {

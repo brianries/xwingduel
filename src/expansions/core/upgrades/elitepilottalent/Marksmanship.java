@@ -11,7 +11,17 @@ import phases.PhaseStateManager;
  * Created by dsayles on 2/7/16.
  */
 public class Marksmanship implements Upgrade, ElitePilotTalent {
-    public UpgradeType getType() {return UpgradeType.ELITE_PILOT_TALENT;}
+
+    @Override
+    public UpgradeType getType() {
+        return UpgradeType.ELITE_PILOT_TALENT;
+    }
+
+    @Override
+    public int getPointCost() {
+        return 3;
+    }
+
     @Override
     public void registerPhase(UnitId unitId) {
         PhaseStateManager.registerUnitIdForPhase(Phase.MODIFY_POST_ATTACK_ATTACKER, unitId);

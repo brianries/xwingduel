@@ -1,95 +1,142 @@
 package network;
 
-import base.Faction;
-import base.Player;
-import expansions.core.pilots.AcademyPilot;
+import base.*;
+import expansions.core.pilots.*;
 import expansions.core.ships.TieFighter;
+import expansions.core.ships.XWing;
+import expansions.core.upgrades.astromech.R2D2;
 import network.message.*;
-import network.message.player.command.AddShipCommand;
+import network.message.player.PlayerCommand;
+import network.message.player.command.AddSquadronCommand;
+import network.message.player.command.PlaceShipCommand;
 import network.message.player.command.RollDiceCommand;
+import network.message.server.ServerCommand;
 import network.message.server.ServerResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rendering.obstacles.ObstacleType;
 
 import java.io.*;
 import java.net.InetAddress;
+import java.nio.channels.SocketChannel;
+import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
  * Created by Brian on 2/8/2016.
  */
-public class GameClient {
+public class GameClient implements NioClient.IncomingDataProcessor {
 
     private static final Logger log = LogManager.getLogger(GameClient.class);
 
+    private LinkedList<NioData> queue = new LinkedList<>();
+    private volatile boolean isRunning = true;
+
     private NioClient client;
-    private Thread clientThread;
+
+    private Thread nioClientThread;
+    private Thread handleDataThread;
 
     public GameClient() {
         try {
             InetAddress address = InetAddress.getByName("localhost"); // fix later
-            client = new NioClient(address, GameServer.SERVER_PORT);
+            client = new NioClient(address, GameServer.SERVER_PORT, this);
         }
         catch (Exception e) {
             log.error("Exception creating Game client! Stack trace: ", e);
         }
 
-        clientThread = new Thread(client);
-        clientThread.setDaemon(true);
-        clientThread.start();
+        this.nioClientThread = new Thread(client);
+        this.nioClientThread.setDaemon(true);
+        this.nioClientThread.start();
+
+        this.handleDataThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    handleData();
+                }
+                catch (Exception e) {
+                    log.error("Error in handle data. Stack trace: ", e);
+                }
+            }
+        };
+        this.handleDataThread.start();
     }
 
-    public static class SerializedResponseHandler implements NioClient.ResponseHandler {
-        private Message message = null;
-        public synchronized boolean handleResponse(byte[] response) {
-            try {
-                this.message = MessageSerializationUtil.deserialize(response);
-                this.notify();
-                return true;
-            }
-            catch (Exception e) {
-                log.error("Error serializing response! Stack trace:", e);
-            }
-
-            return false;
+    @Override
+    public void processData(SocketChannel socketChannel, byte[] data, int count) {
+        synchronized(queue) {
+            NioData serverData = new NioData();
+            serverData.channel = socketChannel;
+            serverData.data = data.clone();
+            queue.add(serverData);
+            queue.notify();
         }
+    }
 
-        public synchronized void waitForResponse() {
-            while(message == null) {
-                try {
-                    this.wait();
-                } catch (InterruptedException e) { }
+    public void handleData() throws IOException, ClassNotFoundException {
+        while(isRunning) {
+            // Wait for data to become available
+            NioData serverData;
+            synchronized(queue) {
+                while (queue.isEmpty() && isRunning) {
+                    try {
+                        queue.wait();
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+                if (isRunning) {
+                    serverData = queue.remove(0);
+                }
+                else {
+                    return;
+                }
             }
-            log.debug("Message (" + message.getCommandOrResponse().toString() + ") received");
 
+            Message message = MessageSerializationUtil.deserialize(serverData.data);
+            log.debug("Handling server data (" + message.getCommandOrResponse().toString() + ")");
             switch (message.getCommandOrResponse()) {
                 case COMMAND:
+                    handleServerCommand(serverData.channel, (ServerCommand) message);
                     break;
                 case RESPONSE:
-                    handleServerResponse((ServerResponse)message);
+                    handleServerResponse(serverData.channel, (ServerResponse) message);
                     break;
-            }
-        }
-
-        private void handleServerResponse(ServerResponse response) {
-            switch (response.getMessageType()) {
-                case UPDATE_MESSAGE:
-                    log.info("Received server update message: " + response.getMessageType().toString());
+                default:
+                    // error
                     break;
             }
         }
     }
 
+    private void handleServerCommand(SocketChannel channel, ServerCommand serverCommand) {
+        log.debug("Handling server command data (" + serverCommand.getMessageType().toString() + ")");
 
-    public void sendCommand(Message message) throws IOException {
-        byte[] bytes = MessageSerializationUtil.serialize(message);
-        SerializedResponseHandler handler = new SerializedResponseHandler();
-        client.send(bytes, handler);
-        handler.waitForResponse();
+    }
+
+    private void handleServerResponse(SocketChannel channel, ServerResponse serverResponse) {
+        log.debug("Handling server response data (" + serverResponse.getMessageType().toString() + ")");
+    }
+
+    public void sendCommand(PlayerCommand command) throws IOException {
+        log.debug("Sending player command (" + command.getMessageType() + ")");
+        byte[] bytes = MessageSerializationUtil.serialize(command);
+        client.send(bytes);
     }
 
     public void shutdown() throws IOException {
         client.shutdown();
+        try {
+            nioClientThread.join();
+        } catch (InterruptedException ignored) { }
+
+        synchronized (queue) {
+            log.debug("Shutting down...");
+            this.isRunning = false;
+            this.queue.notifyAll();
+        }
     }
 
 
@@ -97,8 +144,23 @@ public class GameClient {
         try {
             log.debug("Creating game client...");
             GameClient client = new GameClient();
-            client.sendCommand(new AddShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
+
+            log.debug("Creating canned rebel squadron");
+
+            UnitSubmission rebelUnit1 = new UnitSubmission(new XWing(), new RookiePilot());
+            UnitSubmission rebelUnit2 = new UnitSubmission(new XWing(), new BiggsDarklighter());
+            UnitSubmission rebelUnit3 = new UnitSubmission(new XWing(), new LukeSkywalker(), new R2D2());
+
+            ObstacleType selectedObstacles[] = {
+                    ObstacleType.ASTEROID_BASE_CORE_0,
+                    ObstacleType.ASTEROID_BASE_CORE_1,
+                    ObstacleType.ASTEROID_BASE_CORE_2,
+            };
+
+            client.sendCommand(new AddSquadronCommand(Faction.REBEL_ALLIANCE, selectedObstacles, rebelUnit1, rebelUnit2, rebelUnit3));
+            //client.sendCommand(new PlaceShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
             client.sendCommand(new RollDiceCommand(2));
+            Thread.sleep(3_000);
             client.shutdown();
         } catch (Exception e) {
             log.error("Error: Stack trace: ", e);

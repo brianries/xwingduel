@@ -15,6 +15,6 @@ public class RollDiceCommand extends PlayerCommand {
 
     @Override
     public Type getMessageType() {
-        return null;
+        return Type.ROLL_DICE;
     }
 }

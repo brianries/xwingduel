@@ -4,12 +4,13 @@ import expansions.core.pilots.*;
 import expansions.core.ships.TieFighter;
 import expansions.core.ships.XWing;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by dsayles on 2/7/16.
  */
-public class Squadron {
+public class Squadron implements Serializable {
     boolean hasInitiative = false;
     Faction faction;
     Map<UnitId, Unit> squadron = new HashMap<>();
