@@ -1,5 +1,8 @@
 package network;
 
+import network.message.Message;
+import network.message.MessageSerializationUtil;
+
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,8 +27,8 @@ public class EchoWorker implements Runnable {
 
     public void processData(NioServer server, SocketChannel channel, byte[] data, int count) {
         try {
-            SerializationUtil.PlayerPayLoad payLoad = SerializationUtil.deserializePlayerPayLoad(data);
-            byte[] dataCopy = SerializationUtil.serialize(payLoad.command, payLoad.object);
+            Message message =  MessageSerializationUtil.deserialize(data);
+            byte[] dataCopy = MessageSerializationUtil.serialize(message);
             synchronized(queue) {
                 queue.add(new ServerDataEvent(server, channel, dataCopy));
                 queue.notify();

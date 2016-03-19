@@ -4,9 +4,10 @@ import base.Faction;
 import base.Player;
 import expansions.core.pilots.AcademyPilot;
 import expansions.core.ships.TieFighter;
-import network.playercommand.AddShip;
-import network.playercommand.PlayerCommand;
-import network.playercommand.RollDice;
+import network.message.*;
+import network.message.player.command.AddShipCommand;
+import network.message.player.command.RollDiceCommand;
+import network.message.server.ServerResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,11 +40,10 @@ public class GameClient {
     }
 
     public static class SerializedResponseHandler implements NioClient.ResponseHandler {
-        SerializationUtil.UpdatePayLoad payLoad = null;
-
+        private Message message = null;
         public synchronized boolean handleResponse(byte[] response) {
             try {
-                payLoad = SerializationUtil.deserializeUpdatePayLoad(response);
+                this.message = MessageSerializationUtil.deserialize(response);
                 this.notify();
                 return true;
             }
@@ -55,24 +55,34 @@ public class GameClient {
         }
 
         public synchronized void waitForResponse() {
-            while(this.payLoad == null) {
+            while(message == null) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) { }
             }
-            log.debug("Payload (" + payLoad.command.toString() + ") received");
+            log.debug("Message (" + message.getCommandOrResponse().toString() + ") received");
 
-            switch (payLoad.command) {
+            switch (message.getCommandOrResponse()) {
+                case COMMAND:
+                    break;
+                case RESPONSE:
+                    handleServerResponse((ServerResponse)message);
+                    break;
+            }
+        }
+
+        private void handleServerResponse(ServerResponse response) {
+            switch (response.getMessageType()) {
                 case UPDATE_MESSAGE:
-                    log.info("Received servercommand message: " + payLoad.object);
+                    log.info("Received server update message: " + response.getMessageType().toString());
                     break;
             }
         }
     }
 
 
-    public void sendCommand(PlayerCommand command, Object payload) throws IOException {
-        byte[] bytes = SerializationUtil.serialize(command, payload);
+    public void sendCommand(Message message) throws IOException {
+        byte[] bytes = MessageSerializationUtil.serialize(message);
         SerializedResponseHandler handler = new SerializedResponseHandler();
         client.send(bytes, handler);
         handler.waitForResponse();
@@ -87,8 +97,8 @@ public class GameClient {
         try {
             log.debug("Creating game client...");
             GameClient client = new GameClient();
-            client.sendCommand(PlayerCommand.ADD_SHIP, new AddShip(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
-            client.sendCommand(PlayerCommand.ROLL_DICE, new RollDice(2));
+            client.sendCommand(new AddShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
+            client.sendCommand(new RollDiceCommand(2));
             client.shutdown();
         } catch (Exception e) {
             log.error("Error: Stack trace: ", e);

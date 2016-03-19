@@ -1,11 +1,11 @@
-package network.servercommand;
+package network.message.server.command;
 
-import java.io.Serializable;
+import network.message.server.ServerCommand;
 
 /**
  * Created by Brian on 2/29/2016.
  */
-public class UpdateMessage implements Serializable {
+public class UpdateMessage extends ServerCommand {
 
     private String message;
 
@@ -16,5 +16,10 @@ public class UpdateMessage implements Serializable {
     @Override
     public String toString() {
         return message;
+    }
+
+    @Override
+    public Type getMessageType() {
+        return Type.UPDATE_MESSAGE;
     }
 }

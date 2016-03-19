@@ -1,23 +1,22 @@
-package network.playercommand;
+package network.message.player.command;
 
 import base.Faction;
 import base.Pilot;
 import base.Player;
 import base.Ship;
-
-import java.io.Serializable;
+import network.message.player.PlayerCommand;
 
 /**
  * Created by Brian on 2/15/2016.
  */
-public class AddShip implements Serializable {
+public class AddShipCommand extends PlayerCommand {
 
     private Player player;
     private Faction faction;
     private Ship ship;
     private Pilot pilot;
 
-    public AddShip(Player player, Faction faction, Ship ship, Pilot pilot) {
+    public AddShipCommand(Player player, Faction faction, Ship ship, Pilot pilot) {
         this.player = player;
         this.faction = faction;
         this.ship = ship;
@@ -56,4 +55,8 @@ public class AddShip implements Serializable {
         this.pilot = pilot;
     }
 
+    @Override
+    public Type getMessageType() {
+        return Type.ADD_SHIP;
+    }
 }

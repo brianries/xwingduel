@@ -1,10 +1,15 @@
 package network;
 
 
-import network.playercommand.AddShip;
-import network.servercommand.BoardStateUpdate;
-import network.servercommand.UpdateMessage;
-import network.servercommand.ServerCommand;
+import network.message.*;
+import network.message.player.PlayerCommand;
+import network.message.player.command.AddShipCommand;
+import network.message.player.command.RollDiceCommand;
+import network.message.server.ServerResponse;
+import network.message.server.command.BoardStateUpdateCommand;
+import network.message.server.command.UpdateMessage;
+import network.message.server.response.AddShipResponse;
+import network.message.server.response.RollDiceResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import state.ServerBoardState;
@@ -89,32 +94,57 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
                 serverData = queue.remove(0);
             }
 
-            SerializationUtil.PlayerPayLoad payLoad = SerializationUtil.deserializePlayerPayLoad(serverData.data);
-            log.debug("Handling server data (" + payLoad.command + ")");
-            switch (payLoad.command) {
-
-                case ADD_SHIP:
-                    AddShip addShipCommand = (AddShip)payLoad.object;
-                    this.serverBoardState.addShip(addShipCommand.getPlayer(), addShipCommand.getFaction(), addShipCommand.getShip(), addShipCommand.getPilot());
-                    //this.handleUpdate(new UpdateMessage("State Update Response!"));
+            Message message = MessageSerializationUtil.deserialize(serverData.data);
+            log.debug("Handling server data (" + message.getCommandOrResponse().toString() + ")");
+            switch (message.getCommandOrResponse()) {
+                case COMMAND:
+                    handlePlayerCommand(serverData.channel, (PlayerCommand)message);
+                    break;
+                case RESPONSE:
+                    break;
+                default:
+                    // error
                     break;
 
-                case ROLL_DICE:
-                    byte[] data = SerializationUtil.serialize(ServerCommand.UPDATE_MESSAGE, new UpdateMessage("Roll Dice response!"));
-                    nioServer.send(serverData.channel, data);
-                    break;
             }
         }
     }
 
+    private void handlePlayerCommand(SocketChannel channel, PlayerCommand playerCommand) {
+        switch (playerCommand.getMessageType()) {
+            case ADD_SHIP:
+                AddShipCommand addShipCommand = (AddShipCommand) playerCommand;
+                this.serverBoardState.addShip(addShipCommand.getPlayer(), addShipCommand.getFaction(), addShipCommand.getShip(), addShipCommand.getPilot());
+                sendResponse(channel, new AddShipResponse());
+                break;
 
-    @Override
-    public void handleUpdate(BoardStateUpdate update) {
+            case ROLL_DICE:
+                RollDiceCommand rollDiceCommand = (RollDiceCommand) playerCommand;
+                // roll some dice
+                sendResponse(channel, new RollDiceResponse());
+                break;
+        }
+    }
+
+    public void sendResponse(SocketChannel channel, ServerResponse response) {
         byte[] data;
         try {
-            data = SerializationUtil.serialize(ServerCommand.BOARD_STATE_UPDATE, update);
+            data = MessageSerializationUtil.serialize(response);
         } catch (IOException e) {
-            log.error("Failure to serialize servercommand " + update + " Stack trace: ", e);
+            log.error("Failure to serialize server command " + response + " Stack trace: ", e);
+            return;
+        }
+        nioServer.send(channel, data);
+    }
+
+
+    @Override
+    public void handleUpdate(BoardStateUpdateCommand update) {
+        byte[] data;
+        try {
+            data = MessageSerializationUtil.serialize(update);
+        } catch (IOException e) {
+            log.error("Failure to serialize server command " + update + " Stack trace: ", e);
             return;
         }
         nioServer.sendAll(data);
