@@ -20,8 +20,8 @@ public abstract class NioService implements Runnable {
 
     protected static final Logger log = LogManager.getLogger(NioServer.class);
 
-    // The buffer into which we'll read data when it's available
-    protected ByteBuffer readBuffer = ByteBuffer.allocate(8192);
+    // Keeps track of message size we can read whole messages
+    protected ByteBuffer headerBuffer = ByteBuffer.allocate(4);
 
     // A list of ChangeRequest instances
     protected List changeRequests = new LinkedList();
@@ -149,13 +149,18 @@ public abstract class NioService implements Runnable {
     private void read(SelectionKey key) throws IOException {
         SocketChannel socketChannel = (SocketChannel) key.channel();
 
-        // Clear out our read buffer so it's ready for new data
-        this.readBuffer.clear();
-
         // Attempt to read off the channel
-        int numRead;
+        int numRead = 0;
+        ByteBuffer payload = null;
         try {
-            numRead = socketChannel.read(this.readBuffer);
+            headerBuffer.clear();
+            numRead = socketChannel.read(headerBuffer);
+            if (numRead != -1) {
+                headerBuffer.flip();
+                int length = headerBuffer.getInt();
+                payload = ByteBuffer.allocate(length);
+                numRead = socketChannel.read(payload);
+            }
         } catch (IOException e) {
             // The remote forcibly closed the connection, cancel
             // the selection key and close the channel.
@@ -175,7 +180,7 @@ public abstract class NioService implements Runnable {
         }
 
         // Hand the data off to our worker thread
-        this.incomingDataProcessor.processData(socketChannel, this.readBuffer.array(), numRead);
+        this.incomingDataProcessor.processData(socketChannel, payload.array(), numRead);
     }
 
 
@@ -189,8 +194,12 @@ public abstract class NioService implements Runnable {
                 // Write until there's not more data ...
                 while (!queue.isEmpty()) {
                     ByteBuffer buf = (ByteBuffer) queue.get(0);
+                    headerBuffer.clear();
+                    headerBuffer.putInt(buf.limit());
+                    headerBuffer.flip();
+                    socketChannel.write(headerBuffer);
                     socketChannel.write(buf);
-                    if (buf.remaining() > 0) {
+                    if (headerBuffer.remaining() > 0 || buf.remaining() > 0) {
                         // ... or the socket's buffer fills up
                         break;
                     }
