@@ -4,9 +4,11 @@ import gui.MainPanel;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -15,6 +17,7 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import movement.MovementDifficulty;
 import rendering.BoardScene;
@@ -29,7 +32,6 @@ import rendering.playarea.PlayArea;
 import rendering.ship.ShipOutlineToken;
 import rendering.ship.ShipToken;
 import ship.*;
-import rendering.ship.ShipTokenPart;
 import state.LocalBoardState;
 
 
@@ -205,6 +207,16 @@ public class Main extends Application {
         primaryStage.setTitle("XWing Duel");
         primaryStage.setScene(topScene);
         primaryStage.show();
+
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        dialog.setTitle("Sample Popup Window");
+
+        Pane pane = FXMLLoader.load(getClass().getResource("../layout/initiative.fxml"));
+        Scene dialogScene = new Scene(pane, 500, 500);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     /**
