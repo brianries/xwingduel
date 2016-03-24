@@ -12,7 +12,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="layout.InitiativePaneController">
    <children>
-      <Button fx:id="rollInitButton" layoutX="175.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Roll Initiative" />
+      <Button fx:id="rollInitButton" layoutX="175.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Roll Initiative" onAction="#handleRollInitiativeButtonAction"/>
       <TextArea fx:id="player1TextArea" layoutX="31.0" layoutY="50.0" prefHeight="389.0" prefWidth="200.0" />
       <Separator layoutX="231.0" orientation="VERTICAL" prefHeight="450.0" prefWidth="39.0" />
       <TextArea fx:id="player2TextArea" layoutX="270.0" layoutY="50.0" prefHeight="389.0" prefWidth="200.0" />

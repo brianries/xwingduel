@@ -8,11 +8,11 @@ import java.util.Random;
 public class Roller {
     static long seed = 544321211l; static Random rand = new Random(seed);
 //    static Random rand = new Random(System.nanoTime());
-    static RedDie redDie = new RedDie();
-    static BlackDie blackDie = new BlackDie();
-    static BlueDie blueDie = new BlueDie();
-    static XRedDie xRedDie = new XRedDie();
-    static XGreenDie xGreenDie = new XGreenDie();
+    public static RedDie redDie = new RedDie();
+    public static BlackDie blackDie = new BlackDie();
+    public static BlueDie blueDie = new BlueDie();
+    public static XRedDie xRedDie = new XRedDie();
+    public static XGreenDie xGreenDie = new XGreenDie();
 
     public static DieFace rollRedDie() {
         return roll(redDie);
@@ -29,6 +29,17 @@ public class Roller {
 
     public static DieFace roll(Die die) {
         return die.result(rand.nextInt(die.faces.length));
+    }
+
+    public static String roll(Die die, int times) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < times; i++) {
+            if (i>0) sb.append("\n");
+            sb.append(die.result(rand.nextInt(die.faces.length)));
+        }
+
+        return sb.toString();
     }
 
 

@@ -1,5 +1,8 @@
 package layout;
 
+import dws.Roller;
+import dws.XRedDie;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,10 +30,21 @@ public class InitiativePaneController implements Initializable {
         assert player1TextArea != null : "fx:id=\"player1TextArea\" was not injected: check your FXML file 'InitiativePane.fxml'.";
         assert player2TextArea != null : "fx:id=\"player2TextArea\" was not injected: check your FXML file 'InitiativePane.fxml'.";
 
-        rollInitButton.setOnAction(event -> System.out.println("Message = " + message));
+//        rollInitButton.setOnAction(event -> System.out.println("Message = " + message));
     }
 
     public void initData(String message) {
         this.message = message;
     }
+
+    @FXML protected void handleRollInitiativeButtonAction(ActionEvent event) {
+        System.out.println("button pressed event");
+        String resultPlayer1 = Roller.roll(Roller.xRedDie, 4);
+        System.out.println(resultPlayer1);
+        String resultPlayer2 = Roller.roll(Roller.xRedDie, 4);
+        System.out.println(resultPlayer2);
+        player1TextArea.setText(resultPlayer1);
+        player2TextArea.setText(resultPlayer2);
+    }
+
 }
