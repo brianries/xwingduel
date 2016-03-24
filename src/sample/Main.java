@@ -19,6 +19,7 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import layout.InitiativePaneController;
 import movement.MovementDifficulty;
 import rendering.BoardScene;
 import rendering.movement.MovementTemplate;
@@ -213,7 +214,10 @@ public class Main extends Application {
         dialog.initOwner(primaryStage);
         dialog.setTitle("Sample Popup Window");
 
-        Pane pane = FXMLLoader.load(getClass().getResource("../layout/initiative.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../layout/InitiativePane.fxml"));
+        Pane pane = loader.load();
+        InitiativePaneController controller =  loader.getController();
+        controller.initData("foobar");
         Scene dialogScene = new Scene(pane, 500, 500);
         dialog.setScene(dialogScene);
         dialog.show();
