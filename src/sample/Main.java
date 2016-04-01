@@ -1,14 +1,13 @@
 package sample;
 
+import gui.ObstacleSelectionPane;
 import gui.MainPanel;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -19,7 +18,6 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import layout.InitiativePaneController;
 import movement.MovementDifficulty;
 import rendering.BoardScene;
 import rendering.movement.MovementTemplate;
@@ -209,11 +207,18 @@ public class Main extends Application {
         primaryStage.setScene(topScene);
         primaryStage.show();
 
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(primaryStage);
-        dialog.setTitle("Sample Popup Window");
+        Stage asteroidDialog = new Stage();
+        asteroidDialog.initModality(Modality.APPLICATION_MODAL);
+        asteroidDialog.initOwner(primaryStage);
+        asteroidDialog.setTitle("Select Obstacles");
 
+
+        //Stage dialog = new Stage();
+        //dialog.initModality(Modality.APPLICATION_MODAL);
+        //dialog.initOwner(primaryStage);
+        //dialog.setTitle("Sample Popup Window");
+
+        /*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../layout/InitiativePane.fxml"));
         Pane pane = loader.load();
         InitiativePaneController controller =  loader.getController();
@@ -221,6 +226,12 @@ public class Main extends Application {
         Scene dialogScene = new Scene(pane, 500, 500);
         dialog.setScene(dialogScene);
         dialog.show();
+        */
+
+        ObstacleSelectionPane pane = new ObstacleSelectionPane(200);
+        Scene asteroidScene = new Scene(pane, 300, 200);
+        asteroidDialog.setScene(asteroidScene);
+        asteroidDialog.show();
     }
 
     /**
