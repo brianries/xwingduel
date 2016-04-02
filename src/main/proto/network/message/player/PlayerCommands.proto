@@ -1,0 +1,21 @@
+syntax="proto3";
+
+option java_package="network.message.player";
+option java_outer_classname="PlayerCommands";
+
+message BaseCommand {
+    oneof command {
+        AddSquadron addSquadron = 1;
+        PlaceObstacle placeObstacle = 2;
+    }
+}
+
+message AddSquadron {
+    int32 numAttackDice = 1;
+    int32 numDefenseDice = 2;
+}
+
+
+message PlaceObstacle {
+    int32 obstacleType = 1;
+}
