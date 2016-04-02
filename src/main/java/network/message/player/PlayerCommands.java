@@ -767,14 +767,46 @@ public final class PlayerCommands {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int32 numAttackDice = 1;</code>
+     * <code>optional int32 faction = 1;</code>
      */
-    int getNumAttackDice();
+    int getFaction();
 
     /**
-     * <code>optional int32 numDefenseDice = 2;</code>
+     * <code>repeated int32 selectedObstacleTypes = 2;</code>
      */
-    int getNumDefenseDice();
+    java.util.List<java.lang.Integer> getSelectedObstacleTypesList();
+    /**
+     * <code>repeated int32 selectedObstacleTypes = 2;</code>
+     */
+    int getSelectedObstacleTypesCount();
+    /**
+     * <code>repeated int32 selectedObstacleTypes = 2;</code>
+     */
+    int getSelectedObstacleTypes(int index);
+
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    java.util.List<network.message.player.PlayerCommands.UnitSubmission> 
+        getUnitsList();
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    network.message.player.PlayerCommands.UnitSubmission getUnits(int index);
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    int getUnitsCount();
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    java.util.List<? extends network.message.player.PlayerCommands.UnitSubmissionOrBuilder> 
+        getUnitsOrBuilderList();
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    network.message.player.PlayerCommands.UnitSubmissionOrBuilder getUnitsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code AddSquadron}
@@ -788,8 +820,9 @@ public final class PlayerCommands {
       super(builder);
     }
     private AddSquadron() {
-      numAttackDice_ = 0;
-      numDefenseDice_ = 0;
+      faction_ = 0;
+      selectedObstacleTypes_ = java.util.Collections.emptyList();
+      units_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -818,12 +851,36 @@ public final class PlayerCommands {
             }
             case 8: {
 
-              numAttackDice_ = input.readInt32();
+              faction_ = input.readInt32();
               break;
             }
             case 16: {
-
-              numDefenseDice_ = input.readInt32();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                selectedObstacleTypes_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              selectedObstacleTypes_.add(input.readInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                selectedObstacleTypes_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                selectedObstacleTypes_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                units_ = new java.util.ArrayList<network.message.player.PlayerCommands.UnitSubmission>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              units_.add(input.readMessage(network.message.player.PlayerCommands.UnitSubmission.parser(), extensionRegistry));
               break;
             }
           }
@@ -835,6 +892,12 @@ public final class PlayerCommands {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          selectedObstacleTypes_ = java.util.Collections.unmodifiableList(selectedObstacleTypes_);
+        }
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          units_ = java.util.Collections.unmodifiableList(units_);
+        }
         makeExtensionsImmutable();
       }
     }
@@ -850,22 +913,72 @@ public final class PlayerCommands {
               network.message.player.PlayerCommands.AddSquadron.class, network.message.player.PlayerCommands.AddSquadron.Builder.class);
     }
 
-    public static final int NUMATTACKDICE_FIELD_NUMBER = 1;
-    private int numAttackDice_;
+    private int bitField0_;
+    public static final int FACTION_FIELD_NUMBER = 1;
+    private int faction_;
     /**
-     * <code>optional int32 numAttackDice = 1;</code>
+     * <code>optional int32 faction = 1;</code>
      */
-    public int getNumAttackDice() {
-      return numAttackDice_;
+    public int getFaction() {
+      return faction_;
     }
 
-    public static final int NUMDEFENSEDICE_FIELD_NUMBER = 2;
-    private int numDefenseDice_;
+    public static final int SELECTEDOBSTACLETYPES_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> selectedObstacleTypes_;
     /**
-     * <code>optional int32 numDefenseDice = 2;</code>
+     * <code>repeated int32 selectedObstacleTypes = 2;</code>
      */
-    public int getNumDefenseDice() {
-      return numDefenseDice_;
+    public java.util.List<java.lang.Integer>
+        getSelectedObstacleTypesList() {
+      return selectedObstacleTypes_;
+    }
+    /**
+     * <code>repeated int32 selectedObstacleTypes = 2;</code>
+     */
+    public int getSelectedObstacleTypesCount() {
+      return selectedObstacleTypes_.size();
+    }
+    /**
+     * <code>repeated int32 selectedObstacleTypes = 2;</code>
+     */
+    public int getSelectedObstacleTypes(int index) {
+      return selectedObstacleTypes_.get(index);
+    }
+    private int selectedObstacleTypesMemoizedSerializedSize = -1;
+
+    public static final int UNITS_FIELD_NUMBER = 3;
+    private java.util.List<network.message.player.PlayerCommands.UnitSubmission> units_;
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    public java.util.List<network.message.player.PlayerCommands.UnitSubmission> getUnitsList() {
+      return units_;
+    }
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    public java.util.List<? extends network.message.player.PlayerCommands.UnitSubmissionOrBuilder> 
+        getUnitsOrBuilderList() {
+      return units_;
+    }
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    public int getUnitsCount() {
+      return units_.size();
+    }
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    public network.message.player.PlayerCommands.UnitSubmission getUnits(int index) {
+      return units_.get(index);
+    }
+    /**
+     * <code>repeated .UnitSubmission units = 3;</code>
+     */
+    public network.message.player.PlayerCommands.UnitSubmissionOrBuilder getUnitsOrBuilder(
+        int index) {
+      return units_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -880,11 +993,19 @@ public final class PlayerCommands {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (numAttackDice_ != 0) {
-        output.writeInt32(1, numAttackDice_);
+      getSerializedSize();
+      if (faction_ != 0) {
+        output.writeInt32(1, faction_);
       }
-      if (numDefenseDice_ != 0) {
-        output.writeInt32(2, numDefenseDice_);
+      if (getSelectedObstacleTypesList().size() > 0) {
+        output.writeRawVarint32(18);
+        output.writeRawVarint32(selectedObstacleTypesMemoizedSerializedSize);
+      }
+      for (int i = 0; i < selectedObstacleTypes_.size(); i++) {
+        output.writeInt32NoTag(selectedObstacleTypes_.get(i));
+      }
+      for (int i = 0; i < units_.size(); i++) {
+        output.writeMessage(3, units_.get(i));
       }
     }
 
@@ -893,13 +1014,27 @@ public final class PlayerCommands {
       if (size != -1) return size;
 
       size = 0;
-      if (numAttackDice_ != 0) {
+      if (faction_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, numAttackDice_);
+          .computeInt32Size(1, faction_);
       }
-      if (numDefenseDice_ != 0) {
+      {
+        int dataSize = 0;
+        for (int i = 0; i < selectedObstacleTypes_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(selectedObstacleTypes_.get(i));
+        }
+        size += dataSize;
+        if (!getSelectedObstacleTypesList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        selectedObstacleTypesMemoizedSerializedSize = dataSize;
+      }
+      for (int i = 0; i < units_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, numDefenseDice_);
+          .computeMessageSize(3, units_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -1008,14 +1143,21 @@ public final class PlayerCommands {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getUnitsFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        numAttackDice_ = 0;
+        faction_ = 0;
 
-        numDefenseDice_ = 0;
-
+        selectedObstacleTypes_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        if (unitsBuilder_ == null) {
+          units_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          unitsBuilder_.clear();
+        }
         return this;
       }
 
@@ -1038,8 +1180,24 @@ public final class PlayerCommands {
 
       public network.message.player.PlayerCommands.AddSquadron buildPartial() {
         network.message.player.PlayerCommands.AddSquadron result = new network.message.player.PlayerCommands.AddSquadron(this);
-        result.numAttackDice_ = numAttackDice_;
-        result.numDefenseDice_ = numDefenseDice_;
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.faction_ = faction_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          selectedObstacleTypes_ = java.util.Collections.unmodifiableList(selectedObstacleTypes_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.selectedObstacleTypes_ = selectedObstacleTypes_;
+        if (unitsBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            units_ = java.util.Collections.unmodifiableList(units_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.units_ = units_;
+        } else {
+          result.units_ = unitsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -1055,11 +1213,44 @@ public final class PlayerCommands {
 
       public Builder mergeFrom(network.message.player.PlayerCommands.AddSquadron other) {
         if (other == network.message.player.PlayerCommands.AddSquadron.getDefaultInstance()) return this;
-        if (other.getNumAttackDice() != 0) {
-          setNumAttackDice(other.getNumAttackDice());
+        if (other.getFaction() != 0) {
+          setFaction(other.getFaction());
         }
-        if (other.getNumDefenseDice() != 0) {
-          setNumDefenseDice(other.getNumDefenseDice());
+        if (!other.selectedObstacleTypes_.isEmpty()) {
+          if (selectedObstacleTypes_.isEmpty()) {
+            selectedObstacleTypes_ = other.selectedObstacleTypes_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureSelectedObstacleTypesIsMutable();
+            selectedObstacleTypes_.addAll(other.selectedObstacleTypes_);
+          }
+          onChanged();
+        }
+        if (unitsBuilder_ == null) {
+          if (!other.units_.isEmpty()) {
+            if (units_.isEmpty()) {
+              units_ = other.units_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureUnitsIsMutable();
+              units_.addAll(other.units_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.units_.isEmpty()) {
+            if (unitsBuilder_.isEmpty()) {
+              unitsBuilder_.dispose();
+              unitsBuilder_ = null;
+              units_ = other.units_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              unitsBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getUnitsFieldBuilder() : null;
+            } else {
+              unitsBuilder_.addAllMessages(other.units_);
+            }
+          }
         }
         onChanged();
         return this;
@@ -1086,57 +1277,338 @@ public final class PlayerCommands {
         }
         return this;
       }
+      private int bitField0_;
 
-      private int numAttackDice_ ;
+      private int faction_ ;
       /**
-       * <code>optional int32 numAttackDice = 1;</code>
+       * <code>optional int32 faction = 1;</code>
        */
-      public int getNumAttackDice() {
-        return numAttackDice_;
+      public int getFaction() {
+        return faction_;
       }
       /**
-       * <code>optional int32 numAttackDice = 1;</code>
+       * <code>optional int32 faction = 1;</code>
        */
-      public Builder setNumAttackDice(int value) {
+      public Builder setFaction(int value) {
         
-        numAttackDice_ = value;
+        faction_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 numAttackDice = 1;</code>
+       * <code>optional int32 faction = 1;</code>
        */
-      public Builder clearNumAttackDice() {
+      public Builder clearFaction() {
         
-        numAttackDice_ = 0;
+        faction_ = 0;
         onChanged();
         return this;
       }
 
-      private int numDefenseDice_ ;
-      /**
-       * <code>optional int32 numDefenseDice = 2;</code>
-       */
-      public int getNumDefenseDice() {
-        return numDefenseDice_;
+      private java.util.List<java.lang.Integer> selectedObstacleTypes_ = java.util.Collections.emptyList();
+      private void ensureSelectedObstacleTypesIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          selectedObstacleTypes_ = new java.util.ArrayList<java.lang.Integer>(selectedObstacleTypes_);
+          bitField0_ |= 0x00000002;
+         }
       }
       /**
-       * <code>optional int32 numDefenseDice = 2;</code>
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
        */
-      public Builder setNumDefenseDice(int value) {
-        
-        numDefenseDice_ = value;
+      public java.util.List<java.lang.Integer>
+          getSelectedObstacleTypesList() {
+        return java.util.Collections.unmodifiableList(selectedObstacleTypes_);
+      }
+      /**
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
+       */
+      public int getSelectedObstacleTypesCount() {
+        return selectedObstacleTypes_.size();
+      }
+      /**
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
+       */
+      public int getSelectedObstacleTypes(int index) {
+        return selectedObstacleTypes_.get(index);
+      }
+      /**
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
+       */
+      public Builder setSelectedObstacleTypes(
+          int index, int value) {
+        ensureSelectedObstacleTypesIsMutable();
+        selectedObstacleTypes_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 numDefenseDice = 2;</code>
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
        */
-      public Builder clearNumDefenseDice() {
-        
-        numDefenseDice_ = 0;
+      public Builder addSelectedObstacleTypes(int value) {
+        ensureSelectedObstacleTypesIsMutable();
+        selectedObstacleTypes_.add(value);
         onChanged();
         return this;
+      }
+      /**
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
+       */
+      public Builder addAllSelectedObstacleTypes(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureSelectedObstacleTypesIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, selectedObstacleTypes_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 selectedObstacleTypes = 2;</code>
+       */
+      public Builder clearSelectedObstacleTypes() {
+        selectedObstacleTypes_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<network.message.player.PlayerCommands.UnitSubmission> units_ =
+        java.util.Collections.emptyList();
+      private void ensureUnitsIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          units_ = new java.util.ArrayList<network.message.player.PlayerCommands.UnitSubmission>(units_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          network.message.player.PlayerCommands.UnitSubmission, network.message.player.PlayerCommands.UnitSubmission.Builder, network.message.player.PlayerCommands.UnitSubmissionOrBuilder> unitsBuilder_;
+
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public java.util.List<network.message.player.PlayerCommands.UnitSubmission> getUnitsList() {
+        if (unitsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(units_);
+        } else {
+          return unitsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public int getUnitsCount() {
+        if (unitsBuilder_ == null) {
+          return units_.size();
+        } else {
+          return unitsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public network.message.player.PlayerCommands.UnitSubmission getUnits(int index) {
+        if (unitsBuilder_ == null) {
+          return units_.get(index);
+        } else {
+          return unitsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder setUnits(
+          int index, network.message.player.PlayerCommands.UnitSubmission value) {
+        if (unitsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureUnitsIsMutable();
+          units_.set(index, value);
+          onChanged();
+        } else {
+          unitsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder setUnits(
+          int index, network.message.player.PlayerCommands.UnitSubmission.Builder builderForValue) {
+        if (unitsBuilder_ == null) {
+          ensureUnitsIsMutable();
+          units_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          unitsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder addUnits(network.message.player.PlayerCommands.UnitSubmission value) {
+        if (unitsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureUnitsIsMutable();
+          units_.add(value);
+          onChanged();
+        } else {
+          unitsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder addUnits(
+          int index, network.message.player.PlayerCommands.UnitSubmission value) {
+        if (unitsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureUnitsIsMutable();
+          units_.add(index, value);
+          onChanged();
+        } else {
+          unitsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder addUnits(
+          network.message.player.PlayerCommands.UnitSubmission.Builder builderForValue) {
+        if (unitsBuilder_ == null) {
+          ensureUnitsIsMutable();
+          units_.add(builderForValue.build());
+          onChanged();
+        } else {
+          unitsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder addUnits(
+          int index, network.message.player.PlayerCommands.UnitSubmission.Builder builderForValue) {
+        if (unitsBuilder_ == null) {
+          ensureUnitsIsMutable();
+          units_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          unitsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder addAllUnits(
+          java.lang.Iterable<? extends network.message.player.PlayerCommands.UnitSubmission> values) {
+        if (unitsBuilder_ == null) {
+          ensureUnitsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, units_);
+          onChanged();
+        } else {
+          unitsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder clearUnits() {
+        if (unitsBuilder_ == null) {
+          units_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          unitsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public Builder removeUnits(int index) {
+        if (unitsBuilder_ == null) {
+          ensureUnitsIsMutable();
+          units_.remove(index);
+          onChanged();
+        } else {
+          unitsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public network.message.player.PlayerCommands.UnitSubmission.Builder getUnitsBuilder(
+          int index) {
+        return getUnitsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public network.message.player.PlayerCommands.UnitSubmissionOrBuilder getUnitsOrBuilder(
+          int index) {
+        if (unitsBuilder_ == null) {
+          return units_.get(index);  } else {
+          return unitsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public java.util.List<? extends network.message.player.PlayerCommands.UnitSubmissionOrBuilder> 
+           getUnitsOrBuilderList() {
+        if (unitsBuilder_ != null) {
+          return unitsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(units_);
+        }
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public network.message.player.PlayerCommands.UnitSubmission.Builder addUnitsBuilder() {
+        return getUnitsFieldBuilder().addBuilder(
+            network.message.player.PlayerCommands.UnitSubmission.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public network.message.player.PlayerCommands.UnitSubmission.Builder addUnitsBuilder(
+          int index) {
+        return getUnitsFieldBuilder().addBuilder(
+            index, network.message.player.PlayerCommands.UnitSubmission.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .UnitSubmission units = 3;</code>
+       */
+      public java.util.List<network.message.player.PlayerCommands.UnitSubmission.Builder> 
+           getUnitsBuilderList() {
+        return getUnitsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          network.message.player.PlayerCommands.UnitSubmission, network.message.player.PlayerCommands.UnitSubmission.Builder, network.message.player.PlayerCommands.UnitSubmissionOrBuilder> 
+          getUnitsFieldBuilder() {
+        if (unitsBuilder_ == null) {
+          unitsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              network.message.player.PlayerCommands.UnitSubmission, network.message.player.PlayerCommands.UnitSubmission.Builder, network.message.player.PlayerCommands.UnitSubmissionOrBuilder>(
+                  units_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          units_ = null;
+        }
+        return unitsBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1204,6 +1676,19 @@ public final class PlayerCommands {
      * <code>optional int32 obstacleType = 1;</code>
      */
     int getObstacleType();
+
+    /**
+     * <code>repeated float transform = 2;</code>
+     */
+    java.util.List<java.lang.Float> getTransformList();
+    /**
+     * <code>repeated float transform = 2;</code>
+     */
+    int getTransformCount();
+    /**
+     * <code>repeated float transform = 2;</code>
+     */
+    float getTransform(int index);
   }
   /**
    * Protobuf type {@code PlaceObstacle}
@@ -1218,6 +1703,7 @@ public final class PlayerCommands {
     }
     private PlaceObstacle() {
       obstacleType_ = 0;
+      transform_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -1249,6 +1735,27 @@ public final class PlayerCommands {
               obstacleType_ = input.readInt32();
               break;
             }
+            case 21: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                transform_ = new java.util.ArrayList<java.lang.Float>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              transform_.add(input.readFloat());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                transform_ = new java.util.ArrayList<java.lang.Float>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                transform_.add(input.readFloat());
+              }
+              input.popLimit(limit);
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1258,6 +1765,9 @@ public final class PlayerCommands {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          transform_ = java.util.Collections.unmodifiableList(transform_);
+        }
         makeExtensionsImmutable();
       }
     }
@@ -1273,6 +1783,7 @@ public final class PlayerCommands {
               network.message.player.PlayerCommands.PlaceObstacle.class, network.message.player.PlayerCommands.PlaceObstacle.Builder.class);
     }
 
+    private int bitField0_;
     public static final int OBSTACLETYPE_FIELD_NUMBER = 1;
     private int obstacleType_;
     /**
@@ -1281,6 +1792,29 @@ public final class PlayerCommands {
     public int getObstacleType() {
       return obstacleType_;
     }
+
+    public static final int TRANSFORM_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Float> transform_;
+    /**
+     * <code>repeated float transform = 2;</code>
+     */
+    public java.util.List<java.lang.Float>
+        getTransformList() {
+      return transform_;
+    }
+    /**
+     * <code>repeated float transform = 2;</code>
+     */
+    public int getTransformCount() {
+      return transform_.size();
+    }
+    /**
+     * <code>repeated float transform = 2;</code>
+     */
+    public float getTransform(int index) {
+      return transform_.get(index);
+    }
+    private int transformMemoizedSerializedSize = -1;
 
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1294,8 +1828,16 @@ public final class PlayerCommands {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (obstacleType_ != 0) {
         output.writeInt32(1, obstacleType_);
+      }
+      if (getTransformList().size() > 0) {
+        output.writeRawVarint32(18);
+        output.writeRawVarint32(transformMemoizedSerializedSize);
+      }
+      for (int i = 0; i < transform_.size(); i++) {
+        output.writeFloatNoTag(transform_.get(i));
       }
     }
 
@@ -1307,6 +1849,17 @@ public final class PlayerCommands {
       if (obstacleType_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, obstacleType_);
+      }
+      {
+        int dataSize = 0;
+        dataSize = 4 * getTransformList().size();
+        size += dataSize;
+        if (!getTransformList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        transformMemoizedSerializedSize = dataSize;
       }
       memoizedSize = size;
       return size;
@@ -1421,6 +1974,8 @@ public final class PlayerCommands {
         super.clear();
         obstacleType_ = 0;
 
+        transform_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -1443,7 +1998,15 @@ public final class PlayerCommands {
 
       public network.message.player.PlayerCommands.PlaceObstacle buildPartial() {
         network.message.player.PlayerCommands.PlaceObstacle result = new network.message.player.PlayerCommands.PlaceObstacle(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
         result.obstacleType_ = obstacleType_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          transform_ = java.util.Collections.unmodifiableList(transform_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.transform_ = transform_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -1461,6 +2024,16 @@ public final class PlayerCommands {
         if (other == network.message.player.PlayerCommands.PlaceObstacle.getDefaultInstance()) return this;
         if (other.getObstacleType() != 0) {
           setObstacleType(other.getObstacleType());
+        }
+        if (!other.transform_.isEmpty()) {
+          if (transform_.isEmpty()) {
+            transform_ = other.transform_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureTransformIsMutable();
+            transform_.addAll(other.transform_);
+          }
+          onChanged();
         }
         onChanged();
         return this;
@@ -1487,6 +2060,7 @@ public final class PlayerCommands {
         }
         return this;
       }
+      private int bitField0_;
 
       private int obstacleType_ ;
       /**
@@ -1510,6 +2084,72 @@ public final class PlayerCommands {
       public Builder clearObstacleType() {
         
         obstacleType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Float> transform_ = java.util.Collections.emptyList();
+      private void ensureTransformIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          transform_ = new java.util.ArrayList<java.lang.Float>(transform_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public java.util.List<java.lang.Float>
+          getTransformList() {
+        return java.util.Collections.unmodifiableList(transform_);
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public int getTransformCount() {
+        return transform_.size();
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public float getTransform(int index) {
+        return transform_.get(index);
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public Builder setTransform(
+          int index, float value) {
+        ensureTransformIsMutable();
+        transform_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public Builder addTransform(float value) {
+        ensureTransformIsMutable();
+        transform_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public Builder addAllTransform(
+          java.lang.Iterable<? extends java.lang.Float> values) {
+        ensureTransformIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, transform_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated float transform = 2;</code>
+       */
+      public Builder clearTransform() {
+        transform_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -1571,6 +2211,333 @@ public final class PlayerCommands {
 
   }
 
+  public interface UnitSubmissionOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:UnitSubmission)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code UnitSubmission}
+   *
+   * <pre>
+   * Ship
+   * Pilot
+   * Upgrade
+   * </pre>
+   */
+  public  static final class UnitSubmission extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:UnitSubmission)
+      UnitSubmissionOrBuilder {
+    // Use UnitSubmission.newBuilder() to construct.
+    private UnitSubmission(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private UnitSubmission() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private UnitSubmission(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return network.message.player.PlayerCommands.internal_static_UnitSubmission_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return network.message.player.PlayerCommands.internal_static_UnitSubmission_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              network.message.player.PlayerCommands.UnitSubmission.class, network.message.player.PlayerCommands.UnitSubmission.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static network.message.player.PlayerCommands.UnitSubmission parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(network.message.player.PlayerCommands.UnitSubmission prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code UnitSubmission}
+     *
+     * <pre>
+     * Ship
+     * Pilot
+     * Upgrade
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:UnitSubmission)
+        network.message.player.PlayerCommands.UnitSubmissionOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return network.message.player.PlayerCommands.internal_static_UnitSubmission_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return network.message.player.PlayerCommands.internal_static_UnitSubmission_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                network.message.player.PlayerCommands.UnitSubmission.class, network.message.player.PlayerCommands.UnitSubmission.Builder.class);
+      }
+
+      // Construct using network.message.player.PlayerCommands.UnitSubmission.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return network.message.player.PlayerCommands.internal_static_UnitSubmission_descriptor;
+      }
+
+      public network.message.player.PlayerCommands.UnitSubmission getDefaultInstanceForType() {
+        return network.message.player.PlayerCommands.UnitSubmission.getDefaultInstance();
+      }
+
+      public network.message.player.PlayerCommands.UnitSubmission build() {
+        network.message.player.PlayerCommands.UnitSubmission result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public network.message.player.PlayerCommands.UnitSubmission buildPartial() {
+        network.message.player.PlayerCommands.UnitSubmission result = new network.message.player.PlayerCommands.UnitSubmission(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof network.message.player.PlayerCommands.UnitSubmission) {
+          return mergeFrom((network.message.player.PlayerCommands.UnitSubmission)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(network.message.player.PlayerCommands.UnitSubmission other) {
+        if (other == network.message.player.PlayerCommands.UnitSubmission.getDefaultInstance()) return this;
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        network.message.player.PlayerCommands.UnitSubmission parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (network.message.player.PlayerCommands.UnitSubmission) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:UnitSubmission)
+    }
+
+    // @@protoc_insertion_point(class_scope:UnitSubmission)
+    private static final network.message.player.PlayerCommands.UnitSubmission DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new network.message.player.PlayerCommands.UnitSubmission();
+    }
+
+    public static network.message.player.PlayerCommands.UnitSubmission getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UnitSubmission>
+        PARSER = new com.google.protobuf.AbstractParser<UnitSubmission>() {
+      public UnitSubmission parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new UnitSubmission(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<UnitSubmission> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UnitSubmission> getParserForType() {
+      return PARSER;
+    }
+
+    public network.message.player.PlayerCommands.UnitSubmission getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_BaseCommand_descriptor;
   private static
@@ -1586,6 +2553,11 @@ public final class PlayerCommands {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_PlaceObstacle_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_UnitSubmission_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_UnitSubmission_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1599,10 +2571,12 @@ public final class PlayerCommands {
       "PlayerCommands.proto\"f\n\013BaseCommand\022#\n\013a" +
       "ddSquadron\030\001 \001(\0132\014.AddSquadronH\000\022\'\n\rplac" +
       "eObstacle\030\002 \001(\0132\016.PlaceObstacleH\000B\t\n\007com" +
-      "mand\"<\n\013AddSquadron\022\025\n\rnumAttackDice\030\001 \001" +
-      "(\005\022\026\n\016numDefenseDice\030\002 \001(\005\"%\n\rPlaceObsta" +
-      "cle\022\024\n\014obstacleType\030\001 \001(\005B(\n\026network.mes" +
-      "sage.playerB\016PlayerCommandsb\006proto3"
+      "mand\"]\n\013AddSquadron\022\017\n\007faction\030\001 \001(\005\022\035\n\025" +
+      "selectedObstacleTypes\030\002 \003(\005\022\036\n\005units\030\003 \003" +
+      "(\0132\017.UnitSubmission\"8\n\rPlaceObstacle\022\024\n\014" +
+      "obstacleType\030\001 \001(\005\022\021\n\ttransform\030\002 \003(\002\"\020\n" +
+      "\016UnitSubmissionB(\n\026network.message.playe" +
+      "rB\016PlayerCommandsb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1627,13 +2601,19 @@ public final class PlayerCommands {
     internal_static_AddSquadron_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AddSquadron_descriptor,
-        new java.lang.String[] { "NumAttackDice", "NumDefenseDice", });
+        new java.lang.String[] { "Faction", "SelectedObstacleTypes", "Units", });
     internal_static_PlaceObstacle_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_PlaceObstacle_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_PlaceObstacle_descriptor,
-        new java.lang.String[] { "ObstacleType", });
+        new java.lang.String[] { "ObstacleType", "Transform", });
+    internal_static_UnitSubmission_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_UnitSubmission_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_UnitSubmission_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

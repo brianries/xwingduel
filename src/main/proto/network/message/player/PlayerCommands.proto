@@ -11,11 +11,18 @@ message BaseCommand {
 }
 
 message AddSquadron {
-    int32 numAttackDice = 1;
-    int32 numDefenseDice = 2;
+    int32 faction = 1;
+    repeated int32 selectedObstacleTypes = 2;
+    repeated UnitSubmission units = 3;
 }
-
 
 message PlaceObstacle {
     int32 obstacleType = 1;
+    repeated float transform = 2;
+}
+
+message UnitSubmission {
+    // Ship
+    // Pilot
+    // Upgrade
 }
