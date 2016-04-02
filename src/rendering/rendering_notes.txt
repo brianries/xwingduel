@@ -1,6 +1,0 @@
-Notes:
-
-Create a MVC structure for the rendering (model-view-controller).   The model will be a board state, the view will be this 'board renderer' which will keep a scene graph.  The controller will be various, but mostly consisting
-of the GameClient receiving commands to update the board state.  Setup will be a control that is managed locally and remotely, so users can move the ships around in real time, and then 'accept' a final position which will propagate to the server
-and back to the two players.
-
