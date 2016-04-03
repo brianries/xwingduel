@@ -1,7 +1,7 @@
 package state;
 
 import base.*;
-import network.message.server.command.BoardStateUpdateCommand;
+import network.message.ServerCommands;
 import rendering.obstacles.Obstacle;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class ServerBoardState implements BoardState {
     private CopyOnWriteArrayList<UpdateListener> updateListeners;
 
     public interface UpdateListener {
-        void handleUpdate(BoardStateUpdateCommand update);
+        void handleUpdate(ServerCommands.UpdateBoardState update);
     }
 
     public ServerBoardState() {
@@ -43,10 +43,21 @@ public class ServerBoardState implements BoardState {
         } else {
             playerTwoUnitMap.put(unit.getUnitId(), unit);
         }
-        handleUpdateEvent(new BoardStateUpdateCommand());
+        ServerCommands.UpdateBoardState updateMsg = ServerCommands.UpdateBoardState.newBuilder()
+                // Set fields here
+                .build();
+
+        /*
+        ServerCommands.BaseCommand baseCommand = ServerCommands.BaseCommand.newBuilder()
+                .setType(ServerCommands.BaseCommand.Type.UPDATE_BOARD_STATE)
+                .setMessageId(0) // TODO: keep an internal, consistent counter for message ids
+                .setUpdateBoardState(updateMsg)
+                .build();*/
+
+        handleUpdateEvent(updateMsg);
     }
 
-    public synchronized void handleUpdateEvent(BoardStateUpdateCommand update) {
+    public synchronized void handleUpdateEvent(ServerCommands.UpdateBoardState update) {
         for (UpdateListener listener : updateListeners) {
             listener.handleUpdate(update);
         }

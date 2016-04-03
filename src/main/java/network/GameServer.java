@@ -3,15 +3,6 @@ package network;
 
 import base.Player;
 import network.message.*;
-import network.message.player.PlayerCommand;
-import network.message.player.command.AddSquadronCommand;
-import network.message.player.command.PlaceShipCommand;
-import network.message.player.command.RollDiceCommand;
-import network.message.server.ServerResponse;
-import network.message.server.command.BoardStateUpdateCommand;
-import network.message.server.response.AddSquadronResponse;
-import network.message.server.response.PlaceShipResponse;
-import network.message.server.response.RollDiceResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import state.ServerBoardState;
@@ -90,13 +81,14 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
                 serverData = queue.remove(0);
             }
 
-            Message message = MessageSerializationUtil.deserialize(serverData.data);
-            log.debug("Handling server data (" + message.getCommandOrResponse().toString() + ")");
-            switch (message.getCommandOrResponse()) {
-                case COMMAND:
-                    handlePlayerCommand(serverData.channel, (PlayerCommand)message);
+            ProtoMessage.Message message = ProtoMessage.Message.parseFrom(serverData.data);
+            log.debug("Handling server data (" + message.getType().toString() + ")");
+            switch (message.getType()) {
+                case PLAYER_COMMAND:
+                    handlePlayerCommand(serverData.channel, message.getPlayerCommand());
                     break;
-                case RESPONSE:
+                case PLAYER_RESPONSE:
+                    handlePlayerResponse(serverData.channel, message.getPlayerResponse());
                     break;
                 default:
                     // error
@@ -111,51 +103,54 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
         return Player.PLAYER_ONE;
     }
 
-    private void handlePlayerCommand(SocketChannel channel, PlayerCommand playerCommand) {
-        log.debug("Handling player command data (" + playerCommand.getMessageType().toString() + ")");
-        switch (playerCommand.getMessageType()) {
+    private void handlePlayerResponse(SocketChannel channel, PlayerResponses.BaseResponse playerResponse) {
+        //TODO implement
+    }
+
+    private void handlePlayerCommand(SocketChannel channel, PlayerCommands.BaseCommand playerCommand) {
+        log.debug("Handling player command data (" + playerCommand.getType().toString() + ")");
+        switch (playerCommand.getType()) {
             case ADD_SQUADRON:
-                AddSquadronCommand addSquadronCommand = (AddSquadronCommand) playerCommand;
-                sendResponse(channel, new AddSquadronResponse());
-                this.serverBoardState.addSquadron(getPlayerFromChannel(channel), addSquadronCommand.getFaction(), addSquadronCommand.getUnitSubmissions());
+                //AddSquadronCommand addSquadronCommand = (AddSquadronCommand) playerCommand;
+                //sendResponse(channel, new AddSquadronResponse());
+                //this.serverBoardState.addSquadron(getPlayerFromChannel(channel), addSquadronCommand.getFaction(), addSquadronCommand.getUnitSubmissions());
                 break;
 
             case PLACE_SHIP:
-                PlaceShipCommand addShipCommand = (PlaceShipCommand) playerCommand;
-                sendResponse(channel, new PlaceShipResponse());
+              //  PlaceShipCommand addShipCommand = (PlaceShipCommand) playerCommand;
+              //  sendResponse(channel, new PlaceShipResponse());
                 break;
 
             case ROLL_DICE:
-                RollDiceCommand rollDiceCommand = (RollDiceCommand) playerCommand;
+               // RollDiceCommand rollDiceCommand = (RollDiceCommand) playerCommand;
                 // roll some dice
-                sendResponse(channel, new RollDiceResponse());
+               // sendResponse(channel, new RollDiceResponse());
                 break;
         }
     }
 
-    public void sendResponse(SocketChannel channel, ServerResponse response) {
-        log.debug("Sending server response (" + response.getMessageType().toString() + ")");
-        byte[] data;
-        try {
-            data = MessageSerializationUtil.serialize(response);
-        } catch (IOException e) {
-            log.error("Failure to serialize server command " + response + " Stack trace: ", e);
-            return;
-        }
-        nioServer.send(channel, data);
+    public void sendResponse(SocketChannel channel, ServerResponses.BaseResponse response) {
+        log.debug("Sending server response (" + response.getType().toString() + ")");
+
+        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+                .setServerResponse(response)
+                .build();
+
+        nioServer.send(channel, message.toByteArray());
     }
 
 
     @Override
-    public void handleUpdate(BoardStateUpdateCommand update) {
-        byte[] data;
-        try {
-            data = MessageSerializationUtil.serialize(update);
-        } catch (IOException e) {
-            log.error("Failure to serialize server command " + update + " Stack trace: ", e);
-            return;
-        }
-        nioServer.sendAll(data);
+    public void handleUpdate(ServerCommands.UpdateBoardState update) {
+        ServerCommands.BaseCommand serverCommand = ServerCommands.BaseCommand.newBuilder()
+                .setUpdateBoardState(update)
+                .build();
+
+        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+                .setServerCommand(serverCommand)
+                .build();
+
+        nioServer.sendAll(message.toByteArray());
     }
 
     public void shutdown() {

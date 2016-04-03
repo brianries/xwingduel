@@ -1,0 +1,21 @@
+syntax="proto3";
+package player.responses;
+
+option java_package="network.message";
+option java_outer_classname="PlayerResponses";
+
+message BaseResponse {
+    enum Type {
+        COMMAND = 0;
+    }
+    Type type = 1;
+    int32 messageId = 2;
+
+    oneof response {
+        Command command = 3;
+    }
+}
+
+message Command {
+    bool accepted = 1;
+}

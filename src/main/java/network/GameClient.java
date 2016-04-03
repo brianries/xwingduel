@@ -2,16 +2,10 @@ package network;
 
 import base.*;
 import expansions.core.pilots.*;
-import expansions.core.ships.TieFighter;
 import expansions.core.ships.XWing;
 import expansions.core.upgrades.astromech.R2D2;
 import network.message.*;
-import network.message.player.PlayerCommand;
-import network.message.player.command.AddSquadronCommand;
-import network.message.player.command.PlaceShipCommand;
-import network.message.player.command.RollDiceCommand;
-import network.message.server.ServerCommand;
-import network.message.server.ServerResponse;
+import network.message.PlayerCommands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rendering.obstacles.ObstacleType;
@@ -20,7 +14,8 @@ import java.io.*;
 import java.net.InetAddress;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+import static network.message.ServerCommands.BaseCommand.Type.UPDATE_BOARD_STATE;
 
 
 /**
@@ -34,6 +29,8 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     private volatile boolean isRunning = true;
 
     private NioClient client;
+
+    private int clientId;
 
     private Thread nioClientThread;
     private Thread handleDataThread;
@@ -95,14 +92,15 @@ public class GameClient implements NioClient.IncomingDataProcessor {
                 }
             }
 
-            Message message = MessageSerializationUtil.deserialize(serverData.data);
-            log.debug("Handling server data (" + message.getCommandOrResponse().toString() + ")");
-            switch (message.getCommandOrResponse()) {
-                case COMMAND:
-                    handleServerCommand(serverData.channel, (ServerCommand) message);
+            ProtoMessage.Message message = ProtoMessage.Message.parseFrom(serverData.data);
+            //.BaseCommand baseCommand = ServerCommands.BaseCommand.parseFrom(serverData.data);
+            log.debug("Handling server data (" + message.getType().toString() + ")");
+            switch (message.getType()) {
+                case SERVER_COMMAND:
+                    handleServerCommand(serverData.channel, message.getServerCommand());
                     break;
-                case RESPONSE:
-                    handleServerResponse(serverData.channel, (ServerResponse) message);
+                case SERVER_RESPONSE:
+                    handleServerResponse(serverData.channel, message.getServerResponse());
                     break;
                 default:
                     // error
@@ -111,19 +109,50 @@ public class GameClient implements NioClient.IncomingDataProcessor {
         }
     }
 
-    private void handleServerCommand(SocketChannel channel, ServerCommand serverCommand) {
-        log.debug("Handling server command data (" + serverCommand.getMessageType().toString() + ")");
-
+    private void handleServerCommand(SocketChannel channel, ServerCommands.BaseCommand serverCommand) {
+        log.debug("Handling server command data (" + serverCommand.getType().toString() + ")");
+        switch (serverCommand.getType()) {
+            case UPDATE_BOARD_STATE:
+                ServerCommands.UpdateBoardState updateBoardState = serverCommand.getUpdateBoardState();
+                //sendResponse(channel, );
+                //this.serverBoardState.addSquadron(getPlayerFromChannel(channel), addSquadronCommand.getFaction(), addSquadronCommand.getUnitSubmissions());
+                break;
+        }
     }
 
-    private void handleServerResponse(SocketChannel channel, ServerResponse serverResponse) {
-        log.debug("Handling server response data (" + serverResponse.getMessageType().toString() + ")");
+    private void handleServerResponse(SocketChannel channel, ServerResponses.BaseResponse serverResponse) {
+        log.debug("Handling server command data (" + serverResponse.getType().toString() + ")");
+        switch (serverResponse.getType()) {
+            case LOGIN:
+                break;
+            case COMMAND:
+                break;
+        }
     }
 
-    public void sendCommand(PlayerCommand command) throws IOException {
-        log.debug("Sending player command (" + command.getMessageType() + ")");
-        byte[] bytes = MessageSerializationUtil.serialize(command);
-        client.send(bytes);
+    private void handleServerUpdateBoardState(SocketChannel channel, ServerCommands.UpdateBoardState updateBoardState) {
+        log.debug("Handling server update board state");
+    }
+
+
+    public void sendCommand(PlayerCommands.BaseCommand command) throws IOException {
+        log.debug("Sending player command (" + command.getType().toString() + ")");
+
+        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+                .setPlayerCommand(command)
+                .build();
+
+        client.send(message.toByteArray());
+    }
+
+    public void sendResponse(PlayerResponses.BaseResponse response) throws IOException {
+        log.debug("Sending player response (" + response.getType().toString() + ")");
+
+        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+                .setPlayerResponse(response)
+                .build();
+
+        client.send(message.toByteArray());
     }
 
     public void shutdown() throws IOException {
@@ -157,9 +186,11 @@ public class GameClient implements NioClient.IncomingDataProcessor {
                     ObstacleType.ASTEROID_BASE_CORE_2,
             };
 
-            client.sendCommand(new AddSquadronCommand(Faction.REBEL_ALLIANCE, selectedObstacles, rebelUnit1, rebelUnit2, rebelUnit3));
+
+
+          //  client.sendCommand(new AddSquadronCommand(Faction.REBEL_ALLIANCE, selectedObstacles, rebelUnit1, rebelUnit2, rebelUnit3));
             //client.sendCommand(new PlaceShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));
-            client.sendCommand(new RollDiceCommand(2));
+            //client.sendCommand(new RollDiceCommand(2));
             Thread.sleep(3_000);
             client.shutdown();
         } catch (Exception e) {

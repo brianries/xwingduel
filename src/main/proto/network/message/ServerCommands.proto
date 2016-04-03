@@ -1,0 +1,21 @@
+syntax="proto3";
+package server.commands;
+
+option java_package="network.message";
+option java_outer_classname="ServerCommands";
+
+message BaseCommand {
+    enum Type {
+        UPDATE_BOARD_STATE = 0;
+    }
+    Type type = 1;
+    int32 messageId = 2;
+
+    oneof command {
+        UpdateBoardState updateBoardState = 4;
+    }
+}
+
+message UpdateBoardState {
+    // stuff here
+}
