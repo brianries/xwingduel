@@ -8,19 +8,12 @@ import "src/main/proto/network/message/ServerResponses.proto";
 option java_package="network.message";
 option java_outer_classname="ProtoMessage";
 
+// Wrapper class for commands and responses to allow for dynamic message reading
 message Message {
-    enum Type {
-        PLAYER_COMMAND = 0;
-        PLAYER_RESPONSE = 1;
-        SERVER_COMMAND = 2;
-        SERVER_RESPONSE = 3;
-    }
-    Type type = 1;
-
     oneof subMessage {
-        player.commands.BaseCommand playerCommand = 2;
-        player.responses.BaseResponse playerResponse = 3;
-        server.commands.BaseCommand serverCommand = 4;
-        server.responses.BaseResponse serverResponse = 5;
+        player.commands.BaseCommand playerCommand = 1;
+        player.responses.BaseResponse playerResponse = 2;
+        server.commands.BaseCommand serverCommand = 3;
+        server.responses.BaseResponse serverResponse = 4;
     }
 }

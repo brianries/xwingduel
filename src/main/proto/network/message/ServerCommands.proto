@@ -5,14 +5,10 @@ option java_package="network.message";
 option java_outer_classname="ServerCommands";
 
 message BaseCommand {
-    enum Type {
-        UPDATE_BOARD_STATE = 0;
-    }
-    Type type = 1;
-    int32 messageId = 2;
+    int32 messageId = 1;
 
     oneof command {
-        UpdateBoardState updateBoardState = 4;
+        UpdateBoardState updateBoardState = 2;
     }
 }
 

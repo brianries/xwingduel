@@ -5,14 +5,10 @@ option java_package="network.message";
 option java_outer_classname="PlayerResponses";
 
 message BaseResponse {
-    enum Type {
-        COMMAND = 0;
-    }
-    Type type = 1;
-    int32 messageId = 2;
+    int32 messageId = 1;
 
     oneof response {
-        Command command = 3;
+        Command command = 2;
     }
 }
 

@@ -13,29 +13,20 @@ public final class PlayerCommands {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-     */
-    int getTypeValue();
-    /**
-     * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-     */
-    network.message.PlayerCommands.BaseCommand.Type getType();
-
-    /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
      */
     network.message.PlayerCommands.AddSquadron getAddSquadron();
     /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
      */
     network.message.PlayerCommands.AddSquadronOrBuilder getAddSquadronOrBuilder();
 
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
      */
     network.message.PlayerCommands.PlaceObstacle getPlaceObstacle();
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
      */
     network.message.PlayerCommands.PlaceObstacleOrBuilder getPlaceObstacleOrBuilder();
 
@@ -53,7 +44,6 @@ public final class PlayerCommands {
       super(builder);
     }
     private BaseCommand() {
-      type_ = 0;
     }
 
     @java.lang.Override
@@ -80,15 +70,9 @@ public final class PlayerCommands {
               }
               break;
             }
-            case 8: {
-              int rawValue = input.readEnum();
-
-              type_ = rawValue;
-              break;
-            }
-            case 18: {
+            case 10: {
               network.message.PlayerCommands.AddSquadron.Builder subBuilder = null;
-              if (commandCase_ == 2) {
+              if (commandCase_ == 1) {
                 subBuilder = ((network.message.PlayerCommands.AddSquadron) command_).toBuilder();
               }
               command_ =
@@ -97,12 +81,12 @@ public final class PlayerCommands {
                 subBuilder.mergeFrom((network.message.PlayerCommands.AddSquadron) command_);
                 command_ = subBuilder.buildPartial();
               }
-              commandCase_ = 2;
+              commandCase_ = 1;
               break;
             }
-            case 26: {
+            case 18: {
               network.message.PlayerCommands.PlaceObstacle.Builder subBuilder = null;
-              if (commandCase_ == 3) {
+              if (commandCase_ == 2) {
                 subBuilder = ((network.message.PlayerCommands.PlaceObstacle) command_).toBuilder();
               }
               command_ =
@@ -111,7 +95,7 @@ public final class PlayerCommands {
                 subBuilder.mergeFrom((network.message.PlayerCommands.PlaceObstacle) command_);
                 command_ = subBuilder.buildPartial();
               }
-              commandCase_ = 3;
+              commandCase_ = 2;
               break;
             }
           }
@@ -138,176 +122,12 @@ public final class PlayerCommands {
               network.message.PlayerCommands.BaseCommand.class, network.message.PlayerCommands.BaseCommand.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code player.commands.BaseCommand.Type}
-     */
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>ACTION = 0;</code>
-       */
-      ACTION(0, 0),
-      /**
-       * <code>ADD_SQUADRON = 1;</code>
-       */
-      ADD_SQUADRON(1, 1),
-      /**
-       * <code>DECLARE_TARGET = 3;</code>
-       */
-      DECLARE_TARGET(2, 3),
-      /**
-       * <code>DECLOAK = 4;</code>
-       */
-      DECLOAK(3, 4),
-      /**
-       * <code>MANEUVER = 5;</code>
-       */
-      MANEUVER(4, 5),
-      /**
-       * <code>MODIFY_DICE = 6;</code>
-       */
-      MODIFY_DICE(5, 6),
-      /**
-       * <code>PLACE_OBSTACLE = 7;</code>
-       */
-      PLACE_OBSTACLE(6, 7),
-      /**
-       * <code>PLACE_SHIP = 8;</code>
-       */
-      PLACE_SHIP(7, 8),
-      /**
-       * <code>REROLL_DICE = 9;</code>
-       */
-      REROLL_DICE(8, 9),
-      /**
-       * <code>ROLL_DICE = 10;</code>
-       */
-      ROLL_DICE(9, 10),
-      UNRECOGNIZED(-1, -1),
-      ;
-
-      /**
-       * <code>ACTION = 0;</code>
-       */
-      public static final int ACTION_VALUE = 0;
-      /**
-       * <code>ADD_SQUADRON = 1;</code>
-       */
-      public static final int ADD_SQUADRON_VALUE = 1;
-      /**
-       * <code>DECLARE_TARGET = 3;</code>
-       */
-      public static final int DECLARE_TARGET_VALUE = 3;
-      /**
-       * <code>DECLOAK = 4;</code>
-       */
-      public static final int DECLOAK_VALUE = 4;
-      /**
-       * <code>MANEUVER = 5;</code>
-       */
-      public static final int MANEUVER_VALUE = 5;
-      /**
-       * <code>MODIFY_DICE = 6;</code>
-       */
-      public static final int MODIFY_DICE_VALUE = 6;
-      /**
-       * <code>PLACE_OBSTACLE = 7;</code>
-       */
-      public static final int PLACE_OBSTACLE_VALUE = 7;
-      /**
-       * <code>PLACE_SHIP = 8;</code>
-       */
-      public static final int PLACE_SHIP_VALUE = 8;
-      /**
-       * <code>REROLL_DICE = 9;</code>
-       */
-      public static final int REROLL_DICE_VALUE = 9;
-      /**
-       * <code>ROLL_DICE = 10;</code>
-       */
-      public static final int ROLL_DICE_VALUE = 10;
-
-
-      public final int getNumber() {
-        if (index == -1) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      public static Type valueOf(int value) {
-        switch (value) {
-          case 0: return ACTION;
-          case 1: return ADD_SQUADRON;
-          case 3: return DECLARE_TARGET;
-          case 4: return DECLOAK;
-          case 5: return MANEUVER;
-          case 6: return MODIFY_DICE;
-          case 7: return PLACE_OBSTACLE;
-          case 8: return PLACE_SHIP;
-          case 9: return REROLL_DICE;
-          case 10: return ROLL_DICE;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.valueOf(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(index);
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return network.message.PlayerCommands.BaseCommand.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Type[] VALUES = values();
-
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int index;
-      private final int value;
-
-      private Type(int index, int value) {
-        this.index = index;
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:player.commands.BaseCommand.Type)
-    }
-
     private int commandCase_ = 0;
     private java.lang.Object command_;
     public enum CommandCase
         implements com.google.protobuf.Internal.EnumLite {
-      ADDSQUADRON(2),
-      PLACEOBSTACLE(3),
+      ADDSQUADRON(1),
+      PLACEOBSTACLE(2),
       COMMAND_NOT_SET(0);
       private int value = 0;
       private CommandCase(int value) {
@@ -315,8 +135,8 @@ public final class PlayerCommands {
       }
       public static CommandCase valueOf(int value) {
         switch (value) {
-          case 2: return ADDSQUADRON;
-          case 3: return PLACEOBSTACLE;
+          case 1: return ADDSQUADRON;
+          case 2: return PLACEOBSTACLE;
           case 0: return COMMAND_NOT_SET;
           default: throw new java.lang.IllegalArgumentException(
             "Value is undefined for this oneof enum.");
@@ -333,57 +153,41 @@ public final class PlayerCommands {
           commandCase_);
     }
 
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private int type_;
+    public static final int ADDSQUADRON_FIELD_NUMBER = 1;
     /**
-     * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-     */
-    public network.message.PlayerCommands.BaseCommand.Type getType() {
-      network.message.PlayerCommands.BaseCommand.Type result = network.message.PlayerCommands.BaseCommand.Type.valueOf(type_);
-      return result == null ? network.message.PlayerCommands.BaseCommand.Type.UNRECOGNIZED : result;
-    }
-
-    public static final int ADDSQUADRON_FIELD_NUMBER = 2;
-    /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
      */
     public network.message.PlayerCommands.AddSquadron getAddSquadron() {
-      if (commandCase_ == 2) {
+      if (commandCase_ == 1) {
          return (network.message.PlayerCommands.AddSquadron) command_;
       }
       return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
     }
     /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
      */
     public network.message.PlayerCommands.AddSquadronOrBuilder getAddSquadronOrBuilder() {
-      if (commandCase_ == 2) {
+      if (commandCase_ == 1) {
          return (network.message.PlayerCommands.AddSquadron) command_;
       }
       return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
     }
 
-    public static final int PLACEOBSTACLE_FIELD_NUMBER = 3;
+    public static final int PLACEOBSTACLE_FIELD_NUMBER = 2;
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
      */
     public network.message.PlayerCommands.PlaceObstacle getPlaceObstacle() {
-      if (commandCase_ == 3) {
+      if (commandCase_ == 2) {
          return (network.message.PlayerCommands.PlaceObstacle) command_;
       }
       return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
     }
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
      */
     public network.message.PlayerCommands.PlaceObstacleOrBuilder getPlaceObstacleOrBuilder() {
-      if (commandCase_ == 3) {
+      if (commandCase_ == 2) {
          return (network.message.PlayerCommands.PlaceObstacle) command_;
       }
       return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
@@ -401,14 +205,11 @@ public final class PlayerCommands {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (type_ != network.message.PlayerCommands.BaseCommand.Type.ACTION.getNumber()) {
-        output.writeEnum(1, type_);
+      if (commandCase_ == 1) {
+        output.writeMessage(1, (network.message.PlayerCommands.AddSquadron) command_);
       }
       if (commandCase_ == 2) {
-        output.writeMessage(2, (network.message.PlayerCommands.AddSquadron) command_);
-      }
-      if (commandCase_ == 3) {
-        output.writeMessage(3, (network.message.PlayerCommands.PlaceObstacle) command_);
+        output.writeMessage(2, (network.message.PlayerCommands.PlaceObstacle) command_);
       }
     }
 
@@ -417,17 +218,13 @@ public final class PlayerCommands {
       if (size != -1) return size;
 
       size = 0;
-      if (type_ != network.message.PlayerCommands.BaseCommand.Type.ACTION.getNumber()) {
+      if (commandCase_ == 1) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, type_);
+          .computeMessageSize(1, (network.message.PlayerCommands.AddSquadron) command_);
       }
       if (commandCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (network.message.PlayerCommands.AddSquadron) command_);
-      }
-      if (commandCase_ == 3) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (network.message.PlayerCommands.PlaceObstacle) command_);
+          .computeMessageSize(2, (network.message.PlayerCommands.PlaceObstacle) command_);
       }
       memoizedSize = size;
       return size;
@@ -540,8 +337,6 @@ public final class PlayerCommands {
       }
       public Builder clear() {
         super.clear();
-        type_ = 0;
-
         commandCase_ = 0;
         command_ = null;
         return this;
@@ -566,15 +361,14 @@ public final class PlayerCommands {
 
       public network.message.PlayerCommands.BaseCommand buildPartial() {
         network.message.PlayerCommands.BaseCommand result = new network.message.PlayerCommands.BaseCommand(this);
-        result.type_ = type_;
-        if (commandCase_ == 2) {
+        if (commandCase_ == 1) {
           if (addSquadronBuilder_ == null) {
             result.command_ = command_;
           } else {
             result.command_ = addSquadronBuilder_.build();
           }
         }
-        if (commandCase_ == 3) {
+        if (commandCase_ == 2) {
           if (placeObstacleBuilder_ == null) {
             result.command_ = command_;
           } else {
@@ -597,9 +391,6 @@ public final class PlayerCommands {
 
       public Builder mergeFrom(network.message.PlayerCommands.BaseCommand other) {
         if (other == network.message.PlayerCommands.BaseCommand.getDefaultInstance()) return this;
-        if (other.type_ != 0) {
-          setTypeValue(other.getTypeValue());
-        }
         switch (other.getCommandCase()) {
           case ADDSQUADRON: {
             mergeAddSquadron(other.getAddSquadron());
@@ -654,70 +445,26 @@ public final class PlayerCommands {
       }
 
 
-      private int type_ = 0;
-      /**
-       * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-       */
-      public int getTypeValue() {
-        return type_;
-      }
-      /**
-       * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-       */
-      public Builder setTypeValue(int value) {
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-       */
-      public network.message.PlayerCommands.BaseCommand.Type getType() {
-        network.message.PlayerCommands.BaseCommand.Type result = network.message.PlayerCommands.BaseCommand.Type.valueOf(type_);
-        return result == null ? network.message.PlayerCommands.BaseCommand.Type.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-       */
-      public Builder setType(network.message.PlayerCommands.BaseCommand.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        type_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .player.commands.BaseCommand.Type type = 1;</code>
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.AddSquadron, network.message.PlayerCommands.AddSquadron.Builder, network.message.PlayerCommands.AddSquadronOrBuilder> addSquadronBuilder_;
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public network.message.PlayerCommands.AddSquadron getAddSquadron() {
         if (addSquadronBuilder_ == null) {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 1) {
             return (network.message.PlayerCommands.AddSquadron) command_;
           }
           return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 1) {
             return addSquadronBuilder_.getMessage();
           }
           return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public Builder setAddSquadron(network.message.PlayerCommands.AddSquadron value) {
         if (addSquadronBuilder_ == null) {
@@ -729,11 +476,11 @@ public final class PlayerCommands {
         } else {
           addSquadronBuilder_.setMessage(value);
         }
-        commandCase_ = 2;
+        commandCase_ = 1;
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public Builder setAddSquadron(
           network.message.PlayerCommands.AddSquadron.Builder builderForValue) {
@@ -743,15 +490,15 @@ public final class PlayerCommands {
         } else {
           addSquadronBuilder_.setMessage(builderForValue.build());
         }
-        commandCase_ = 2;
+        commandCase_ = 1;
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public Builder mergeAddSquadron(network.message.PlayerCommands.AddSquadron value) {
         if (addSquadronBuilder_ == null) {
-          if (commandCase_ == 2 &&
+          if (commandCase_ == 1 &&
               command_ != network.message.PlayerCommands.AddSquadron.getDefaultInstance()) {
             command_ = network.message.PlayerCommands.AddSquadron.newBuilder((network.message.PlayerCommands.AddSquadron) command_)
                 .mergeFrom(value).buildPartial();
@@ -760,26 +507,26 @@ public final class PlayerCommands {
           }
           onChanged();
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 1) {
             addSquadronBuilder_.mergeFrom(value);
           }
           addSquadronBuilder_.setMessage(value);
         }
-        commandCase_ = 2;
+        commandCase_ = 1;
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public Builder clearAddSquadron() {
         if (addSquadronBuilder_ == null) {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 1) {
             commandCase_ = 0;
             command_ = null;
             onChanged();
           }
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 1) {
             commandCase_ = 0;
             command_ = null;
           }
@@ -788,32 +535,32 @@ public final class PlayerCommands {
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public network.message.PlayerCommands.AddSquadron.Builder getAddSquadronBuilder() {
         return getAddSquadronFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       public network.message.PlayerCommands.AddSquadronOrBuilder getAddSquadronOrBuilder() {
-        if ((commandCase_ == 2) && (addSquadronBuilder_ != null)) {
+        if ((commandCase_ == 1) && (addSquadronBuilder_ != null)) {
           return addSquadronBuilder_.getMessageOrBuilder();
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 1) {
             return (network.message.PlayerCommands.AddSquadron) command_;
           }
           return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 2;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.AddSquadron, network.message.PlayerCommands.AddSquadron.Builder, network.message.PlayerCommands.AddSquadronOrBuilder> 
           getAddSquadronFieldBuilder() {
         if (addSquadronBuilder_ == null) {
-          if (!(commandCase_ == 2)) {
+          if (!(commandCase_ == 1)) {
             command_ = network.message.PlayerCommands.AddSquadron.getDefaultInstance();
           }
           addSquadronBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -823,7 +570,7 @@ public final class PlayerCommands {
                   isClean());
           command_ = null;
         }
-        commandCase_ = 2;
+        commandCase_ = 1;
         onChanged();;
         return addSquadronBuilder_;
       }
@@ -831,23 +578,23 @@ public final class PlayerCommands {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.PlaceObstacle, network.message.PlayerCommands.PlaceObstacle.Builder, network.message.PlayerCommands.PlaceObstacleOrBuilder> placeObstacleBuilder_;
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public network.message.PlayerCommands.PlaceObstacle getPlaceObstacle() {
         if (placeObstacleBuilder_ == null) {
-          if (commandCase_ == 3) {
+          if (commandCase_ == 2) {
             return (network.message.PlayerCommands.PlaceObstacle) command_;
           }
           return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
         } else {
-          if (commandCase_ == 3) {
+          if (commandCase_ == 2) {
             return placeObstacleBuilder_.getMessage();
           }
           return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public Builder setPlaceObstacle(network.message.PlayerCommands.PlaceObstacle value) {
         if (placeObstacleBuilder_ == null) {
@@ -859,11 +606,11 @@ public final class PlayerCommands {
         } else {
           placeObstacleBuilder_.setMessage(value);
         }
-        commandCase_ = 3;
+        commandCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public Builder setPlaceObstacle(
           network.message.PlayerCommands.PlaceObstacle.Builder builderForValue) {
@@ -873,15 +620,15 @@ public final class PlayerCommands {
         } else {
           placeObstacleBuilder_.setMessage(builderForValue.build());
         }
-        commandCase_ = 3;
+        commandCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public Builder mergePlaceObstacle(network.message.PlayerCommands.PlaceObstacle value) {
         if (placeObstacleBuilder_ == null) {
-          if (commandCase_ == 3 &&
+          if (commandCase_ == 2 &&
               command_ != network.message.PlayerCommands.PlaceObstacle.getDefaultInstance()) {
             command_ = network.message.PlayerCommands.PlaceObstacle.newBuilder((network.message.PlayerCommands.PlaceObstacle) command_)
                 .mergeFrom(value).buildPartial();
@@ -890,26 +637,26 @@ public final class PlayerCommands {
           }
           onChanged();
         } else {
-          if (commandCase_ == 3) {
+          if (commandCase_ == 2) {
             placeObstacleBuilder_.mergeFrom(value);
           }
           placeObstacleBuilder_.setMessage(value);
         }
-        commandCase_ = 3;
+        commandCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public Builder clearPlaceObstacle() {
         if (placeObstacleBuilder_ == null) {
-          if (commandCase_ == 3) {
+          if (commandCase_ == 2) {
             commandCase_ = 0;
             command_ = null;
             onChanged();
           }
         } else {
-          if (commandCase_ == 3) {
+          if (commandCase_ == 2) {
             commandCase_ = 0;
             command_ = null;
           }
@@ -918,32 +665,32 @@ public final class PlayerCommands {
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public network.message.PlayerCommands.PlaceObstacle.Builder getPlaceObstacleBuilder() {
         return getPlaceObstacleFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       public network.message.PlayerCommands.PlaceObstacleOrBuilder getPlaceObstacleOrBuilder() {
-        if ((commandCase_ == 3) && (placeObstacleBuilder_ != null)) {
+        if ((commandCase_ == 2) && (placeObstacleBuilder_ != null)) {
           return placeObstacleBuilder_.getMessageOrBuilder();
         } else {
-          if (commandCase_ == 3) {
+          if (commandCase_ == 2) {
             return (network.message.PlayerCommands.PlaceObstacle) command_;
           }
           return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 3;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.PlaceObstacle, network.message.PlayerCommands.PlaceObstacle.Builder, network.message.PlayerCommands.PlaceObstacleOrBuilder> 
           getPlaceObstacleFieldBuilder() {
         if (placeObstacleBuilder_ == null) {
-          if (!(commandCase_ == 3)) {
+          if (!(commandCase_ == 2)) {
             command_ = network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
           }
           placeObstacleBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -953,7 +700,7 @@ public final class PlayerCommands {
                   isClean());
           command_ = null;
         }
-        commandCase_ = 3;
+        commandCase_ = 2;
         onChanged();;
         return placeObstacleBuilder_;
       }
@@ -3475,22 +3222,17 @@ public final class PlayerCommands {
   static {
     java.lang.String[] descriptorData = {
       "\n3src/main/proto/network/message/PlayerC" +
-      "ommands.proto\022\017player.commands\"\342\002\n\013BaseC" +
-      "ommand\022/\n\004type\030\001 \001(\0162!.player.commands.B" +
-      "aseCommand.Type\0223\n\013addSquadron\030\002 \001(\0132\034.p" +
-      "layer.commands.AddSquadronH\000\0227\n\rplaceObs" +
-      "tacle\030\003 \001(\0132\036.player.commands.PlaceObsta" +
-      "cleH\000\"\250\001\n\004Type\022\n\n\006ACTION\020\000\022\020\n\014ADD_SQUADR" +
-      "ON\020\001\022\022\n\016DECLARE_TARGET\020\003\022\013\n\007DECLOAK\020\004\022\014\n" +
-      "\010MANEUVER\020\005\022\017\n\013MODIFY_DICE\020\006\022\022\n\016PLACE_OB" +
-      "STACLE\020\007\022\016\n\nPLACE_SHIP\020\010\022\017\n\013REROLL_DICE\020",
-      "\t\022\r\n\tROLL_DICE\020\nB\t\n\007command\"\010\n\006Action\"m\n" +
-      "\013AddSquadron\022\017\n\007faction\030\001 \001(\005\022\035\n\025selecte" +
-      "dObstacleTypes\030\002 \003(\005\022.\n\005units\030\003 \003(\0132\037.pl" +
-      "ayer.commands.UnitSubmission\"8\n\rPlaceObs" +
-      "tacle\022\024\n\014obstacleType\030\001 \001(\005\022\021\n\ttransform" +
-      "\030\002 \003(\002\"\020\n\016UnitSubmission\"\013\n\tPlaceShipB!\n" +
-      "\017network.messageB\016PlayerCommandsb\006proto3"
+      "ommands.proto\022\017player.commands\"\206\001\n\013BaseC" +
+      "ommand\0223\n\013addSquadron\030\001 \001(\0132\034.player.com" +
+      "mands.AddSquadronH\000\0227\n\rplaceObstacle\030\002 \001" +
+      "(\0132\036.player.commands.PlaceObstacleH\000B\t\n\007" +
+      "command\"\010\n\006Action\"m\n\013AddSquadron\022\017\n\007fact" +
+      "ion\030\001 \001(\005\022\035\n\025selectedObstacleTypes\030\002 \003(\005" +
+      "\022.\n\005units\030\003 \003(\0132\037.player.commands.UnitSu" +
+      "bmission\"8\n\rPlaceObstacle\022\024\n\014obstacleTyp" +
+      "e\030\001 \001(\005\022\021\n\ttransform\030\002 \003(\002\"\020\n\016UnitSubmis",
+      "sion\"\013\n\tPlaceShipB!\n\017network.messageB\016Pl" +
+      "ayerCommandsb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3509,7 +3251,7 @@ public final class PlayerCommands {
     internal_static_player_commands_BaseCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_player_commands_BaseCommand_descriptor,
-        new java.lang.String[] { "Type", "AddSquadron", "PlaceObstacle", "Command", });
+        new java.lang.String[] { "AddSquadron", "PlaceObstacle", "Command", });
     internal_static_player_commands_Action_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_player_commands_Action_fieldAccessorTable = new

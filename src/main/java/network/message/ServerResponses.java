@@ -13,39 +13,30 @@ public final class ServerResponses {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-     */
-    int getTypeValue();
-    /**
-     * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-     */
-    network.message.ServerResponses.BaseResponse.Type getType();
-
-    /**
-     * <code>optional int32 clientId = 2;</code>
+     * <code>optional int32 clientId = 1;</code>
      */
     int getClientId();
 
     /**
-     * <code>optional int32 messageId = 3;</code>
+     * <code>optional int32 messageId = 2;</code>
      */
     int getMessageId();
 
     /**
-     * <code>optional .server.responses.Login login = 4;</code>
+     * <code>optional .server.responses.Login login = 3;</code>
      */
     network.message.ServerResponses.Login getLogin();
     /**
-     * <code>optional .server.responses.Login login = 4;</code>
+     * <code>optional .server.responses.Login login = 3;</code>
      */
     network.message.ServerResponses.LoginOrBuilder getLoginOrBuilder();
 
     /**
-     * <code>optional .server.responses.Command command = 5;</code>
+     * <code>optional .server.responses.Command command = 4;</code>
      */
     network.message.ServerResponses.Command getCommand();
     /**
-     * <code>optional .server.responses.Command command = 5;</code>
+     * <code>optional .server.responses.Command command = 4;</code>
      */
     network.message.ServerResponses.CommandOrBuilder getCommandOrBuilder();
 
@@ -63,7 +54,6 @@ public final class ServerResponses {
       super(builder);
     }
     private BaseResponse() {
-      type_ = 0;
       clientId_ = 0;
       messageId_ = 0;
     }
@@ -93,24 +83,18 @@ public final class ServerResponses {
               break;
             }
             case 8: {
-              int rawValue = input.readEnum();
-
-              type_ = rawValue;
-              break;
-            }
-            case 16: {
 
               clientId_ = input.readInt32();
               break;
             }
-            case 24: {
+            case 16: {
 
               messageId_ = input.readInt32();
               break;
             }
-            case 34: {
+            case 26: {
               network.message.ServerResponses.Login.Builder subBuilder = null;
-              if (responseCase_ == 4) {
+              if (responseCase_ == 3) {
                 subBuilder = ((network.message.ServerResponses.Login) response_).toBuilder();
               }
               response_ =
@@ -119,12 +103,12 @@ public final class ServerResponses {
                 subBuilder.mergeFrom((network.message.ServerResponses.Login) response_);
                 response_ = subBuilder.buildPartial();
               }
-              responseCase_ = 4;
+              responseCase_ = 3;
               break;
             }
-            case 42: {
+            case 34: {
               network.message.ServerResponses.Command.Builder subBuilder = null;
-              if (responseCase_ == 5) {
+              if (responseCase_ == 4) {
                 subBuilder = ((network.message.ServerResponses.Command) response_).toBuilder();
               }
               response_ =
@@ -133,7 +117,7 @@ public final class ServerResponses {
                 subBuilder.mergeFrom((network.message.ServerResponses.Command) response_);
                 response_ = subBuilder.buildPartial();
               }
-              responseCase_ = 5;
+              responseCase_ = 4;
               break;
             }
           }
@@ -160,104 +144,12 @@ public final class ServerResponses {
               network.message.ServerResponses.BaseResponse.class, network.message.ServerResponses.BaseResponse.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code server.responses.BaseResponse.Type}
-     */
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>LOGIN = 0;</code>
-       */
-      LOGIN(0, 0),
-      /**
-       * <code>COMMAND = 1;</code>
-       */
-      COMMAND(1, 1),
-      UNRECOGNIZED(-1, -1),
-      ;
-
-      /**
-       * <code>LOGIN = 0;</code>
-       */
-      public static final int LOGIN_VALUE = 0;
-      /**
-       * <code>COMMAND = 1;</code>
-       */
-      public static final int COMMAND_VALUE = 1;
-
-
-      public final int getNumber() {
-        if (index == -1) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      public static Type valueOf(int value) {
-        switch (value) {
-          case 0: return LOGIN;
-          case 1: return COMMAND;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.valueOf(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(index);
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return network.message.ServerResponses.BaseResponse.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Type[] VALUES = values();
-
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int index;
-      private final int value;
-
-      private Type(int index, int value) {
-        this.index = index;
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:server.responses.BaseResponse.Type)
-    }
-
     private int responseCase_ = 0;
     private java.lang.Object response_;
     public enum ResponseCase
         implements com.google.protobuf.Internal.EnumLite {
-      LOGIN(4),
-      COMMAND(5),
+      LOGIN(3),
+      COMMAND(4),
       RESPONSE_NOT_SET(0);
       private int value = 0;
       private ResponseCase(int value) {
@@ -265,8 +157,8 @@ public final class ServerResponses {
       }
       public static ResponseCase valueOf(int value) {
         switch (value) {
-          case 4: return LOGIN;
-          case 5: return COMMAND;
+          case 3: return LOGIN;
+          case 4: return COMMAND;
           case 0: return RESPONSE_NOT_SET;
           default: throw new java.lang.IllegalArgumentException(
             "Value is undefined for this oneof enum.");
@@ -283,75 +175,59 @@ public final class ServerResponses {
           responseCase_);
     }
 
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private int type_;
-    /**
-     * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-     */
-    public network.message.ServerResponses.BaseResponse.Type getType() {
-      network.message.ServerResponses.BaseResponse.Type result = network.message.ServerResponses.BaseResponse.Type.valueOf(type_);
-      return result == null ? network.message.ServerResponses.BaseResponse.Type.UNRECOGNIZED : result;
-    }
-
-    public static final int CLIENTID_FIELD_NUMBER = 2;
+    public static final int CLIENTID_FIELD_NUMBER = 1;
     private int clientId_;
     /**
-     * <code>optional int32 clientId = 2;</code>
+     * <code>optional int32 clientId = 1;</code>
      */
     public int getClientId() {
       return clientId_;
     }
 
-    public static final int MESSAGEID_FIELD_NUMBER = 3;
+    public static final int MESSAGEID_FIELD_NUMBER = 2;
     private int messageId_;
     /**
-     * <code>optional int32 messageId = 3;</code>
+     * <code>optional int32 messageId = 2;</code>
      */
     public int getMessageId() {
       return messageId_;
     }
 
-    public static final int LOGIN_FIELD_NUMBER = 4;
+    public static final int LOGIN_FIELD_NUMBER = 3;
     /**
-     * <code>optional .server.responses.Login login = 4;</code>
+     * <code>optional .server.responses.Login login = 3;</code>
      */
     public network.message.ServerResponses.Login getLogin() {
-      if (responseCase_ == 4) {
+      if (responseCase_ == 3) {
          return (network.message.ServerResponses.Login) response_;
       }
       return network.message.ServerResponses.Login.getDefaultInstance();
     }
     /**
-     * <code>optional .server.responses.Login login = 4;</code>
+     * <code>optional .server.responses.Login login = 3;</code>
      */
     public network.message.ServerResponses.LoginOrBuilder getLoginOrBuilder() {
-      if (responseCase_ == 4) {
+      if (responseCase_ == 3) {
          return (network.message.ServerResponses.Login) response_;
       }
       return network.message.ServerResponses.Login.getDefaultInstance();
     }
 
-    public static final int COMMAND_FIELD_NUMBER = 5;
+    public static final int COMMAND_FIELD_NUMBER = 4;
     /**
-     * <code>optional .server.responses.Command command = 5;</code>
+     * <code>optional .server.responses.Command command = 4;</code>
      */
     public network.message.ServerResponses.Command getCommand() {
-      if (responseCase_ == 5) {
+      if (responseCase_ == 4) {
          return (network.message.ServerResponses.Command) response_;
       }
       return network.message.ServerResponses.Command.getDefaultInstance();
     }
     /**
-     * <code>optional .server.responses.Command command = 5;</code>
+     * <code>optional .server.responses.Command command = 4;</code>
      */
     public network.message.ServerResponses.CommandOrBuilder getCommandOrBuilder() {
-      if (responseCase_ == 5) {
+      if (responseCase_ == 4) {
          return (network.message.ServerResponses.Command) response_;
       }
       return network.message.ServerResponses.Command.getDefaultInstance();
@@ -369,20 +245,17 @@ public final class ServerResponses {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (type_ != network.message.ServerResponses.BaseResponse.Type.LOGIN.getNumber()) {
-        output.writeEnum(1, type_);
-      }
       if (clientId_ != 0) {
-        output.writeInt32(2, clientId_);
+        output.writeInt32(1, clientId_);
       }
       if (messageId_ != 0) {
-        output.writeInt32(3, messageId_);
+        output.writeInt32(2, messageId_);
+      }
+      if (responseCase_ == 3) {
+        output.writeMessage(3, (network.message.ServerResponses.Login) response_);
       }
       if (responseCase_ == 4) {
-        output.writeMessage(4, (network.message.ServerResponses.Login) response_);
-      }
-      if (responseCase_ == 5) {
-        output.writeMessage(5, (network.message.ServerResponses.Command) response_);
+        output.writeMessage(4, (network.message.ServerResponses.Command) response_);
       }
     }
 
@@ -391,25 +264,21 @@ public final class ServerResponses {
       if (size != -1) return size;
 
       size = 0;
-      if (type_ != network.message.ServerResponses.BaseResponse.Type.LOGIN.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, type_);
-      }
       if (clientId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, clientId_);
+          .computeInt32Size(1, clientId_);
       }
       if (messageId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, messageId_);
+          .computeInt32Size(2, messageId_);
+      }
+      if (responseCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (network.message.ServerResponses.Login) response_);
       }
       if (responseCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (network.message.ServerResponses.Login) response_);
-      }
-      if (responseCase_ == 5) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, (network.message.ServerResponses.Command) response_);
+          .computeMessageSize(4, (network.message.ServerResponses.Command) response_);
       }
       memoizedSize = size;
       return size;
@@ -522,8 +391,6 @@ public final class ServerResponses {
       }
       public Builder clear() {
         super.clear();
-        type_ = 0;
-
         clientId_ = 0;
 
         messageId_ = 0;
@@ -552,17 +419,16 @@ public final class ServerResponses {
 
       public network.message.ServerResponses.BaseResponse buildPartial() {
         network.message.ServerResponses.BaseResponse result = new network.message.ServerResponses.BaseResponse(this);
-        result.type_ = type_;
         result.clientId_ = clientId_;
         result.messageId_ = messageId_;
-        if (responseCase_ == 4) {
+        if (responseCase_ == 3) {
           if (loginBuilder_ == null) {
             result.response_ = response_;
           } else {
             result.response_ = loginBuilder_.build();
           }
         }
-        if (responseCase_ == 5) {
+        if (responseCase_ == 4) {
           if (commandBuilder_ == null) {
             result.response_ = response_;
           } else {
@@ -585,9 +451,6 @@ public final class ServerResponses {
 
       public Builder mergeFrom(network.message.ServerResponses.BaseResponse other) {
         if (other == network.message.ServerResponses.BaseResponse.getDefaultInstance()) return this;
-        if (other.type_ != 0) {
-          setTypeValue(other.getTypeValue());
-        }
         if (other.getClientId() != 0) {
           setClientId(other.getClientId());
         }
@@ -648,59 +511,15 @@ public final class ServerResponses {
       }
 
 
-      private int type_ = 0;
-      /**
-       * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-       */
-      public int getTypeValue() {
-        return type_;
-      }
-      /**
-       * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-       */
-      public Builder setTypeValue(int value) {
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-       */
-      public network.message.ServerResponses.BaseResponse.Type getType() {
-        network.message.ServerResponses.BaseResponse.Type result = network.message.ServerResponses.BaseResponse.Type.valueOf(type_);
-        return result == null ? network.message.ServerResponses.BaseResponse.Type.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-       */
-      public Builder setType(network.message.ServerResponses.BaseResponse.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        type_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .server.responses.BaseResponse.Type type = 1;</code>
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
       private int clientId_ ;
       /**
-       * <code>optional int32 clientId = 2;</code>
+       * <code>optional int32 clientId = 1;</code>
        */
       public int getClientId() {
         return clientId_;
       }
       /**
-       * <code>optional int32 clientId = 2;</code>
+       * <code>optional int32 clientId = 1;</code>
        */
       public Builder setClientId(int value) {
         
@@ -709,7 +528,7 @@ public final class ServerResponses {
         return this;
       }
       /**
-       * <code>optional int32 clientId = 2;</code>
+       * <code>optional int32 clientId = 1;</code>
        */
       public Builder clearClientId() {
         
@@ -720,13 +539,13 @@ public final class ServerResponses {
 
       private int messageId_ ;
       /**
-       * <code>optional int32 messageId = 3;</code>
+       * <code>optional int32 messageId = 2;</code>
        */
       public int getMessageId() {
         return messageId_;
       }
       /**
-       * <code>optional int32 messageId = 3;</code>
+       * <code>optional int32 messageId = 2;</code>
        */
       public Builder setMessageId(int value) {
         
@@ -735,7 +554,7 @@ public final class ServerResponses {
         return this;
       }
       /**
-       * <code>optional int32 messageId = 3;</code>
+       * <code>optional int32 messageId = 2;</code>
        */
       public Builder clearMessageId() {
         
@@ -747,23 +566,23 @@ public final class ServerResponses {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerResponses.Login, network.message.ServerResponses.Login.Builder, network.message.ServerResponses.LoginOrBuilder> loginBuilder_;
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public network.message.ServerResponses.Login getLogin() {
         if (loginBuilder_ == null) {
-          if (responseCase_ == 4) {
+          if (responseCase_ == 3) {
             return (network.message.ServerResponses.Login) response_;
           }
           return network.message.ServerResponses.Login.getDefaultInstance();
         } else {
-          if (responseCase_ == 4) {
+          if (responseCase_ == 3) {
             return loginBuilder_.getMessage();
           }
           return network.message.ServerResponses.Login.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public Builder setLogin(network.message.ServerResponses.Login value) {
         if (loginBuilder_ == null) {
@@ -775,11 +594,11 @@ public final class ServerResponses {
         } else {
           loginBuilder_.setMessage(value);
         }
-        responseCase_ = 4;
+        responseCase_ = 3;
         return this;
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public Builder setLogin(
           network.message.ServerResponses.Login.Builder builderForValue) {
@@ -789,15 +608,15 @@ public final class ServerResponses {
         } else {
           loginBuilder_.setMessage(builderForValue.build());
         }
-        responseCase_ = 4;
+        responseCase_ = 3;
         return this;
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public Builder mergeLogin(network.message.ServerResponses.Login value) {
         if (loginBuilder_ == null) {
-          if (responseCase_ == 4 &&
+          if (responseCase_ == 3 &&
               response_ != network.message.ServerResponses.Login.getDefaultInstance()) {
             response_ = network.message.ServerResponses.Login.newBuilder((network.message.ServerResponses.Login) response_)
                 .mergeFrom(value).buildPartial();
@@ -806,26 +625,26 @@ public final class ServerResponses {
           }
           onChanged();
         } else {
-          if (responseCase_ == 4) {
+          if (responseCase_ == 3) {
             loginBuilder_.mergeFrom(value);
           }
           loginBuilder_.setMessage(value);
         }
-        responseCase_ = 4;
+        responseCase_ = 3;
         return this;
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public Builder clearLogin() {
         if (loginBuilder_ == null) {
-          if (responseCase_ == 4) {
+          if (responseCase_ == 3) {
             responseCase_ = 0;
             response_ = null;
             onChanged();
           }
         } else {
-          if (responseCase_ == 4) {
+          if (responseCase_ == 3) {
             responseCase_ = 0;
             response_ = null;
           }
@@ -834,32 +653,32 @@ public final class ServerResponses {
         return this;
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public network.message.ServerResponses.Login.Builder getLoginBuilder() {
         return getLoginFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       public network.message.ServerResponses.LoginOrBuilder getLoginOrBuilder() {
-        if ((responseCase_ == 4) && (loginBuilder_ != null)) {
+        if ((responseCase_ == 3) && (loginBuilder_ != null)) {
           return loginBuilder_.getMessageOrBuilder();
         } else {
-          if (responseCase_ == 4) {
+          if (responseCase_ == 3) {
             return (network.message.ServerResponses.Login) response_;
           }
           return network.message.ServerResponses.Login.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.responses.Login login = 4;</code>
+       * <code>optional .server.responses.Login login = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerResponses.Login, network.message.ServerResponses.Login.Builder, network.message.ServerResponses.LoginOrBuilder> 
           getLoginFieldBuilder() {
         if (loginBuilder_ == null) {
-          if (!(responseCase_ == 4)) {
+          if (!(responseCase_ == 3)) {
             response_ = network.message.ServerResponses.Login.getDefaultInstance();
           }
           loginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -869,7 +688,7 @@ public final class ServerResponses {
                   isClean());
           response_ = null;
         }
-        responseCase_ = 4;
+        responseCase_ = 3;
         onChanged();;
         return loginBuilder_;
       }
@@ -877,23 +696,23 @@ public final class ServerResponses {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerResponses.Command, network.message.ServerResponses.Command.Builder, network.message.ServerResponses.CommandOrBuilder> commandBuilder_;
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public network.message.ServerResponses.Command getCommand() {
         if (commandBuilder_ == null) {
-          if (responseCase_ == 5) {
+          if (responseCase_ == 4) {
             return (network.message.ServerResponses.Command) response_;
           }
           return network.message.ServerResponses.Command.getDefaultInstance();
         } else {
-          if (responseCase_ == 5) {
+          if (responseCase_ == 4) {
             return commandBuilder_.getMessage();
           }
           return network.message.ServerResponses.Command.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public Builder setCommand(network.message.ServerResponses.Command value) {
         if (commandBuilder_ == null) {
@@ -905,11 +724,11 @@ public final class ServerResponses {
         } else {
           commandBuilder_.setMessage(value);
         }
-        responseCase_ = 5;
+        responseCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public Builder setCommand(
           network.message.ServerResponses.Command.Builder builderForValue) {
@@ -919,15 +738,15 @@ public final class ServerResponses {
         } else {
           commandBuilder_.setMessage(builderForValue.build());
         }
-        responseCase_ = 5;
+        responseCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public Builder mergeCommand(network.message.ServerResponses.Command value) {
         if (commandBuilder_ == null) {
-          if (responseCase_ == 5 &&
+          if (responseCase_ == 4 &&
               response_ != network.message.ServerResponses.Command.getDefaultInstance()) {
             response_ = network.message.ServerResponses.Command.newBuilder((network.message.ServerResponses.Command) response_)
                 .mergeFrom(value).buildPartial();
@@ -936,26 +755,26 @@ public final class ServerResponses {
           }
           onChanged();
         } else {
-          if (responseCase_ == 5) {
+          if (responseCase_ == 4) {
             commandBuilder_.mergeFrom(value);
           }
           commandBuilder_.setMessage(value);
         }
-        responseCase_ = 5;
+        responseCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public Builder clearCommand() {
         if (commandBuilder_ == null) {
-          if (responseCase_ == 5) {
+          if (responseCase_ == 4) {
             responseCase_ = 0;
             response_ = null;
             onChanged();
           }
         } else {
-          if (responseCase_ == 5) {
+          if (responseCase_ == 4) {
             responseCase_ = 0;
             response_ = null;
           }
@@ -964,32 +783,32 @@ public final class ServerResponses {
         return this;
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public network.message.ServerResponses.Command.Builder getCommandBuilder() {
         return getCommandFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       public network.message.ServerResponses.CommandOrBuilder getCommandOrBuilder() {
-        if ((responseCase_ == 5) && (commandBuilder_ != null)) {
+        if ((responseCase_ == 4) && (commandBuilder_ != null)) {
           return commandBuilder_.getMessageOrBuilder();
         } else {
-          if (responseCase_ == 5) {
+          if (responseCase_ == 4) {
             return (network.message.ServerResponses.Command) response_;
           }
           return network.message.ServerResponses.Command.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.responses.Command command = 5;</code>
+       * <code>optional .server.responses.Command command = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerResponses.Command, network.message.ServerResponses.Command.Builder, network.message.ServerResponses.CommandOrBuilder> 
           getCommandFieldBuilder() {
         if (commandBuilder_ == null) {
-          if (!(responseCase_ == 5)) {
+          if (!(responseCase_ == 4)) {
             response_ = network.message.ServerResponses.Command.getDefaultInstance();
           }
           commandBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -999,7 +818,7 @@ public final class ServerResponses {
                   isClean());
           response_ = null;
         }
-        responseCase_ = 5;
+        responseCase_ = 4;
         onChanged();;
         return commandBuilder_;
       }
@@ -1895,16 +1714,14 @@ public final class ServerResponses {
   static {
     java.lang.String[] descriptorData = {
       "\n4src/main/proto/network/message/ServerR" +
-      "esponses.proto\022\020server.responses\"\352\001\n\014Bas" +
-      "eResponse\0221\n\004type\030\001 \001(\0162#.server.respons" +
-      "es.BaseResponse.Type\022\020\n\010clientId\030\002 \001(\005\022\021" +
-      "\n\tmessageId\030\003 \001(\005\022(\n\005login\030\004 \001(\0132\027.serve" +
-      "r.responses.LoginH\000\022,\n\007command\030\005 \001(\0132\031.s" +
-      "erver.responses.CommandH\000\"\036\n\004Type\022\t\n\005LOG" +
-      "IN\020\000\022\013\n\007COMMAND\020\001B\n\n\010response\",\n\005Login\022\020" +
-      "\n\010clientId\030\001 \001(\005\022\021\n\tplayerNum\030\002 \001(\005\"\033\n\007C" +
-      "ommand\022\020\n\010accepted\030\001 \001(\010B\"\n\017network.mess",
-      "ageB\017ServerResponsesb\006proto3"
+      "esponses.proto\022\020server.responses\"\227\001\n\014Bas" +
+      "eResponse\022\020\n\010clientId\030\001 \001(\005\022\021\n\tmessageId" +
+      "\030\002 \001(\005\022(\n\005login\030\003 \001(\0132\027.server.responses" +
+      ".LoginH\000\022,\n\007command\030\004 \001(\0132\031.server.respo" +
+      "nses.CommandH\000B\n\n\010response\",\n\005Login\022\020\n\010c" +
+      "lientId\030\001 \001(\005\022\021\n\tplayerNum\030\002 \001(\005\"\033\n\007Comm" +
+      "and\022\020\n\010accepted\030\001 \001(\010B\"\n\017network.message" +
+      "B\017ServerResponsesb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1923,7 +1740,7 @@ public final class ServerResponses {
     internal_static_server_responses_BaseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_server_responses_BaseResponse_descriptor,
-        new java.lang.String[] { "Type", "ClientId", "MessageId", "Login", "Command", "Response", });
+        new java.lang.String[] { "ClientId", "MessageId", "Login", "Command", "Response", });
     internal_static_server_responses_Login_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_server_responses_Login_fieldAccessorTable = new

@@ -13,9 +13,9 @@ import rendering.obstacles.ObstacleType;
 import java.io.*;
 import java.net.InetAddress;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
-
-import static network.message.ServerCommands.BaseCommand.Type.UPDATE_BOARD_STATE;
 
 
 /**
@@ -93,13 +93,12 @@ public class GameClient implements NioClient.IncomingDataProcessor {
             }
 
             ProtoMessage.Message message = ProtoMessage.Message.parseFrom(serverData.data);
-            //.BaseCommand baseCommand = ServerCommands.BaseCommand.parseFrom(serverData.data);
-            log.debug("Handling server data (" + message.getType().toString() + ")");
-            switch (message.getType()) {
-                case SERVER_COMMAND:
+            log.debug("Handling server data (" + message.getSubMessageCase().toString() + ")");
+            switch (message.getSubMessageCase()) {
+                case SERVERCOMMAND:
                     handleServerCommand(serverData.channel, message.getServerCommand());
                     break;
-                case SERVER_RESPONSE:
+                case SERVERRESPONSE:
                     handleServerResponse(serverData.channel, message.getServerResponse());
                     break;
                 default:
@@ -110,9 +109,9 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     }
 
     private void handleServerCommand(SocketChannel channel, ServerCommands.BaseCommand serverCommand) {
-        log.debug("Handling server command data (" + serverCommand.getType().toString() + ")");
-        switch (serverCommand.getType()) {
-            case UPDATE_BOARD_STATE:
+        log.debug("Handling server command data (" + serverCommand.getCommandCase().toString() + ")");
+        switch (serverCommand.getCommandCase()) {
+            case UPDATEBOARDSTATE:
                 ServerCommands.UpdateBoardState updateBoardState = serverCommand.getUpdateBoardState();
                 //sendResponse(channel, );
                 //this.serverBoardState.addSquadron(getPlayerFromChannel(channel), addSquadronCommand.getFaction(), addSquadronCommand.getUnitSubmissions());
@@ -121,8 +120,8 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     }
 
     private void handleServerResponse(SocketChannel channel, ServerResponses.BaseResponse serverResponse) {
-        log.debug("Handling server command data (" + serverResponse.getType().toString() + ")");
-        switch (serverResponse.getType()) {
+        log.debug("Handling server command data (" + serverResponse.getResponseCase().toString() + ")");
+        switch (serverResponse.getResponseCase()) {
             case LOGIN:
                 break;
             case COMMAND:
@@ -136,7 +135,7 @@ public class GameClient implements NioClient.IncomingDataProcessor {
 
 
     public void sendCommand(PlayerCommands.BaseCommand command) throws IOException {
-        log.debug("Sending player command (" + command.getType().toString() + ")");
+        log.debug("Sending player command (" + command.getCommandCase().toString() + ")");
 
         ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
                 .setPlayerCommand(command)
@@ -146,7 +145,7 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     }
 
     public void sendResponse(PlayerResponses.BaseResponse response) throws IOException {
-        log.debug("Sending player response (" + response.getType().toString() + ")");
+        log.debug("Sending player response (" + response.getResponseCase().toString() + ")");
 
         ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
                 .setPlayerResponse(response)
@@ -176,17 +175,31 @@ public class GameClient implements NioClient.IncomingDataProcessor {
 
             log.debug("Creating canned rebel squadron");
 
-            UnitSubmission rebelUnit1 = new UnitSubmission(new XWing(), new RookiePilot());
-            UnitSubmission rebelUnit2 = new UnitSubmission(new XWing(), new BiggsDarklighter());
-            UnitSubmission rebelUnit3 = new UnitSubmission(new XWing(), new LukeSkywalker(), new R2D2());
+            //UnitSubmission rebelUnit1 = new UnitSubmission(new XWing(), new RookiePilot());
+            ///UnitSubmission rebelUnit2 = new UnitSubmission(new XWing(), new BiggsDarklighter());
+            //UnitSubmission rebelUnit3 = new UnitSubmission(new XWing(), new LukeSkywalker(), new R2D2());
 
-            ObstacleType selectedObstacles[] = {
-                    ObstacleType.ASTEROID_BASE_CORE_0,
-                    ObstacleType.ASTEROID_BASE_CORE_1,
-                    ObstacleType.ASTEROID_BASE_CORE_2,
-            };
+            ArrayList<PlayerCommands.UnitSubmission> unitSubmissions = new ArrayList<>();
+            unitSubmissions.add(PlayerCommands.UnitSubmission.newBuilder().build());
+
+            ArrayList<Integer> selectedObstacles = new ArrayList<>(Arrays.asList(
+                    ObstacleType.ASTEROID_BASE_CORE_0.ordinal(),
+                    ObstacleType.ASTEROID_BASE_CORE_1.ordinal(),
+                    ObstacleType.ASTEROID_BASE_CORE_2.ordinal()
+            ));
+
+            PlayerCommands.AddSquadron addSquadron = PlayerCommands.AddSquadron.newBuilder()
+                    .setFaction(0)
+                    .addAllSelectedObstacleTypes(selectedObstacles)
+                    .addAllUnits(unitSubmissions)
+                    .build();
 
 
+            PlayerCommands.BaseCommand baseCommand = PlayerCommands.BaseCommand.newBuilder()
+                    .setAddSquadron(addSquadron)
+                    .build();
+
+            client.sendCommand(baseCommand);
 
           //  client.sendCommand(new AddSquadronCommand(Faction.REBEL_ALLIANCE, selectedObstacles, rebelUnit1, rebelUnit2, rebelUnit3));
             //client.sendCommand(new PlaceShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));

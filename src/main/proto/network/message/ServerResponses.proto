@@ -5,17 +5,12 @@ option java_package="network.message";
 option java_outer_classname="ServerResponses";
 
 message BaseResponse {
-    enum Type {
-        LOGIN = 0;
-        COMMAND = 1;
-    }
-    Type type = 1;
-    int32 clientId = 2;
-    int32 messageId = 3;
+    int32 clientId = 1;
+    int32 messageId = 2;
 
     oneof response {
-        Login login = 4;
-        Command command = 5;
+        Login login = 3;
+        Command command = 4;
     }
 }
 

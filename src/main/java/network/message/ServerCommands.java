@@ -13,25 +13,16 @@ public final class ServerCommands {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-     */
-    int getTypeValue();
-    /**
-     * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-     */
-    network.message.ServerCommands.BaseCommand.Type getType();
-
-    /**
-     * <code>optional int32 messageId = 2;</code>
+     * <code>optional int32 messageId = 1;</code>
      */
     int getMessageId();
 
     /**
-     * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+     * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
      */
     network.message.ServerCommands.UpdateBoardState getUpdateBoardState();
     /**
-     * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+     * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
      */
     network.message.ServerCommands.UpdateBoardStateOrBuilder getUpdateBoardStateOrBuilder();
 
@@ -49,7 +40,6 @@ public final class ServerCommands {
       super(builder);
     }
     private BaseCommand() {
-      type_ = 0;
       messageId_ = 0;
     }
 
@@ -78,19 +68,13 @@ public final class ServerCommands {
               break;
             }
             case 8: {
-              int rawValue = input.readEnum();
-
-              type_ = rawValue;
-              break;
-            }
-            case 16: {
 
               messageId_ = input.readInt32();
               break;
             }
-            case 34: {
+            case 18: {
               network.message.ServerCommands.UpdateBoardState.Builder subBuilder = null;
-              if (commandCase_ == 4) {
+              if (commandCase_ == 2) {
                 subBuilder = ((network.message.ServerCommands.UpdateBoardState) command_).toBuilder();
               }
               command_ =
@@ -99,7 +83,7 @@ public final class ServerCommands {
                 subBuilder.mergeFrom((network.message.ServerCommands.UpdateBoardState) command_);
                 command_ = subBuilder.buildPartial();
               }
-              commandCase_ = 4;
+              commandCase_ = 2;
               break;
             }
           }
@@ -126,94 +110,11 @@ public final class ServerCommands {
               network.message.ServerCommands.BaseCommand.class, network.message.ServerCommands.BaseCommand.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code server.commands.BaseCommand.Type}
-     */
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>UPDATE_BOARD_STATE = 0;</code>
-       */
-      UPDATE_BOARD_STATE(0, 0),
-      UNRECOGNIZED(-1, -1),
-      ;
-
-      /**
-       * <code>UPDATE_BOARD_STATE = 0;</code>
-       */
-      public static final int UPDATE_BOARD_STATE_VALUE = 0;
-
-
-      public final int getNumber() {
-        if (index == -1) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      public static Type valueOf(int value) {
-        switch (value) {
-          case 0: return UPDATE_BOARD_STATE;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.valueOf(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(index);
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return network.message.ServerCommands.BaseCommand.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Type[] VALUES = values();
-
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int index;
-      private final int value;
-
-      private Type(int index, int value) {
-        this.index = index;
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:server.commands.BaseCommand.Type)
-    }
-
     private int commandCase_ = 0;
     private java.lang.Object command_;
     public enum CommandCase
         implements com.google.protobuf.Internal.EnumLite {
-      UPDATEBOARDSTATE(4),
+      UPDATEBOARDSTATE(2),
       COMMAND_NOT_SET(0);
       private int value = 0;
       private CommandCase(int value) {
@@ -221,7 +122,7 @@ public final class ServerCommands {
       }
       public static CommandCase valueOf(int value) {
         switch (value) {
-          case 4: return UPDATEBOARDSTATE;
+          case 2: return UPDATEBOARDSTATE;
           case 0: return COMMAND_NOT_SET;
           default: throw new java.lang.IllegalArgumentException(
             "Value is undefined for this oneof enum.");
@@ -238,46 +139,30 @@ public final class ServerCommands {
           commandCase_);
     }
 
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private int type_;
-    /**
-     * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-     */
-    public network.message.ServerCommands.BaseCommand.Type getType() {
-      network.message.ServerCommands.BaseCommand.Type result = network.message.ServerCommands.BaseCommand.Type.valueOf(type_);
-      return result == null ? network.message.ServerCommands.BaseCommand.Type.UNRECOGNIZED : result;
-    }
-
-    public static final int MESSAGEID_FIELD_NUMBER = 2;
+    public static final int MESSAGEID_FIELD_NUMBER = 1;
     private int messageId_;
     /**
-     * <code>optional int32 messageId = 2;</code>
+     * <code>optional int32 messageId = 1;</code>
      */
     public int getMessageId() {
       return messageId_;
     }
 
-    public static final int UPDATEBOARDSTATE_FIELD_NUMBER = 4;
+    public static final int UPDATEBOARDSTATE_FIELD_NUMBER = 2;
     /**
-     * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+     * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
      */
     public network.message.ServerCommands.UpdateBoardState getUpdateBoardState() {
-      if (commandCase_ == 4) {
+      if (commandCase_ == 2) {
          return (network.message.ServerCommands.UpdateBoardState) command_;
       }
       return network.message.ServerCommands.UpdateBoardState.getDefaultInstance();
     }
     /**
-     * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+     * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
      */
     public network.message.ServerCommands.UpdateBoardStateOrBuilder getUpdateBoardStateOrBuilder() {
-      if (commandCase_ == 4) {
+      if (commandCase_ == 2) {
          return (network.message.ServerCommands.UpdateBoardState) command_;
       }
       return network.message.ServerCommands.UpdateBoardState.getDefaultInstance();
@@ -295,14 +180,11 @@ public final class ServerCommands {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (type_ != network.message.ServerCommands.BaseCommand.Type.UPDATE_BOARD_STATE.getNumber()) {
-        output.writeEnum(1, type_);
-      }
       if (messageId_ != 0) {
-        output.writeInt32(2, messageId_);
+        output.writeInt32(1, messageId_);
       }
-      if (commandCase_ == 4) {
-        output.writeMessage(4, (network.message.ServerCommands.UpdateBoardState) command_);
+      if (commandCase_ == 2) {
+        output.writeMessage(2, (network.message.ServerCommands.UpdateBoardState) command_);
       }
     }
 
@@ -311,17 +193,13 @@ public final class ServerCommands {
       if (size != -1) return size;
 
       size = 0;
-      if (type_ != network.message.ServerCommands.BaseCommand.Type.UPDATE_BOARD_STATE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, type_);
-      }
       if (messageId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, messageId_);
+          .computeInt32Size(1, messageId_);
       }
-      if (commandCase_ == 4) {
+      if (commandCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (network.message.ServerCommands.UpdateBoardState) command_);
+          .computeMessageSize(2, (network.message.ServerCommands.UpdateBoardState) command_);
       }
       memoizedSize = size;
       return size;
@@ -434,8 +312,6 @@ public final class ServerCommands {
       }
       public Builder clear() {
         super.clear();
-        type_ = 0;
-
         messageId_ = 0;
 
         commandCase_ = 0;
@@ -462,9 +338,8 @@ public final class ServerCommands {
 
       public network.message.ServerCommands.BaseCommand buildPartial() {
         network.message.ServerCommands.BaseCommand result = new network.message.ServerCommands.BaseCommand(this);
-        result.type_ = type_;
         result.messageId_ = messageId_;
-        if (commandCase_ == 4) {
+        if (commandCase_ == 2) {
           if (updateBoardStateBuilder_ == null) {
             result.command_ = command_;
           } else {
@@ -487,9 +362,6 @@ public final class ServerCommands {
 
       public Builder mergeFrom(network.message.ServerCommands.BaseCommand other) {
         if (other == network.message.ServerCommands.BaseCommand.getDefaultInstance()) return this;
-        if (other.type_ != 0) {
-          setTypeValue(other.getTypeValue());
-        }
         if (other.getMessageId() != 0) {
           setMessageId(other.getMessageId());
         }
@@ -543,59 +415,15 @@ public final class ServerCommands {
       }
 
 
-      private int type_ = 0;
-      /**
-       * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-       */
-      public int getTypeValue() {
-        return type_;
-      }
-      /**
-       * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-       */
-      public Builder setTypeValue(int value) {
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-       */
-      public network.message.ServerCommands.BaseCommand.Type getType() {
-        network.message.ServerCommands.BaseCommand.Type result = network.message.ServerCommands.BaseCommand.Type.valueOf(type_);
-        return result == null ? network.message.ServerCommands.BaseCommand.Type.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-       */
-      public Builder setType(network.message.ServerCommands.BaseCommand.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        type_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .server.commands.BaseCommand.Type type = 1;</code>
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
       private int messageId_ ;
       /**
-       * <code>optional int32 messageId = 2;</code>
+       * <code>optional int32 messageId = 1;</code>
        */
       public int getMessageId() {
         return messageId_;
       }
       /**
-       * <code>optional int32 messageId = 2;</code>
+       * <code>optional int32 messageId = 1;</code>
        */
       public Builder setMessageId(int value) {
         
@@ -604,7 +432,7 @@ public final class ServerCommands {
         return this;
       }
       /**
-       * <code>optional int32 messageId = 2;</code>
+       * <code>optional int32 messageId = 1;</code>
        */
       public Builder clearMessageId() {
         
@@ -616,23 +444,23 @@ public final class ServerCommands {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerCommands.UpdateBoardState, network.message.ServerCommands.UpdateBoardState.Builder, network.message.ServerCommands.UpdateBoardStateOrBuilder> updateBoardStateBuilder_;
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public network.message.ServerCommands.UpdateBoardState getUpdateBoardState() {
         if (updateBoardStateBuilder_ == null) {
-          if (commandCase_ == 4) {
+          if (commandCase_ == 2) {
             return (network.message.ServerCommands.UpdateBoardState) command_;
           }
           return network.message.ServerCommands.UpdateBoardState.getDefaultInstance();
         } else {
-          if (commandCase_ == 4) {
+          if (commandCase_ == 2) {
             return updateBoardStateBuilder_.getMessage();
           }
           return network.message.ServerCommands.UpdateBoardState.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public Builder setUpdateBoardState(network.message.ServerCommands.UpdateBoardState value) {
         if (updateBoardStateBuilder_ == null) {
@@ -644,11 +472,11 @@ public final class ServerCommands {
         } else {
           updateBoardStateBuilder_.setMessage(value);
         }
-        commandCase_ = 4;
+        commandCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public Builder setUpdateBoardState(
           network.message.ServerCommands.UpdateBoardState.Builder builderForValue) {
@@ -658,15 +486,15 @@ public final class ServerCommands {
         } else {
           updateBoardStateBuilder_.setMessage(builderForValue.build());
         }
-        commandCase_ = 4;
+        commandCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public Builder mergeUpdateBoardState(network.message.ServerCommands.UpdateBoardState value) {
         if (updateBoardStateBuilder_ == null) {
-          if (commandCase_ == 4 &&
+          if (commandCase_ == 2 &&
               command_ != network.message.ServerCommands.UpdateBoardState.getDefaultInstance()) {
             command_ = network.message.ServerCommands.UpdateBoardState.newBuilder((network.message.ServerCommands.UpdateBoardState) command_)
                 .mergeFrom(value).buildPartial();
@@ -675,26 +503,26 @@ public final class ServerCommands {
           }
           onChanged();
         } else {
-          if (commandCase_ == 4) {
+          if (commandCase_ == 2) {
             updateBoardStateBuilder_.mergeFrom(value);
           }
           updateBoardStateBuilder_.setMessage(value);
         }
-        commandCase_ = 4;
+        commandCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public Builder clearUpdateBoardState() {
         if (updateBoardStateBuilder_ == null) {
-          if (commandCase_ == 4) {
+          if (commandCase_ == 2) {
             commandCase_ = 0;
             command_ = null;
             onChanged();
           }
         } else {
-          if (commandCase_ == 4) {
+          if (commandCase_ == 2) {
             commandCase_ = 0;
             command_ = null;
           }
@@ -703,32 +531,32 @@ public final class ServerCommands {
         return this;
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public network.message.ServerCommands.UpdateBoardState.Builder getUpdateBoardStateBuilder() {
         return getUpdateBoardStateFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       public network.message.ServerCommands.UpdateBoardStateOrBuilder getUpdateBoardStateOrBuilder() {
-        if ((commandCase_ == 4) && (updateBoardStateBuilder_ != null)) {
+        if ((commandCase_ == 2) && (updateBoardStateBuilder_ != null)) {
           return updateBoardStateBuilder_.getMessageOrBuilder();
         } else {
-          if (commandCase_ == 4) {
+          if (commandCase_ == 2) {
             return (network.message.ServerCommands.UpdateBoardState) command_;
           }
           return network.message.ServerCommands.UpdateBoardState.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.commands.UpdateBoardState updateBoardState = 4;</code>
+       * <code>optional .server.commands.UpdateBoardState updateBoardState = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerCommands.UpdateBoardState, network.message.ServerCommands.UpdateBoardState.Builder, network.message.ServerCommands.UpdateBoardStateOrBuilder> 
           getUpdateBoardStateFieldBuilder() {
         if (updateBoardStateBuilder_ == null) {
-          if (!(commandCase_ == 4)) {
+          if (!(commandCase_ == 2)) {
             command_ = network.message.ServerCommands.UpdateBoardState.getDefaultInstance();
           }
           updateBoardStateBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -738,7 +566,7 @@ public final class ServerCommands {
                   isClean());
           command_ = null;
         }
-        commandCase_ = 4;
+        commandCase_ = 2;
         onChanged();;
         return updateBoardStateBuilder_;
       }
@@ -1143,14 +971,12 @@ public final class ServerCommands {
   static {
     java.lang.String[] descriptorData = {
       "\n3src/main/proto/network/message/ServerC" +
-      "ommands.proto\022\017server.commands\"\273\001\n\013BaseC" +
-      "ommand\022/\n\004type\030\001 \001(\0162!.server.commands.B" +
-      "aseCommand.Type\022\021\n\tmessageId\030\002 \001(\005\022=\n\020up" +
-      "dateBoardState\030\004 \001(\0132!.server.commands.U" +
-      "pdateBoardStateH\000\"\036\n\004Type\022\026\n\022UPDATE_BOAR" +
-      "D_STATE\020\000B\t\n\007command\"\022\n\020UpdateBoardState" +
-      "B!\n\017network.messageB\016ServerCommandsb\006pro" +
-      "to3"
+      "ommands.proto\022\017server.commands\"j\n\013BaseCo" +
+      "mmand\022\021\n\tmessageId\030\001 \001(\005\022=\n\020updateBoardS" +
+      "tate\030\002 \001(\0132!.server.commands.UpdateBoard" +
+      "StateH\000B\t\n\007command\"\022\n\020UpdateBoardStateB!" +
+      "\n\017network.messageB\016ServerCommandsb\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1169,7 +995,7 @@ public final class ServerCommands {
     internal_static_server_commands_BaseCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_server_commands_BaseCommand_descriptor,
-        new java.lang.String[] { "Type", "MessageId", "UpdateBoardState", "Command", });
+        new java.lang.String[] { "MessageId", "UpdateBoardState", "Command", });
     internal_static_server_commands_UpdateBoardState_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_server_commands_UpdateBoardState_fieldAccessorTable = new

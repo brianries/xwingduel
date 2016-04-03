@@ -5,24 +5,9 @@ option java_package="network.message";
 option java_outer_classname="PlayerCommands";
 
 message BaseCommand {
-    enum Type {
-        ACTION = 0;
-        ADD_SQUADRON = 1;
-        DECLARE_TARGET = 3;
-        DECLOAK = 4;
-        MANEUVER = 5;
-        MODIFY_DICE = 6;
-        PLACE_OBSTACLE = 7;
-        PLACE_SHIP = 8;
-        REROLL_DICE = 9;
-        ROLL_DICE = 10;
-    }
-
-    Type type = 1;
-
     oneof command {
-        AddSquadron addSquadron = 2;
-        PlaceObstacle placeObstacle = 3;
+        AddSquadron addSquadron = 1;
+        PlaceObstacle placeObstacle = 2;
     }
 }
 

@@ -13,47 +13,38 @@ public final class ProtoMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .Message.Type type = 1;</code>
-     */
-    int getTypeValue();
-    /**
-     * <code>optional .Message.Type type = 1;</code>
-     */
-    network.message.ProtoMessage.Message.Type getType();
-
-    /**
-     * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+     * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
      */
     network.message.PlayerCommands.BaseCommand getPlayerCommand();
     /**
-     * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+     * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
      */
     network.message.PlayerCommands.BaseCommandOrBuilder getPlayerCommandOrBuilder();
 
     /**
-     * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+     * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
      */
     network.message.PlayerResponses.BaseResponse getPlayerResponse();
     /**
-     * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+     * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
      */
     network.message.PlayerResponses.BaseResponseOrBuilder getPlayerResponseOrBuilder();
 
     /**
-     * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+     * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
      */
     network.message.ServerCommands.BaseCommand getServerCommand();
     /**
-     * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+     * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
      */
     network.message.ServerCommands.BaseCommandOrBuilder getServerCommandOrBuilder();
 
     /**
-     * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+     * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
      */
     network.message.ServerResponses.BaseResponse getServerResponse();
     /**
-     * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+     * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
      */
     network.message.ServerResponses.BaseResponseOrBuilder getServerResponseOrBuilder();
 
@@ -61,6 +52,10 @@ public final class ProtoMessage {
   }
   /**
    * Protobuf type {@code Message}
+   *
+   * <pre>
+   * Wrapper class for commands and responses to allow for dynamic message reading
+   * </pre>
    */
   public  static final class Message extends
       com.google.protobuf.GeneratedMessage implements
@@ -71,7 +66,6 @@ public final class ProtoMessage {
       super(builder);
     }
     private Message() {
-      type_ = 0;
     }
 
     @java.lang.Override
@@ -98,15 +92,9 @@ public final class ProtoMessage {
               }
               break;
             }
-            case 8: {
-              int rawValue = input.readEnum();
-
-              type_ = rawValue;
-              break;
-            }
-            case 18: {
+            case 10: {
               network.message.PlayerCommands.BaseCommand.Builder subBuilder = null;
-              if (subMessageCase_ == 2) {
+              if (subMessageCase_ == 1) {
                 subBuilder = ((network.message.PlayerCommands.BaseCommand) subMessage_).toBuilder();
               }
               subMessage_ =
@@ -115,12 +103,12 @@ public final class ProtoMessage {
                 subBuilder.mergeFrom((network.message.PlayerCommands.BaseCommand) subMessage_);
                 subMessage_ = subBuilder.buildPartial();
               }
-              subMessageCase_ = 2;
+              subMessageCase_ = 1;
               break;
             }
-            case 26: {
+            case 18: {
               network.message.PlayerResponses.BaseResponse.Builder subBuilder = null;
-              if (subMessageCase_ == 3) {
+              if (subMessageCase_ == 2) {
                 subBuilder = ((network.message.PlayerResponses.BaseResponse) subMessage_).toBuilder();
               }
               subMessage_ =
@@ -129,12 +117,12 @@ public final class ProtoMessage {
                 subBuilder.mergeFrom((network.message.PlayerResponses.BaseResponse) subMessage_);
                 subMessage_ = subBuilder.buildPartial();
               }
-              subMessageCase_ = 3;
+              subMessageCase_ = 2;
               break;
             }
-            case 34: {
+            case 26: {
               network.message.ServerCommands.BaseCommand.Builder subBuilder = null;
-              if (subMessageCase_ == 4) {
+              if (subMessageCase_ == 3) {
                 subBuilder = ((network.message.ServerCommands.BaseCommand) subMessage_).toBuilder();
               }
               subMessage_ =
@@ -143,12 +131,12 @@ public final class ProtoMessage {
                 subBuilder.mergeFrom((network.message.ServerCommands.BaseCommand) subMessage_);
                 subMessage_ = subBuilder.buildPartial();
               }
-              subMessageCase_ = 4;
+              subMessageCase_ = 3;
               break;
             }
-            case 42: {
+            case 34: {
               network.message.ServerResponses.BaseResponse.Builder subBuilder = null;
-              if (subMessageCase_ == 5) {
+              if (subMessageCase_ == 4) {
                 subBuilder = ((network.message.ServerResponses.BaseResponse) subMessage_).toBuilder();
               }
               subMessage_ =
@@ -157,7 +145,7 @@ public final class ProtoMessage {
                 subBuilder.mergeFrom((network.message.ServerResponses.BaseResponse) subMessage_);
                 subMessage_ = subBuilder.buildPartial();
               }
-              subMessageCase_ = 5;
+              subMessageCase_ = 4;
               break;
             }
           }
@@ -184,124 +172,14 @@ public final class ProtoMessage {
               network.message.ProtoMessage.Message.class, network.message.ProtoMessage.Message.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code Message.Type}
-     */
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>PLAYER_COMMAND = 0;</code>
-       */
-      PLAYER_COMMAND(0, 0),
-      /**
-       * <code>PLAYER_RESPONSE = 1;</code>
-       */
-      PLAYER_RESPONSE(1, 1),
-      /**
-       * <code>SERVER_COMMAND = 2;</code>
-       */
-      SERVER_COMMAND(2, 2),
-      /**
-       * <code>SERVER_RESPONSE = 3;</code>
-       */
-      SERVER_RESPONSE(3, 3),
-      UNRECOGNIZED(-1, -1),
-      ;
-
-      /**
-       * <code>PLAYER_COMMAND = 0;</code>
-       */
-      public static final int PLAYER_COMMAND_VALUE = 0;
-      /**
-       * <code>PLAYER_RESPONSE = 1;</code>
-       */
-      public static final int PLAYER_RESPONSE_VALUE = 1;
-      /**
-       * <code>SERVER_COMMAND = 2;</code>
-       */
-      public static final int SERVER_COMMAND_VALUE = 2;
-      /**
-       * <code>SERVER_RESPONSE = 3;</code>
-       */
-      public static final int SERVER_RESPONSE_VALUE = 3;
-
-
-      public final int getNumber() {
-        if (index == -1) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      public static Type valueOf(int value) {
-        switch (value) {
-          case 0: return PLAYER_COMMAND;
-          case 1: return PLAYER_RESPONSE;
-          case 2: return SERVER_COMMAND;
-          case 3: return SERVER_RESPONSE;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.valueOf(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(index);
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return network.message.ProtoMessage.Message.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Type[] VALUES = values();
-
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int index;
-      private final int value;
-
-      private Type(int index, int value) {
-        this.index = index;
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:Message.Type)
-    }
-
     private int subMessageCase_ = 0;
     private java.lang.Object subMessage_;
     public enum SubMessageCase
         implements com.google.protobuf.Internal.EnumLite {
-      PLAYERCOMMAND(2),
-      PLAYERRESPONSE(3),
-      SERVERCOMMAND(4),
-      SERVERRESPONSE(5),
+      PLAYERCOMMAND(1),
+      PLAYERRESPONSE(2),
+      SERVERCOMMAND(3),
+      SERVERRESPONSE(4),
       SUBMESSAGE_NOT_SET(0);
       private int value = 0;
       private SubMessageCase(int value) {
@@ -309,10 +187,10 @@ public final class ProtoMessage {
       }
       public static SubMessageCase valueOf(int value) {
         switch (value) {
-          case 2: return PLAYERCOMMAND;
-          case 3: return PLAYERRESPONSE;
-          case 4: return SERVERCOMMAND;
-          case 5: return SERVERRESPONSE;
+          case 1: return PLAYERCOMMAND;
+          case 2: return PLAYERRESPONSE;
+          case 3: return SERVERCOMMAND;
+          case 4: return SERVERRESPONSE;
           case 0: return SUBMESSAGE_NOT_SET;
           default: throw new java.lang.IllegalArgumentException(
             "Value is undefined for this oneof enum.");
@@ -329,97 +207,81 @@ public final class ProtoMessage {
           subMessageCase_);
     }
 
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private int type_;
+    public static final int PLAYERCOMMAND_FIELD_NUMBER = 1;
     /**
-     * <code>optional .Message.Type type = 1;</code>
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <code>optional .Message.Type type = 1;</code>
-     */
-    public network.message.ProtoMessage.Message.Type getType() {
-      network.message.ProtoMessage.Message.Type result = network.message.ProtoMessage.Message.Type.valueOf(type_);
-      return result == null ? network.message.ProtoMessage.Message.Type.UNRECOGNIZED : result;
-    }
-
-    public static final int PLAYERCOMMAND_FIELD_NUMBER = 2;
-    /**
-     * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+     * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
      */
     public network.message.PlayerCommands.BaseCommand getPlayerCommand() {
-      if (subMessageCase_ == 2) {
+      if (subMessageCase_ == 1) {
          return (network.message.PlayerCommands.BaseCommand) subMessage_;
       }
       return network.message.PlayerCommands.BaseCommand.getDefaultInstance();
     }
     /**
-     * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+     * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
      */
     public network.message.PlayerCommands.BaseCommandOrBuilder getPlayerCommandOrBuilder() {
-      if (subMessageCase_ == 2) {
+      if (subMessageCase_ == 1) {
          return (network.message.PlayerCommands.BaseCommand) subMessage_;
       }
       return network.message.PlayerCommands.BaseCommand.getDefaultInstance();
     }
 
-    public static final int PLAYERRESPONSE_FIELD_NUMBER = 3;
+    public static final int PLAYERRESPONSE_FIELD_NUMBER = 2;
     /**
-     * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+     * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
      */
     public network.message.PlayerResponses.BaseResponse getPlayerResponse() {
-      if (subMessageCase_ == 3) {
+      if (subMessageCase_ == 2) {
          return (network.message.PlayerResponses.BaseResponse) subMessage_;
       }
       return network.message.PlayerResponses.BaseResponse.getDefaultInstance();
     }
     /**
-     * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+     * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
      */
     public network.message.PlayerResponses.BaseResponseOrBuilder getPlayerResponseOrBuilder() {
-      if (subMessageCase_ == 3) {
+      if (subMessageCase_ == 2) {
          return (network.message.PlayerResponses.BaseResponse) subMessage_;
       }
       return network.message.PlayerResponses.BaseResponse.getDefaultInstance();
     }
 
-    public static final int SERVERCOMMAND_FIELD_NUMBER = 4;
+    public static final int SERVERCOMMAND_FIELD_NUMBER = 3;
     /**
-     * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+     * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
      */
     public network.message.ServerCommands.BaseCommand getServerCommand() {
-      if (subMessageCase_ == 4) {
+      if (subMessageCase_ == 3) {
          return (network.message.ServerCommands.BaseCommand) subMessage_;
       }
       return network.message.ServerCommands.BaseCommand.getDefaultInstance();
     }
     /**
-     * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+     * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
      */
     public network.message.ServerCommands.BaseCommandOrBuilder getServerCommandOrBuilder() {
-      if (subMessageCase_ == 4) {
+      if (subMessageCase_ == 3) {
          return (network.message.ServerCommands.BaseCommand) subMessage_;
       }
       return network.message.ServerCommands.BaseCommand.getDefaultInstance();
     }
 
-    public static final int SERVERRESPONSE_FIELD_NUMBER = 5;
+    public static final int SERVERRESPONSE_FIELD_NUMBER = 4;
     /**
-     * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+     * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
      */
     public network.message.ServerResponses.BaseResponse getServerResponse() {
-      if (subMessageCase_ == 5) {
+      if (subMessageCase_ == 4) {
          return (network.message.ServerResponses.BaseResponse) subMessage_;
       }
       return network.message.ServerResponses.BaseResponse.getDefaultInstance();
     }
     /**
-     * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+     * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
      */
     public network.message.ServerResponses.BaseResponseOrBuilder getServerResponseOrBuilder() {
-      if (subMessageCase_ == 5) {
+      if (subMessageCase_ == 4) {
          return (network.message.ServerResponses.BaseResponse) subMessage_;
       }
       return network.message.ServerResponses.BaseResponse.getDefaultInstance();
@@ -437,20 +299,17 @@ public final class ProtoMessage {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (type_ != network.message.ProtoMessage.Message.Type.PLAYER_COMMAND.getNumber()) {
-        output.writeEnum(1, type_);
+      if (subMessageCase_ == 1) {
+        output.writeMessage(1, (network.message.PlayerCommands.BaseCommand) subMessage_);
       }
       if (subMessageCase_ == 2) {
-        output.writeMessage(2, (network.message.PlayerCommands.BaseCommand) subMessage_);
+        output.writeMessage(2, (network.message.PlayerResponses.BaseResponse) subMessage_);
       }
       if (subMessageCase_ == 3) {
-        output.writeMessage(3, (network.message.PlayerResponses.BaseResponse) subMessage_);
+        output.writeMessage(3, (network.message.ServerCommands.BaseCommand) subMessage_);
       }
       if (subMessageCase_ == 4) {
-        output.writeMessage(4, (network.message.ServerCommands.BaseCommand) subMessage_);
-      }
-      if (subMessageCase_ == 5) {
-        output.writeMessage(5, (network.message.ServerResponses.BaseResponse) subMessage_);
+        output.writeMessage(4, (network.message.ServerResponses.BaseResponse) subMessage_);
       }
     }
 
@@ -459,25 +318,21 @@ public final class ProtoMessage {
       if (size != -1) return size;
 
       size = 0;
-      if (type_ != network.message.ProtoMessage.Message.Type.PLAYER_COMMAND.getNumber()) {
+      if (subMessageCase_ == 1) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, type_);
+          .computeMessageSize(1, (network.message.PlayerCommands.BaseCommand) subMessage_);
       }
       if (subMessageCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (network.message.PlayerCommands.BaseCommand) subMessage_);
+          .computeMessageSize(2, (network.message.PlayerResponses.BaseResponse) subMessage_);
       }
       if (subMessageCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (network.message.PlayerResponses.BaseResponse) subMessage_);
+          .computeMessageSize(3, (network.message.ServerCommands.BaseCommand) subMessage_);
       }
       if (subMessageCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (network.message.ServerCommands.BaseCommand) subMessage_);
-      }
-      if (subMessageCase_ == 5) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, (network.message.ServerResponses.BaseResponse) subMessage_);
+          .computeMessageSize(4, (network.message.ServerResponses.BaseResponse) subMessage_);
       }
       memoizedSize = size;
       return size;
@@ -557,6 +412,10 @@ public final class ProtoMessage {
     }
     /**
      * Protobuf type {@code Message}
+     *
+     * <pre>
+     * Wrapper class for commands and responses to allow for dynamic message reading
+     * </pre>
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
@@ -590,8 +449,6 @@ public final class ProtoMessage {
       }
       public Builder clear() {
         super.clear();
-        type_ = 0;
-
         subMessageCase_ = 0;
         subMessage_ = null;
         return this;
@@ -616,29 +473,28 @@ public final class ProtoMessage {
 
       public network.message.ProtoMessage.Message buildPartial() {
         network.message.ProtoMessage.Message result = new network.message.ProtoMessage.Message(this);
-        result.type_ = type_;
-        if (subMessageCase_ == 2) {
+        if (subMessageCase_ == 1) {
           if (playerCommandBuilder_ == null) {
             result.subMessage_ = subMessage_;
           } else {
             result.subMessage_ = playerCommandBuilder_.build();
           }
         }
-        if (subMessageCase_ == 3) {
+        if (subMessageCase_ == 2) {
           if (playerResponseBuilder_ == null) {
             result.subMessage_ = subMessage_;
           } else {
             result.subMessage_ = playerResponseBuilder_.build();
           }
         }
-        if (subMessageCase_ == 4) {
+        if (subMessageCase_ == 3) {
           if (serverCommandBuilder_ == null) {
             result.subMessage_ = subMessage_;
           } else {
             result.subMessage_ = serverCommandBuilder_.build();
           }
         }
-        if (subMessageCase_ == 5) {
+        if (subMessageCase_ == 4) {
           if (serverResponseBuilder_ == null) {
             result.subMessage_ = subMessage_;
           } else {
@@ -661,9 +517,6 @@ public final class ProtoMessage {
 
       public Builder mergeFrom(network.message.ProtoMessage.Message other) {
         if (other == network.message.ProtoMessage.Message.getDefaultInstance()) return this;
-        if (other.type_ != 0) {
-          setTypeValue(other.getTypeValue());
-        }
         switch (other.getSubMessageCase()) {
           case PLAYERCOMMAND: {
             mergePlayerCommand(other.getPlayerCommand());
@@ -726,70 +579,26 @@ public final class ProtoMessage {
       }
 
 
-      private int type_ = 0;
-      /**
-       * <code>optional .Message.Type type = 1;</code>
-       */
-      public int getTypeValue() {
-        return type_;
-      }
-      /**
-       * <code>optional .Message.Type type = 1;</code>
-       */
-      public Builder setTypeValue(int value) {
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .Message.Type type = 1;</code>
-       */
-      public network.message.ProtoMessage.Message.Type getType() {
-        network.message.ProtoMessage.Message.Type result = network.message.ProtoMessage.Message.Type.valueOf(type_);
-        return result == null ? network.message.ProtoMessage.Message.Type.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>optional .Message.Type type = 1;</code>
-       */
-      public Builder setType(network.message.ProtoMessage.Message.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        type_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional .Message.Type type = 1;</code>
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.BaseCommand, network.message.PlayerCommands.BaseCommand.Builder, network.message.PlayerCommands.BaseCommandOrBuilder> playerCommandBuilder_;
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public network.message.PlayerCommands.BaseCommand getPlayerCommand() {
         if (playerCommandBuilder_ == null) {
-          if (subMessageCase_ == 2) {
+          if (subMessageCase_ == 1) {
             return (network.message.PlayerCommands.BaseCommand) subMessage_;
           }
           return network.message.PlayerCommands.BaseCommand.getDefaultInstance();
         } else {
-          if (subMessageCase_ == 2) {
+          if (subMessageCase_ == 1) {
             return playerCommandBuilder_.getMessage();
           }
           return network.message.PlayerCommands.BaseCommand.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public Builder setPlayerCommand(network.message.PlayerCommands.BaseCommand value) {
         if (playerCommandBuilder_ == null) {
@@ -801,11 +610,11 @@ public final class ProtoMessage {
         } else {
           playerCommandBuilder_.setMessage(value);
         }
-        subMessageCase_ = 2;
+        subMessageCase_ = 1;
         return this;
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public Builder setPlayerCommand(
           network.message.PlayerCommands.BaseCommand.Builder builderForValue) {
@@ -815,15 +624,15 @@ public final class ProtoMessage {
         } else {
           playerCommandBuilder_.setMessage(builderForValue.build());
         }
-        subMessageCase_ = 2;
+        subMessageCase_ = 1;
         return this;
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public Builder mergePlayerCommand(network.message.PlayerCommands.BaseCommand value) {
         if (playerCommandBuilder_ == null) {
-          if (subMessageCase_ == 2 &&
+          if (subMessageCase_ == 1 &&
               subMessage_ != network.message.PlayerCommands.BaseCommand.getDefaultInstance()) {
             subMessage_ = network.message.PlayerCommands.BaseCommand.newBuilder((network.message.PlayerCommands.BaseCommand) subMessage_)
                 .mergeFrom(value).buildPartial();
@@ -832,26 +641,26 @@ public final class ProtoMessage {
           }
           onChanged();
         } else {
-          if (subMessageCase_ == 2) {
+          if (subMessageCase_ == 1) {
             playerCommandBuilder_.mergeFrom(value);
           }
           playerCommandBuilder_.setMessage(value);
         }
-        subMessageCase_ = 2;
+        subMessageCase_ = 1;
         return this;
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public Builder clearPlayerCommand() {
         if (playerCommandBuilder_ == null) {
-          if (subMessageCase_ == 2) {
+          if (subMessageCase_ == 1) {
             subMessageCase_ = 0;
             subMessage_ = null;
             onChanged();
           }
         } else {
-          if (subMessageCase_ == 2) {
+          if (subMessageCase_ == 1) {
             subMessageCase_ = 0;
             subMessage_ = null;
           }
@@ -860,32 +669,32 @@ public final class ProtoMessage {
         return this;
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public network.message.PlayerCommands.BaseCommand.Builder getPlayerCommandBuilder() {
         return getPlayerCommandFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       public network.message.PlayerCommands.BaseCommandOrBuilder getPlayerCommandOrBuilder() {
-        if ((subMessageCase_ == 2) && (playerCommandBuilder_ != null)) {
+        if ((subMessageCase_ == 1) && (playerCommandBuilder_ != null)) {
           return playerCommandBuilder_.getMessageOrBuilder();
         } else {
-          if (subMessageCase_ == 2) {
+          if (subMessageCase_ == 1) {
             return (network.message.PlayerCommands.BaseCommand) subMessage_;
           }
           return network.message.PlayerCommands.BaseCommand.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.BaseCommand playerCommand = 2;</code>
+       * <code>optional .player.commands.BaseCommand playerCommand = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.BaseCommand, network.message.PlayerCommands.BaseCommand.Builder, network.message.PlayerCommands.BaseCommandOrBuilder> 
           getPlayerCommandFieldBuilder() {
         if (playerCommandBuilder_ == null) {
-          if (!(subMessageCase_ == 2)) {
+          if (!(subMessageCase_ == 1)) {
             subMessage_ = network.message.PlayerCommands.BaseCommand.getDefaultInstance();
           }
           playerCommandBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -895,7 +704,7 @@ public final class ProtoMessage {
                   isClean());
           subMessage_ = null;
         }
-        subMessageCase_ = 2;
+        subMessageCase_ = 1;
         onChanged();;
         return playerCommandBuilder_;
       }
@@ -903,23 +712,23 @@ public final class ProtoMessage {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerResponses.BaseResponse, network.message.PlayerResponses.BaseResponse.Builder, network.message.PlayerResponses.BaseResponseOrBuilder> playerResponseBuilder_;
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public network.message.PlayerResponses.BaseResponse getPlayerResponse() {
         if (playerResponseBuilder_ == null) {
-          if (subMessageCase_ == 3) {
+          if (subMessageCase_ == 2) {
             return (network.message.PlayerResponses.BaseResponse) subMessage_;
           }
           return network.message.PlayerResponses.BaseResponse.getDefaultInstance();
         } else {
-          if (subMessageCase_ == 3) {
+          if (subMessageCase_ == 2) {
             return playerResponseBuilder_.getMessage();
           }
           return network.message.PlayerResponses.BaseResponse.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public Builder setPlayerResponse(network.message.PlayerResponses.BaseResponse value) {
         if (playerResponseBuilder_ == null) {
@@ -931,11 +740,11 @@ public final class ProtoMessage {
         } else {
           playerResponseBuilder_.setMessage(value);
         }
-        subMessageCase_ = 3;
+        subMessageCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public Builder setPlayerResponse(
           network.message.PlayerResponses.BaseResponse.Builder builderForValue) {
@@ -945,15 +754,15 @@ public final class ProtoMessage {
         } else {
           playerResponseBuilder_.setMessage(builderForValue.build());
         }
-        subMessageCase_ = 3;
+        subMessageCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public Builder mergePlayerResponse(network.message.PlayerResponses.BaseResponse value) {
         if (playerResponseBuilder_ == null) {
-          if (subMessageCase_ == 3 &&
+          if (subMessageCase_ == 2 &&
               subMessage_ != network.message.PlayerResponses.BaseResponse.getDefaultInstance()) {
             subMessage_ = network.message.PlayerResponses.BaseResponse.newBuilder((network.message.PlayerResponses.BaseResponse) subMessage_)
                 .mergeFrom(value).buildPartial();
@@ -962,26 +771,26 @@ public final class ProtoMessage {
           }
           onChanged();
         } else {
-          if (subMessageCase_ == 3) {
+          if (subMessageCase_ == 2) {
             playerResponseBuilder_.mergeFrom(value);
           }
           playerResponseBuilder_.setMessage(value);
         }
-        subMessageCase_ = 3;
+        subMessageCase_ = 2;
         return this;
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public Builder clearPlayerResponse() {
         if (playerResponseBuilder_ == null) {
-          if (subMessageCase_ == 3) {
+          if (subMessageCase_ == 2) {
             subMessageCase_ = 0;
             subMessage_ = null;
             onChanged();
           }
         } else {
-          if (subMessageCase_ == 3) {
+          if (subMessageCase_ == 2) {
             subMessageCase_ = 0;
             subMessage_ = null;
           }
@@ -990,32 +799,32 @@ public final class ProtoMessage {
         return this;
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public network.message.PlayerResponses.BaseResponse.Builder getPlayerResponseBuilder() {
         return getPlayerResponseFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       public network.message.PlayerResponses.BaseResponseOrBuilder getPlayerResponseOrBuilder() {
-        if ((subMessageCase_ == 3) && (playerResponseBuilder_ != null)) {
+        if ((subMessageCase_ == 2) && (playerResponseBuilder_ != null)) {
           return playerResponseBuilder_.getMessageOrBuilder();
         } else {
-          if (subMessageCase_ == 3) {
+          if (subMessageCase_ == 2) {
             return (network.message.PlayerResponses.BaseResponse) subMessage_;
           }
           return network.message.PlayerResponses.BaseResponse.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.responses.BaseResponse playerResponse = 3;</code>
+       * <code>optional .player.responses.BaseResponse playerResponse = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerResponses.BaseResponse, network.message.PlayerResponses.BaseResponse.Builder, network.message.PlayerResponses.BaseResponseOrBuilder> 
           getPlayerResponseFieldBuilder() {
         if (playerResponseBuilder_ == null) {
-          if (!(subMessageCase_ == 3)) {
+          if (!(subMessageCase_ == 2)) {
             subMessage_ = network.message.PlayerResponses.BaseResponse.getDefaultInstance();
           }
           playerResponseBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -1025,7 +834,7 @@ public final class ProtoMessage {
                   isClean());
           subMessage_ = null;
         }
-        subMessageCase_ = 3;
+        subMessageCase_ = 2;
         onChanged();;
         return playerResponseBuilder_;
       }
@@ -1033,23 +842,23 @@ public final class ProtoMessage {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerCommands.BaseCommand, network.message.ServerCommands.BaseCommand.Builder, network.message.ServerCommands.BaseCommandOrBuilder> serverCommandBuilder_;
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public network.message.ServerCommands.BaseCommand getServerCommand() {
         if (serverCommandBuilder_ == null) {
-          if (subMessageCase_ == 4) {
+          if (subMessageCase_ == 3) {
             return (network.message.ServerCommands.BaseCommand) subMessage_;
           }
           return network.message.ServerCommands.BaseCommand.getDefaultInstance();
         } else {
-          if (subMessageCase_ == 4) {
+          if (subMessageCase_ == 3) {
             return serverCommandBuilder_.getMessage();
           }
           return network.message.ServerCommands.BaseCommand.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public Builder setServerCommand(network.message.ServerCommands.BaseCommand value) {
         if (serverCommandBuilder_ == null) {
@@ -1061,11 +870,11 @@ public final class ProtoMessage {
         } else {
           serverCommandBuilder_.setMessage(value);
         }
-        subMessageCase_ = 4;
+        subMessageCase_ = 3;
         return this;
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public Builder setServerCommand(
           network.message.ServerCommands.BaseCommand.Builder builderForValue) {
@@ -1075,15 +884,15 @@ public final class ProtoMessage {
         } else {
           serverCommandBuilder_.setMessage(builderForValue.build());
         }
-        subMessageCase_ = 4;
+        subMessageCase_ = 3;
         return this;
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public Builder mergeServerCommand(network.message.ServerCommands.BaseCommand value) {
         if (serverCommandBuilder_ == null) {
-          if (subMessageCase_ == 4 &&
+          if (subMessageCase_ == 3 &&
               subMessage_ != network.message.ServerCommands.BaseCommand.getDefaultInstance()) {
             subMessage_ = network.message.ServerCommands.BaseCommand.newBuilder((network.message.ServerCommands.BaseCommand) subMessage_)
                 .mergeFrom(value).buildPartial();
@@ -1092,26 +901,26 @@ public final class ProtoMessage {
           }
           onChanged();
         } else {
-          if (subMessageCase_ == 4) {
+          if (subMessageCase_ == 3) {
             serverCommandBuilder_.mergeFrom(value);
           }
           serverCommandBuilder_.setMessage(value);
         }
-        subMessageCase_ = 4;
+        subMessageCase_ = 3;
         return this;
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public Builder clearServerCommand() {
         if (serverCommandBuilder_ == null) {
-          if (subMessageCase_ == 4) {
+          if (subMessageCase_ == 3) {
             subMessageCase_ = 0;
             subMessage_ = null;
             onChanged();
           }
         } else {
-          if (subMessageCase_ == 4) {
+          if (subMessageCase_ == 3) {
             subMessageCase_ = 0;
             subMessage_ = null;
           }
@@ -1120,32 +929,32 @@ public final class ProtoMessage {
         return this;
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public network.message.ServerCommands.BaseCommand.Builder getServerCommandBuilder() {
         return getServerCommandFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       public network.message.ServerCommands.BaseCommandOrBuilder getServerCommandOrBuilder() {
-        if ((subMessageCase_ == 4) && (serverCommandBuilder_ != null)) {
+        if ((subMessageCase_ == 3) && (serverCommandBuilder_ != null)) {
           return serverCommandBuilder_.getMessageOrBuilder();
         } else {
-          if (subMessageCase_ == 4) {
+          if (subMessageCase_ == 3) {
             return (network.message.ServerCommands.BaseCommand) subMessage_;
           }
           return network.message.ServerCommands.BaseCommand.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.commands.BaseCommand serverCommand = 4;</code>
+       * <code>optional .server.commands.BaseCommand serverCommand = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerCommands.BaseCommand, network.message.ServerCommands.BaseCommand.Builder, network.message.ServerCommands.BaseCommandOrBuilder> 
           getServerCommandFieldBuilder() {
         if (serverCommandBuilder_ == null) {
-          if (!(subMessageCase_ == 4)) {
+          if (!(subMessageCase_ == 3)) {
             subMessage_ = network.message.ServerCommands.BaseCommand.getDefaultInstance();
           }
           serverCommandBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -1155,7 +964,7 @@ public final class ProtoMessage {
                   isClean());
           subMessage_ = null;
         }
-        subMessageCase_ = 4;
+        subMessageCase_ = 3;
         onChanged();;
         return serverCommandBuilder_;
       }
@@ -1163,23 +972,23 @@ public final class ProtoMessage {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerResponses.BaseResponse, network.message.ServerResponses.BaseResponse.Builder, network.message.ServerResponses.BaseResponseOrBuilder> serverResponseBuilder_;
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public network.message.ServerResponses.BaseResponse getServerResponse() {
         if (serverResponseBuilder_ == null) {
-          if (subMessageCase_ == 5) {
+          if (subMessageCase_ == 4) {
             return (network.message.ServerResponses.BaseResponse) subMessage_;
           }
           return network.message.ServerResponses.BaseResponse.getDefaultInstance();
         } else {
-          if (subMessageCase_ == 5) {
+          if (subMessageCase_ == 4) {
             return serverResponseBuilder_.getMessage();
           }
           return network.message.ServerResponses.BaseResponse.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public Builder setServerResponse(network.message.ServerResponses.BaseResponse value) {
         if (serverResponseBuilder_ == null) {
@@ -1191,11 +1000,11 @@ public final class ProtoMessage {
         } else {
           serverResponseBuilder_.setMessage(value);
         }
-        subMessageCase_ = 5;
+        subMessageCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public Builder setServerResponse(
           network.message.ServerResponses.BaseResponse.Builder builderForValue) {
@@ -1205,15 +1014,15 @@ public final class ProtoMessage {
         } else {
           serverResponseBuilder_.setMessage(builderForValue.build());
         }
-        subMessageCase_ = 5;
+        subMessageCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public Builder mergeServerResponse(network.message.ServerResponses.BaseResponse value) {
         if (serverResponseBuilder_ == null) {
-          if (subMessageCase_ == 5 &&
+          if (subMessageCase_ == 4 &&
               subMessage_ != network.message.ServerResponses.BaseResponse.getDefaultInstance()) {
             subMessage_ = network.message.ServerResponses.BaseResponse.newBuilder((network.message.ServerResponses.BaseResponse) subMessage_)
                 .mergeFrom(value).buildPartial();
@@ -1222,26 +1031,26 @@ public final class ProtoMessage {
           }
           onChanged();
         } else {
-          if (subMessageCase_ == 5) {
+          if (subMessageCase_ == 4) {
             serverResponseBuilder_.mergeFrom(value);
           }
           serverResponseBuilder_.setMessage(value);
         }
-        subMessageCase_ = 5;
+        subMessageCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public Builder clearServerResponse() {
         if (serverResponseBuilder_ == null) {
-          if (subMessageCase_ == 5) {
+          if (subMessageCase_ == 4) {
             subMessageCase_ = 0;
             subMessage_ = null;
             onChanged();
           }
         } else {
-          if (subMessageCase_ == 5) {
+          if (subMessageCase_ == 4) {
             subMessageCase_ = 0;
             subMessage_ = null;
           }
@@ -1250,32 +1059,32 @@ public final class ProtoMessage {
         return this;
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public network.message.ServerResponses.BaseResponse.Builder getServerResponseBuilder() {
         return getServerResponseFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       public network.message.ServerResponses.BaseResponseOrBuilder getServerResponseOrBuilder() {
-        if ((subMessageCase_ == 5) && (serverResponseBuilder_ != null)) {
+        if ((subMessageCase_ == 4) && (serverResponseBuilder_ != null)) {
           return serverResponseBuilder_.getMessageOrBuilder();
         } else {
-          if (subMessageCase_ == 5) {
+          if (subMessageCase_ == 4) {
             return (network.message.ServerResponses.BaseResponse) subMessage_;
           }
           return network.message.ServerResponses.BaseResponse.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .server.responses.BaseResponse serverResponse = 5;</code>
+       * <code>optional .server.responses.BaseResponse serverResponse = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.ServerResponses.BaseResponse, network.message.ServerResponses.BaseResponse.Builder, network.message.ServerResponses.BaseResponseOrBuilder> 
           getServerResponseFieldBuilder() {
         if (serverResponseBuilder_ == null) {
-          if (!(subMessageCase_ == 5)) {
+          if (!(subMessageCase_ == 4)) {
             subMessage_ = network.message.ServerResponses.BaseResponse.getDefaultInstance();
           }
           serverResponseBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -1285,7 +1094,7 @@ public final class ProtoMessage {
                   isClean());
           subMessage_ = null;
         }
-        subMessageCase_ = 5;
+        subMessageCase_ = 4;
         onChanged();;
         return serverResponseBuilder_;
       }
@@ -1367,17 +1176,14 @@ public final class ProtoMessage {
       "ork/message/PlayerResponses.proto\0323src/m" +
       "ain/proto/network/message/ServerCommands" +
       ".proto\0324src/main/proto/network/message/S" +
-      "erverResponses.proto\"\360\002\n\007Message\022\033\n\004type" +
-      "\030\001 \001(\0162\r.Message.Type\0225\n\rplayerCommand\030\002" +
-      " \001(\0132\034.player.commands.BaseCommandH\000\0228\n\016" +
-      "playerResponse\030\003 \001(\0132\036.player.responses.",
-      "BaseResponseH\000\0225\n\rserverCommand\030\004 \001(\0132\034." +
-      "server.commands.BaseCommandH\000\0228\n\016serverR" +
-      "esponse\030\005 \001(\0132\036.server.responses.BaseRes" +
-      "ponseH\000\"X\n\004Type\022\022\n\016PLAYER_COMMAND\020\000\022\023\n\017P" +
-      "LAYER_RESPONSE\020\001\022\022\n\016SERVER_COMMAND\020\002\022\023\n\017" +
-      "SERVER_RESPONSE\020\003B\014\n\nsubMessageB\037\n\017netwo" +
-      "rk.messageB\014ProtoMessageb\006proto3"
+      "erverResponses.proto\"\371\001\n\007Message\0225\n\rplay" +
+      "erCommand\030\001 \001(\0132\034.player.commands.BaseCo" +
+      "mmandH\000\0228\n\016playerResponse\030\002 \001(\0132\036.player" +
+      ".responses.BaseResponseH\000\0225\n\rserverComma",
+      "nd\030\003 \001(\0132\034.server.commands.BaseCommandH\000" +
+      "\0228\n\016serverResponse\030\004 \001(\0132\036.server.respon" +
+      "ses.BaseResponseH\000B\014\n\nsubMessageB\037\n\017netw" +
+      "ork.messageB\014ProtoMessageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1400,7 +1206,7 @@ public final class ProtoMessage {
     internal_static_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Message_descriptor,
-        new java.lang.String[] { "Type", "PlayerCommand", "PlayerResponse", "ServerCommand", "ServerResponse", "SubMessage", });
+        new java.lang.String[] { "PlayerCommand", "PlayerResponse", "ServerCommand", "ServerResponse", "SubMessage", });
     network.message.PlayerCommands.getDescriptor();
     network.message.PlayerResponses.getDescriptor();
     network.message.ServerCommands.getDescriptor();

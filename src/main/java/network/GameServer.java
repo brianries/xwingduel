@@ -82,12 +82,12 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
             }
 
             ProtoMessage.Message message = ProtoMessage.Message.parseFrom(serverData.data);
-            log.debug("Handling server data (" + message.getType().toString() + ")");
-            switch (message.getType()) {
-                case PLAYER_COMMAND:
+            log.debug("Handling server data (" + message.getSubMessageCase().toString() + ")");
+            switch (message.getSubMessageCase()) {
+                case PLAYERCOMMAND:
                     handlePlayerCommand(serverData.channel, message.getPlayerCommand());
                     break;
-                case PLAYER_RESPONSE:
+                case PLAYERRESPONSE:
                     handlePlayerResponse(serverData.channel, message.getPlayerResponse());
                     break;
                 default:
@@ -104,33 +104,31 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     }
 
     private void handlePlayerResponse(SocketChannel channel, PlayerResponses.BaseResponse playerResponse) {
+        log.debug("Handling player response data (" + playerResponse.getResponseCase().toString() + ")");
         //TODO implement
     }
 
     private void handlePlayerCommand(SocketChannel channel, PlayerCommands.BaseCommand playerCommand) {
-        log.debug("Handling player command data (" + playerCommand.getType().toString() + ")");
-        switch (playerCommand.getType()) {
-            case ADD_SQUADRON:
+        log.debug("Handling player command data (" + playerCommand.getCommandCase().toString() + ")");
+        switch (playerCommand.getCommandCase()) {
+            case ADDSQUADRON:
                 //AddSquadronCommand addSquadronCommand = (AddSquadronCommand) playerCommand;
                 //sendResponse(channel, new AddSquadronResponse());
                 //this.serverBoardState.addSquadron(getPlayerFromChannel(channel), addSquadronCommand.getFaction(), addSquadronCommand.getUnitSubmissions());
                 break;
 
-            case PLACE_SHIP:
+            case PLACEOBSTACLE:
               //  PlaceShipCommand addShipCommand = (PlaceShipCommand) playerCommand;
               //  sendResponse(channel, new PlaceShipResponse());
                 break;
 
-            case ROLL_DICE:
-               // RollDiceCommand rollDiceCommand = (RollDiceCommand) playerCommand;
-                // roll some dice
-               // sendResponse(channel, new RollDiceResponse());
-                break;
+            case COMMAND_NOT_SET:
+                throw new RuntimeException("Command not sent for player command!");
         }
     }
 
     public void sendResponse(SocketChannel channel, ServerResponses.BaseResponse response) {
-        log.debug("Sending server response (" + response.getType().toString() + ")");
+        log.debug("Sending server response (" + response.getResponseCase().toString() + ")");
 
         ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
                 .setServerResponse(response)
