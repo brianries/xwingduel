@@ -81,7 +81,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
                 serverData = queue.remove(0);
             }
 
-            ProtoMessage.Message message = ProtoMessage.Message.parseFrom(serverData.data);
+            Protocol.Message message = Protocol.Message.parseFrom(serverData.data);
             log.debug("Handling server data (" + message.getSubMessageCase().toString() + ")");
             switch (message.getSubMessageCase()) {
                 case PLAYERCOMMAND:
@@ -130,7 +130,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     public void sendResponse(SocketChannel channel, ServerResponses.BaseResponse response) {
         log.debug("Sending server response (" + response.getResponseCase().toString() + ")");
 
-        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+        Protocol.Message message = Protocol.Message.newBuilder()
                 .setServerResponse(response)
                 .build();
 
@@ -144,7 +144,7 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
                 .setUpdateBoardState(update)
                 .build();
 
-        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+        Protocol.Message message = Protocol.Message.newBuilder()
                 .setServerCommand(serverCommand)
                 .build();
 

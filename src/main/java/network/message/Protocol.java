@@ -3,8 +3,8 @@
 
 package network.message;
 
-public final class ProtoMessage {
-  private ProtoMessage() {}
+public final class Protocol {
+  private Protocol() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
@@ -48,7 +48,7 @@ public final class ProtoMessage {
      */
     network.message.ServerResponses.BaseResponseOrBuilder getServerResponseOrBuilder();
 
-    public network.message.ProtoMessage.Message.SubMessageCase getSubMessageCase();
+    public network.message.Protocol.Message.SubMessageCase getSubMessageCase();
   }
   /**
    * Protobuf type {@code Message}
@@ -162,14 +162,14 @@ public final class ProtoMessage {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return network.message.ProtoMessage.internal_static_Message_descriptor;
+      return network.message.Protocol.internal_static_Message_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return network.message.ProtoMessage.internal_static_Message_fieldAccessorTable
+      return network.message.Protocol.internal_static_Message_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              network.message.ProtoMessage.Message.class, network.message.ProtoMessage.Message.Builder.class);
+              network.message.Protocol.Message.class, network.message.Protocol.Message.Builder.class);
     }
 
     private int subMessageCase_ = 0;
@@ -339,53 +339,53 @@ public final class ProtoMessage {
     }
 
     private static final long serialVersionUID = 0L;
-    public static network.message.ProtoMessage.Message parseFrom(
+    public static network.message.Protocol.Message parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static network.message.ProtoMessage.Message parseFrom(
+    public static network.message.Protocol.Message parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static network.message.ProtoMessage.Message parseFrom(byte[] data)
+    public static network.message.Protocol.Message parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static network.message.ProtoMessage.Message parseFrom(
+    public static network.message.Protocol.Message parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static network.message.ProtoMessage.Message parseFrom(java.io.InputStream input)
+    public static network.message.Protocol.Message parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static network.message.ProtoMessage.Message parseFrom(
+    public static network.message.Protocol.Message parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static network.message.ProtoMessage.Message parseDelimitedFrom(java.io.InputStream input)
+    public static network.message.Protocol.Message parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static network.message.ProtoMessage.Message parseDelimitedFrom(
+    public static network.message.Protocol.Message parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static network.message.ProtoMessage.Message parseFrom(
+    public static network.message.Protocol.Message parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static network.message.ProtoMessage.Message parseFrom(
+    public static network.message.Protocol.Message parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -396,7 +396,7 @@ public final class ProtoMessage {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(network.message.ProtoMessage.Message prototype) {
+    public static Builder newBuilder(network.message.Protocol.Message prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -420,20 +420,20 @@ public final class ProtoMessage {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:Message)
-        network.message.ProtoMessage.MessageOrBuilder {
+        network.message.Protocol.MessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return network.message.ProtoMessage.internal_static_Message_descriptor;
+        return network.message.Protocol.internal_static_Message_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return network.message.ProtoMessage.internal_static_Message_fieldAccessorTable
+        return network.message.Protocol.internal_static_Message_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                network.message.ProtoMessage.Message.class, network.message.ProtoMessage.Message.Builder.class);
+                network.message.Protocol.Message.class, network.message.Protocol.Message.Builder.class);
       }
 
-      // Construct using network.message.ProtoMessage.Message.newBuilder()
+      // Construct using network.message.Protocol.Message.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -456,23 +456,23 @@ public final class ProtoMessage {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return network.message.ProtoMessage.internal_static_Message_descriptor;
+        return network.message.Protocol.internal_static_Message_descriptor;
       }
 
-      public network.message.ProtoMessage.Message getDefaultInstanceForType() {
-        return network.message.ProtoMessage.Message.getDefaultInstance();
+      public network.message.Protocol.Message getDefaultInstanceForType() {
+        return network.message.Protocol.Message.getDefaultInstance();
       }
 
-      public network.message.ProtoMessage.Message build() {
-        network.message.ProtoMessage.Message result = buildPartial();
+      public network.message.Protocol.Message build() {
+        network.message.Protocol.Message result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public network.message.ProtoMessage.Message buildPartial() {
-        network.message.ProtoMessage.Message result = new network.message.ProtoMessage.Message(this);
+      public network.message.Protocol.Message buildPartial() {
+        network.message.Protocol.Message result = new network.message.Protocol.Message(this);
         if (subMessageCase_ == 1) {
           if (playerCommandBuilder_ == null) {
             result.subMessage_ = subMessage_;
@@ -507,16 +507,16 @@ public final class ProtoMessage {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof network.message.ProtoMessage.Message) {
-          return mergeFrom((network.message.ProtoMessage.Message)other);
+        if (other instanceof network.message.Protocol.Message) {
+          return mergeFrom((network.message.Protocol.Message)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(network.message.ProtoMessage.Message other) {
-        if (other == network.message.ProtoMessage.Message.getDefaultInstance()) return this;
+      public Builder mergeFrom(network.message.Protocol.Message other) {
+        if (other == network.message.Protocol.Message.getDefaultInstance()) return this;
         switch (other.getSubMessageCase()) {
           case PLAYERCOMMAND: {
             mergePlayerCommand(other.getPlayerCommand());
@@ -550,11 +550,11 @@ public final class ProtoMessage {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        network.message.ProtoMessage.Message parsedMessage = null;
+        network.message.Protocol.Message parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (network.message.ProtoMessage.Message) e.getUnfinishedMessage();
+          parsedMessage = (network.message.Protocol.Message) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1113,12 +1113,12 @@ public final class ProtoMessage {
     }
 
     // @@protoc_insertion_point(class_scope:Message)
-    private static final network.message.ProtoMessage.Message DEFAULT_INSTANCE;
+    private static final network.message.Protocol.Message DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new network.message.ProtoMessage.Message();
+      DEFAULT_INSTANCE = new network.message.Protocol.Message();
     }
 
-    public static network.message.ProtoMessage.Message getDefaultInstance() {
+    public static network.message.Protocol.Message getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1150,7 +1150,7 @@ public final class ProtoMessage {
       return PARSER;
     }
 
-    public network.message.ProtoMessage.Message getDefaultInstanceForType() {
+    public network.message.Protocol.Message getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1182,8 +1182,8 @@ public final class ProtoMessage {
       ".responses.BaseResponseH\000\0225\n\rserverComma",
       "nd\030\003 \001(\0132\034.server.commands.BaseCommandH\000" +
       "\0228\n\016serverResponse\030\004 \001(\0132\036.server.respon" +
-      "ses.BaseResponseH\000B\014\n\nsubMessageB\037\n\017netw" +
-      "ork.messageB\014ProtoMessageb\006proto3"
+      "ses.BaseResponseH\000B\014\n\nsubMessageB\033\n\017netw" +
+      "ork.messageB\010Protocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

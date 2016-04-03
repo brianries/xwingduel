@@ -92,7 +92,7 @@ public class GameClient implements NioClient.IncomingDataProcessor {
                 }
             }
 
-            ProtoMessage.Message message = ProtoMessage.Message.parseFrom(serverData.data);
+            Protocol.Message message = Protocol.Message.parseFrom(serverData.data);
             log.debug("Handling server data (" + message.getSubMessageCase().toString() + ")");
             switch (message.getSubMessageCase()) {
                 case SERVERCOMMAND:
@@ -137,7 +137,7 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     public void sendCommand(PlayerCommands.BaseCommand command) throws IOException {
         log.debug("Sending player command (" + command.getCommandCase().toString() + ")");
 
-        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+        Protocol.Message message = Protocol.Message.newBuilder()
                 .setPlayerCommand(command)
                 .build();
 
@@ -147,7 +147,7 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     public void sendResponse(PlayerResponses.BaseResponse response) throws IOException {
         log.debug("Sending player response (" + response.getResponseCase().toString() + ")");
 
-        ProtoMessage.Message message = ProtoMessage.Message.newBuilder()
+        Protocol.Message message = Protocol.Message.newBuilder()
                 .setPlayerResponse(response)
                 .build();
 
