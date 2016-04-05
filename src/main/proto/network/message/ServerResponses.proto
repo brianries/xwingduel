@@ -6,7 +6,7 @@ option java_outer_classname="ServerResponses";
 
 message BaseResponse {
     int32 clientId = 1;
-    int32 messageId = 2;
+    int32 sequenceNum = 2;
 
     oneof response {
         Login login = 3;
@@ -15,8 +15,8 @@ message BaseResponse {
 }
 
 message Login {
-    int32 clientId = 1;
-    int32 playerNum = 2;
+    int32 assignedClientId = 1;
+    int32 assignedPlayerNum = 2;
 }
 
 message Command {

@@ -31,6 +31,9 @@ public class GameClient implements NioClient.IncomingDataProcessor {
     private NioClient client;
 
     private int clientId;
+    private Player player;
+
+    private int sequenceNum = 0;
 
     private Thread nioClientThread;
     private Thread handleDataThread;
@@ -123,6 +126,10 @@ public class GameClient implements NioClient.IncomingDataProcessor {
         log.debug("Handling server command data (" + serverResponse.getResponseCase().toString() + ")");
         switch (serverResponse.getResponseCase()) {
             case LOGIN:
+                ServerResponses.Login loginResponse = serverResponse.getLogin();
+                this.clientId = loginResponse.getAssignedClientId();
+                this.player = Player.values()[loginResponse.getAssignedPlayerNum()];
+                log.debug("Assigned client id " + clientId + " and player " + this.player.toString());
                 break;
             case COMMAND:
                 break;
@@ -167,6 +174,21 @@ public class GameClient implements NioClient.IncomingDataProcessor {
         }
     }
 
+    public void login() throws IOException {
+        PlayerCommands.Login login = PlayerCommands.Login.newBuilder()
+                .setName("John Doe")
+                .setType(PlayerCommands.Login.LoginType.PLAYER)
+                .build();
+
+        PlayerCommands.BaseCommand baseCommand = PlayerCommands.BaseCommand.newBuilder()
+                .setClientId(clientId)
+                .setSequenceNum(sequenceNum++)
+                .setLogin(login)
+                .build();
+
+        sendCommand(baseCommand);
+    }
+
 
     public static void main(String[] args) {
         try {
@@ -179,6 +201,7 @@ public class GameClient implements NioClient.IncomingDataProcessor {
             ///UnitSubmission rebelUnit2 = new UnitSubmission(new XWing(), new BiggsDarklighter());
             //UnitSubmission rebelUnit3 = new UnitSubmission(new XWing(), new LukeSkywalker(), new R2D2());
 
+            /*
             ArrayList<PlayerCommands.UnitSubmission> unitSubmissions = new ArrayList<>();
             unitSubmissions.add(PlayerCommands.UnitSubmission.newBuilder().build());
 
@@ -195,11 +218,11 @@ public class GameClient implements NioClient.IncomingDataProcessor {
                     .build();
 
 
-            PlayerCommands.BaseCommand baseCommand = PlayerCommands.BaseCommand.newBuilder()
-                    .setAddSquadron(addSquadron)
-                    .build();
+           client.sendCommand(baseCommand);    */
 
-            client.sendCommand(baseCommand);
+            client.login();
+
+
 
           //  client.sendCommand(new AddSquadronCommand(Faction.REBEL_ALLIANCE, selectedObstacles, rebelUnit1, rebelUnit2, rebelUnit3));
             //client.sendCommand(new PlaceShipCommand(Player.PLAYER_ONE, Faction.GALACTIC_EMPIRE, new TieFighter(), new AcademyPilot()));

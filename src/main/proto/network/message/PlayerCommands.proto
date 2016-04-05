@@ -5,14 +5,23 @@ option java_package="network.message";
 option java_outer_classname="PlayerCommands";
 
 message BaseCommand {
+    int32 clientId = 1;
+    int32 sequenceNum = 2;
+
     oneof command {
-        AddSquadron addSquadron = 1;
-        PlaceObstacle placeObstacle = 2;
+        Login login = 3;
+        AddSquadron addSquadron = 4;
+        PlaceObstacle placeObstacle = 5;
     }
 }
 
-message Action {
-
+message Login {
+    string name = 1;
+    enum LoginType {
+        PLAYER = 0;
+        SPECTATOR = 1;
+    }
+    LoginType type = 2;
 }
 
 message AddSquadron {

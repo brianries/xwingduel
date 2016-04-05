@@ -111,6 +111,20 @@ public class GameServer implements NioServer.IncomingDataProcessor, ServerBoardS
     private void handlePlayerCommand(SocketChannel channel, PlayerCommands.BaseCommand playerCommand) {
         log.debug("Handling player command data (" + playerCommand.getCommandCase().toString() + ")");
         switch (playerCommand.getCommandCase()) {
+
+            case LOGIN:
+                ServerResponses.Login loginResponse = ServerResponses.Login.newBuilder()
+                        .setAssignedClientId(1)
+                        .setAssignedPlayerNum(0)
+                        .build();
+
+                ServerResponses.BaseResponse baseResponse = ServerResponses.BaseResponse.newBuilder()
+                        .setClientId(playerCommand.getClientId())
+                        .setSequenceNum(playerCommand.getSequenceNum())
+                        .setLogin(loginResponse)
+                        .build();
+                sendResponse(channel, baseResponse);
+                break;
             case ADDSQUADRON:
                 //AddSquadronCommand addSquadronCommand = (AddSquadronCommand) playerCommand;
                 //sendResponse(channel, new AddSquadronResponse());

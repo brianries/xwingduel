@@ -13,20 +13,39 @@ public final class PlayerCommands {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+     * <code>optional int32 clientId = 1;</code>
+     */
+    int getClientId();
+
+    /**
+     * <code>optional int32 sequenceNum = 2;</code>
+     */
+    int getSequenceNum();
+
+    /**
+     * <code>optional .player.commands.Login login = 3;</code>
+     */
+    network.message.PlayerCommands.Login getLogin();
+    /**
+     * <code>optional .player.commands.Login login = 3;</code>
+     */
+    network.message.PlayerCommands.LoginOrBuilder getLoginOrBuilder();
+
+    /**
+     * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
      */
     network.message.PlayerCommands.AddSquadron getAddSquadron();
     /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+     * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
      */
     network.message.PlayerCommands.AddSquadronOrBuilder getAddSquadronOrBuilder();
 
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
      */
     network.message.PlayerCommands.PlaceObstacle getPlaceObstacle();
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
      */
     network.message.PlayerCommands.PlaceObstacleOrBuilder getPlaceObstacleOrBuilder();
 
@@ -44,6 +63,8 @@ public final class PlayerCommands {
       super(builder);
     }
     private BaseCommand() {
+      clientId_ = 0;
+      sequenceNum_ = 0;
     }
 
     @java.lang.Override
@@ -70,9 +91,33 @@ public final class PlayerCommands {
               }
               break;
             }
-            case 10: {
+            case 8: {
+
+              clientId_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              sequenceNum_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              network.message.PlayerCommands.Login.Builder subBuilder = null;
+              if (commandCase_ == 3) {
+                subBuilder = ((network.message.PlayerCommands.Login) command_).toBuilder();
+              }
+              command_ =
+                  input.readMessage(network.message.PlayerCommands.Login.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((network.message.PlayerCommands.Login) command_);
+                command_ = subBuilder.buildPartial();
+              }
+              commandCase_ = 3;
+              break;
+            }
+            case 34: {
               network.message.PlayerCommands.AddSquadron.Builder subBuilder = null;
-              if (commandCase_ == 1) {
+              if (commandCase_ == 4) {
                 subBuilder = ((network.message.PlayerCommands.AddSquadron) command_).toBuilder();
               }
               command_ =
@@ -81,12 +126,12 @@ public final class PlayerCommands {
                 subBuilder.mergeFrom((network.message.PlayerCommands.AddSquadron) command_);
                 command_ = subBuilder.buildPartial();
               }
-              commandCase_ = 1;
+              commandCase_ = 4;
               break;
             }
-            case 18: {
+            case 42: {
               network.message.PlayerCommands.PlaceObstacle.Builder subBuilder = null;
-              if (commandCase_ == 2) {
+              if (commandCase_ == 5) {
                 subBuilder = ((network.message.PlayerCommands.PlaceObstacle) command_).toBuilder();
               }
               command_ =
@@ -95,7 +140,7 @@ public final class PlayerCommands {
                 subBuilder.mergeFrom((network.message.PlayerCommands.PlaceObstacle) command_);
                 command_ = subBuilder.buildPartial();
               }
-              commandCase_ = 2;
+              commandCase_ = 5;
               break;
             }
           }
@@ -126,8 +171,9 @@ public final class PlayerCommands {
     private java.lang.Object command_;
     public enum CommandCase
         implements com.google.protobuf.Internal.EnumLite {
-      ADDSQUADRON(1),
-      PLACEOBSTACLE(2),
+      LOGIN(3),
+      ADDSQUADRON(4),
+      PLACEOBSTACLE(5),
       COMMAND_NOT_SET(0);
       private int value = 0;
       private CommandCase(int value) {
@@ -135,8 +181,9 @@ public final class PlayerCommands {
       }
       public static CommandCase valueOf(int value) {
         switch (value) {
-          case 1: return ADDSQUADRON;
-          case 2: return PLACEOBSTACLE;
+          case 3: return LOGIN;
+          case 4: return ADDSQUADRON;
+          case 5: return PLACEOBSTACLE;
           case 0: return COMMAND_NOT_SET;
           default: throw new java.lang.IllegalArgumentException(
             "Value is undefined for this oneof enum.");
@@ -153,41 +200,79 @@ public final class PlayerCommands {
           commandCase_);
     }
 
-    public static final int ADDSQUADRON_FIELD_NUMBER = 1;
+    public static final int CLIENTID_FIELD_NUMBER = 1;
+    private int clientId_;
     /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+     * <code>optional int32 clientId = 1;</code>
+     */
+    public int getClientId() {
+      return clientId_;
+    }
+
+    public static final int SEQUENCENUM_FIELD_NUMBER = 2;
+    private int sequenceNum_;
+    /**
+     * <code>optional int32 sequenceNum = 2;</code>
+     */
+    public int getSequenceNum() {
+      return sequenceNum_;
+    }
+
+    public static final int LOGIN_FIELD_NUMBER = 3;
+    /**
+     * <code>optional .player.commands.Login login = 3;</code>
+     */
+    public network.message.PlayerCommands.Login getLogin() {
+      if (commandCase_ == 3) {
+         return (network.message.PlayerCommands.Login) command_;
+      }
+      return network.message.PlayerCommands.Login.getDefaultInstance();
+    }
+    /**
+     * <code>optional .player.commands.Login login = 3;</code>
+     */
+    public network.message.PlayerCommands.LoginOrBuilder getLoginOrBuilder() {
+      if (commandCase_ == 3) {
+         return (network.message.PlayerCommands.Login) command_;
+      }
+      return network.message.PlayerCommands.Login.getDefaultInstance();
+    }
+
+    public static final int ADDSQUADRON_FIELD_NUMBER = 4;
+    /**
+     * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
      */
     public network.message.PlayerCommands.AddSquadron getAddSquadron() {
-      if (commandCase_ == 1) {
+      if (commandCase_ == 4) {
          return (network.message.PlayerCommands.AddSquadron) command_;
       }
       return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
     }
     /**
-     * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+     * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
      */
     public network.message.PlayerCommands.AddSquadronOrBuilder getAddSquadronOrBuilder() {
-      if (commandCase_ == 1) {
+      if (commandCase_ == 4) {
          return (network.message.PlayerCommands.AddSquadron) command_;
       }
       return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
     }
 
-    public static final int PLACEOBSTACLE_FIELD_NUMBER = 2;
+    public static final int PLACEOBSTACLE_FIELD_NUMBER = 5;
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
      */
     public network.message.PlayerCommands.PlaceObstacle getPlaceObstacle() {
-      if (commandCase_ == 2) {
+      if (commandCase_ == 5) {
          return (network.message.PlayerCommands.PlaceObstacle) command_;
       }
       return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
     }
     /**
-     * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+     * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
      */
     public network.message.PlayerCommands.PlaceObstacleOrBuilder getPlaceObstacleOrBuilder() {
-      if (commandCase_ == 2) {
+      if (commandCase_ == 5) {
          return (network.message.PlayerCommands.PlaceObstacle) command_;
       }
       return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
@@ -205,11 +290,20 @@ public final class PlayerCommands {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (commandCase_ == 1) {
-        output.writeMessage(1, (network.message.PlayerCommands.AddSquadron) command_);
+      if (clientId_ != 0) {
+        output.writeInt32(1, clientId_);
       }
-      if (commandCase_ == 2) {
-        output.writeMessage(2, (network.message.PlayerCommands.PlaceObstacle) command_);
+      if (sequenceNum_ != 0) {
+        output.writeInt32(2, sequenceNum_);
+      }
+      if (commandCase_ == 3) {
+        output.writeMessage(3, (network.message.PlayerCommands.Login) command_);
+      }
+      if (commandCase_ == 4) {
+        output.writeMessage(4, (network.message.PlayerCommands.AddSquadron) command_);
+      }
+      if (commandCase_ == 5) {
+        output.writeMessage(5, (network.message.PlayerCommands.PlaceObstacle) command_);
       }
     }
 
@@ -218,13 +312,25 @@ public final class PlayerCommands {
       if (size != -1) return size;
 
       size = 0;
-      if (commandCase_ == 1) {
+      if (clientId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, (network.message.PlayerCommands.AddSquadron) command_);
+          .computeInt32Size(1, clientId_);
       }
-      if (commandCase_ == 2) {
+      if (sequenceNum_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (network.message.PlayerCommands.PlaceObstacle) command_);
+          .computeInt32Size(2, sequenceNum_);
+      }
+      if (commandCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (network.message.PlayerCommands.Login) command_);
+      }
+      if (commandCase_ == 4) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, (network.message.PlayerCommands.AddSquadron) command_);
+      }
+      if (commandCase_ == 5) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, (network.message.PlayerCommands.PlaceObstacle) command_);
       }
       memoizedSize = size;
       return size;
@@ -337,6 +443,10 @@ public final class PlayerCommands {
       }
       public Builder clear() {
         super.clear();
+        clientId_ = 0;
+
+        sequenceNum_ = 0;
+
         commandCase_ = 0;
         command_ = null;
         return this;
@@ -361,14 +471,23 @@ public final class PlayerCommands {
 
       public network.message.PlayerCommands.BaseCommand buildPartial() {
         network.message.PlayerCommands.BaseCommand result = new network.message.PlayerCommands.BaseCommand(this);
-        if (commandCase_ == 1) {
+        result.clientId_ = clientId_;
+        result.sequenceNum_ = sequenceNum_;
+        if (commandCase_ == 3) {
+          if (loginBuilder_ == null) {
+            result.command_ = command_;
+          } else {
+            result.command_ = loginBuilder_.build();
+          }
+        }
+        if (commandCase_ == 4) {
           if (addSquadronBuilder_ == null) {
             result.command_ = command_;
           } else {
             result.command_ = addSquadronBuilder_.build();
           }
         }
-        if (commandCase_ == 2) {
+        if (commandCase_ == 5) {
           if (placeObstacleBuilder_ == null) {
             result.command_ = command_;
           } else {
@@ -391,7 +510,17 @@ public final class PlayerCommands {
 
       public Builder mergeFrom(network.message.PlayerCommands.BaseCommand other) {
         if (other == network.message.PlayerCommands.BaseCommand.getDefaultInstance()) return this;
+        if (other.getClientId() != 0) {
+          setClientId(other.getClientId());
+        }
+        if (other.getSequenceNum() != 0) {
+          setSequenceNum(other.getSequenceNum());
+        }
         switch (other.getCommandCase()) {
+          case LOGIN: {
+            mergeLogin(other.getLogin());
+            break;
+          }
           case ADDSQUADRON: {
             mergeAddSquadron(other.getAddSquadron());
             break;
@@ -445,26 +574,208 @@ public final class PlayerCommands {
       }
 
 
+      private int clientId_ ;
+      /**
+       * <code>optional int32 clientId = 1;</code>
+       */
+      public int getClientId() {
+        return clientId_;
+      }
+      /**
+       * <code>optional int32 clientId = 1;</code>
+       */
+      public Builder setClientId(int value) {
+        
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 clientId = 1;</code>
+       */
+      public Builder clearClientId() {
+        
+        clientId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int sequenceNum_ ;
+      /**
+       * <code>optional int32 sequenceNum = 2;</code>
+       */
+      public int getSequenceNum() {
+        return sequenceNum_;
+      }
+      /**
+       * <code>optional int32 sequenceNum = 2;</code>
+       */
+      public Builder setSequenceNum(int value) {
+        
+        sequenceNum_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 sequenceNum = 2;</code>
+       */
+      public Builder clearSequenceNum() {
+        
+        sequenceNum_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.SingleFieldBuilder<
+          network.message.PlayerCommands.Login, network.message.PlayerCommands.Login.Builder, network.message.PlayerCommands.LoginOrBuilder> loginBuilder_;
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public network.message.PlayerCommands.Login getLogin() {
+        if (loginBuilder_ == null) {
+          if (commandCase_ == 3) {
+            return (network.message.PlayerCommands.Login) command_;
+          }
+          return network.message.PlayerCommands.Login.getDefaultInstance();
+        } else {
+          if (commandCase_ == 3) {
+            return loginBuilder_.getMessage();
+          }
+          return network.message.PlayerCommands.Login.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public Builder setLogin(network.message.PlayerCommands.Login value) {
+        if (loginBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          command_ = value;
+          onChanged();
+        } else {
+          loginBuilder_.setMessage(value);
+        }
+        commandCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public Builder setLogin(
+          network.message.PlayerCommands.Login.Builder builderForValue) {
+        if (loginBuilder_ == null) {
+          command_ = builderForValue.build();
+          onChanged();
+        } else {
+          loginBuilder_.setMessage(builderForValue.build());
+        }
+        commandCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public Builder mergeLogin(network.message.PlayerCommands.Login value) {
+        if (loginBuilder_ == null) {
+          if (commandCase_ == 3 &&
+              command_ != network.message.PlayerCommands.Login.getDefaultInstance()) {
+            command_ = network.message.PlayerCommands.Login.newBuilder((network.message.PlayerCommands.Login) command_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            command_ = value;
+          }
+          onChanged();
+        } else {
+          if (commandCase_ == 3) {
+            loginBuilder_.mergeFrom(value);
+          }
+          loginBuilder_.setMessage(value);
+        }
+        commandCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public Builder clearLogin() {
+        if (loginBuilder_ == null) {
+          if (commandCase_ == 3) {
+            commandCase_ = 0;
+            command_ = null;
+            onChanged();
+          }
+        } else {
+          if (commandCase_ == 3) {
+            commandCase_ = 0;
+            command_ = null;
+          }
+          loginBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public network.message.PlayerCommands.Login.Builder getLoginBuilder() {
+        return getLoginFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      public network.message.PlayerCommands.LoginOrBuilder getLoginOrBuilder() {
+        if ((commandCase_ == 3) && (loginBuilder_ != null)) {
+          return loginBuilder_.getMessageOrBuilder();
+        } else {
+          if (commandCase_ == 3) {
+            return (network.message.PlayerCommands.Login) command_;
+          }
+          return network.message.PlayerCommands.Login.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .player.commands.Login login = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          network.message.PlayerCommands.Login, network.message.PlayerCommands.Login.Builder, network.message.PlayerCommands.LoginOrBuilder> 
+          getLoginFieldBuilder() {
+        if (loginBuilder_ == null) {
+          if (!(commandCase_ == 3)) {
+            command_ = network.message.PlayerCommands.Login.getDefaultInstance();
+          }
+          loginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              network.message.PlayerCommands.Login, network.message.PlayerCommands.Login.Builder, network.message.PlayerCommands.LoginOrBuilder>(
+                  (network.message.PlayerCommands.Login) command_,
+                  getParentForChildren(),
+                  isClean());
+          command_ = null;
+        }
+        commandCase_ = 3;
+        onChanged();;
+        return loginBuilder_;
+      }
+
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.AddSquadron, network.message.PlayerCommands.AddSquadron.Builder, network.message.PlayerCommands.AddSquadronOrBuilder> addSquadronBuilder_;
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public network.message.PlayerCommands.AddSquadron getAddSquadron() {
         if (addSquadronBuilder_ == null) {
-          if (commandCase_ == 1) {
+          if (commandCase_ == 4) {
             return (network.message.PlayerCommands.AddSquadron) command_;
           }
           return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
         } else {
-          if (commandCase_ == 1) {
+          if (commandCase_ == 4) {
             return addSquadronBuilder_.getMessage();
           }
           return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public Builder setAddSquadron(network.message.PlayerCommands.AddSquadron value) {
         if (addSquadronBuilder_ == null) {
@@ -476,11 +787,11 @@ public final class PlayerCommands {
         } else {
           addSquadronBuilder_.setMessage(value);
         }
-        commandCase_ = 1;
+        commandCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public Builder setAddSquadron(
           network.message.PlayerCommands.AddSquadron.Builder builderForValue) {
@@ -490,15 +801,15 @@ public final class PlayerCommands {
         } else {
           addSquadronBuilder_.setMessage(builderForValue.build());
         }
-        commandCase_ = 1;
+        commandCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public Builder mergeAddSquadron(network.message.PlayerCommands.AddSquadron value) {
         if (addSquadronBuilder_ == null) {
-          if (commandCase_ == 1 &&
+          if (commandCase_ == 4 &&
               command_ != network.message.PlayerCommands.AddSquadron.getDefaultInstance()) {
             command_ = network.message.PlayerCommands.AddSquadron.newBuilder((network.message.PlayerCommands.AddSquadron) command_)
                 .mergeFrom(value).buildPartial();
@@ -507,26 +818,26 @@ public final class PlayerCommands {
           }
           onChanged();
         } else {
-          if (commandCase_ == 1) {
+          if (commandCase_ == 4) {
             addSquadronBuilder_.mergeFrom(value);
           }
           addSquadronBuilder_.setMessage(value);
         }
-        commandCase_ = 1;
+        commandCase_ = 4;
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public Builder clearAddSquadron() {
         if (addSquadronBuilder_ == null) {
-          if (commandCase_ == 1) {
+          if (commandCase_ == 4) {
             commandCase_ = 0;
             command_ = null;
             onChanged();
           }
         } else {
-          if (commandCase_ == 1) {
+          if (commandCase_ == 4) {
             commandCase_ = 0;
             command_ = null;
           }
@@ -535,32 +846,32 @@ public final class PlayerCommands {
         return this;
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public network.message.PlayerCommands.AddSquadron.Builder getAddSquadronBuilder() {
         return getAddSquadronFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       public network.message.PlayerCommands.AddSquadronOrBuilder getAddSquadronOrBuilder() {
-        if ((commandCase_ == 1) && (addSquadronBuilder_ != null)) {
+        if ((commandCase_ == 4) && (addSquadronBuilder_ != null)) {
           return addSquadronBuilder_.getMessageOrBuilder();
         } else {
-          if (commandCase_ == 1) {
+          if (commandCase_ == 4) {
             return (network.message.PlayerCommands.AddSquadron) command_;
           }
           return network.message.PlayerCommands.AddSquadron.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.AddSquadron addSquadron = 1;</code>
+       * <code>optional .player.commands.AddSquadron addSquadron = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.AddSquadron, network.message.PlayerCommands.AddSquadron.Builder, network.message.PlayerCommands.AddSquadronOrBuilder> 
           getAddSquadronFieldBuilder() {
         if (addSquadronBuilder_ == null) {
-          if (!(commandCase_ == 1)) {
+          if (!(commandCase_ == 4)) {
             command_ = network.message.PlayerCommands.AddSquadron.getDefaultInstance();
           }
           addSquadronBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -570,7 +881,7 @@ public final class PlayerCommands {
                   isClean());
           command_ = null;
         }
-        commandCase_ = 1;
+        commandCase_ = 4;
         onChanged();;
         return addSquadronBuilder_;
       }
@@ -578,23 +889,23 @@ public final class PlayerCommands {
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.PlaceObstacle, network.message.PlayerCommands.PlaceObstacle.Builder, network.message.PlayerCommands.PlaceObstacleOrBuilder> placeObstacleBuilder_;
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public network.message.PlayerCommands.PlaceObstacle getPlaceObstacle() {
         if (placeObstacleBuilder_ == null) {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 5) {
             return (network.message.PlayerCommands.PlaceObstacle) command_;
           }
           return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 5) {
             return placeObstacleBuilder_.getMessage();
           }
           return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public Builder setPlaceObstacle(network.message.PlayerCommands.PlaceObstacle value) {
         if (placeObstacleBuilder_ == null) {
@@ -606,11 +917,11 @@ public final class PlayerCommands {
         } else {
           placeObstacleBuilder_.setMessage(value);
         }
-        commandCase_ = 2;
+        commandCase_ = 5;
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public Builder setPlaceObstacle(
           network.message.PlayerCommands.PlaceObstacle.Builder builderForValue) {
@@ -620,15 +931,15 @@ public final class PlayerCommands {
         } else {
           placeObstacleBuilder_.setMessage(builderForValue.build());
         }
-        commandCase_ = 2;
+        commandCase_ = 5;
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public Builder mergePlaceObstacle(network.message.PlayerCommands.PlaceObstacle value) {
         if (placeObstacleBuilder_ == null) {
-          if (commandCase_ == 2 &&
+          if (commandCase_ == 5 &&
               command_ != network.message.PlayerCommands.PlaceObstacle.getDefaultInstance()) {
             command_ = network.message.PlayerCommands.PlaceObstacle.newBuilder((network.message.PlayerCommands.PlaceObstacle) command_)
                 .mergeFrom(value).buildPartial();
@@ -637,26 +948,26 @@ public final class PlayerCommands {
           }
           onChanged();
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 5) {
             placeObstacleBuilder_.mergeFrom(value);
           }
           placeObstacleBuilder_.setMessage(value);
         }
-        commandCase_ = 2;
+        commandCase_ = 5;
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public Builder clearPlaceObstacle() {
         if (placeObstacleBuilder_ == null) {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 5) {
             commandCase_ = 0;
             command_ = null;
             onChanged();
           }
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 5) {
             commandCase_ = 0;
             command_ = null;
           }
@@ -665,32 +976,32 @@ public final class PlayerCommands {
         return this;
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public network.message.PlayerCommands.PlaceObstacle.Builder getPlaceObstacleBuilder() {
         return getPlaceObstacleFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       public network.message.PlayerCommands.PlaceObstacleOrBuilder getPlaceObstacleOrBuilder() {
-        if ((commandCase_ == 2) && (placeObstacleBuilder_ != null)) {
+        if ((commandCase_ == 5) && (placeObstacleBuilder_ != null)) {
           return placeObstacleBuilder_.getMessageOrBuilder();
         } else {
-          if (commandCase_ == 2) {
+          if (commandCase_ == 5) {
             return (network.message.PlayerCommands.PlaceObstacle) command_;
           }
           return network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .player.commands.PlaceObstacle placeObstacle = 2;</code>
+       * <code>optional .player.commands.PlaceObstacle placeObstacle = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           network.message.PlayerCommands.PlaceObstacle, network.message.PlayerCommands.PlaceObstacle.Builder, network.message.PlayerCommands.PlaceObstacleOrBuilder> 
           getPlaceObstacleFieldBuilder() {
         if (placeObstacleBuilder_ == null) {
-          if (!(commandCase_ == 2)) {
+          if (!(commandCase_ == 5)) {
             command_ = network.message.PlayerCommands.PlaceObstacle.getDefaultInstance();
           }
           placeObstacleBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -700,7 +1011,7 @@ public final class PlayerCommands {
                   isClean());
           command_ = null;
         }
-        commandCase_ = 2;
+        commandCase_ = 5;
         onChanged();;
         return placeObstacleBuilder_;
       }
@@ -762,22 +1073,43 @@ public final class PlayerCommands {
 
   }
 
-  public interface ActionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:player.commands.Action)
+  public interface LoginOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:player.commands.Login)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>optional .player.commands.Login.LoginType type = 2;</code>
+     */
+    int getTypeValue();
+    /**
+     * <code>optional .player.commands.Login.LoginType type = 2;</code>
+     */
+    network.message.PlayerCommands.Login.LoginType getType();
   }
   /**
-   * Protobuf type {@code player.commands.Action}
+   * Protobuf type {@code player.commands.Login}
    */
-  public  static final class Action extends
+  public  static final class Login extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:player.commands.Action)
-      ActionOrBuilder {
-    // Use Action.newBuilder() to construct.
-    private Action(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      // @@protoc_insertion_point(message_implements:player.commands.Login)
+      LoginOrBuilder {
+    // Use Login.newBuilder() to construct.
+    private Login(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
     }
-    private Action() {
+    private Login() {
+      name_ = "";
+      type_ = 0;
     }
 
     @java.lang.Override
@@ -785,10 +1117,11 @@ public final class PlayerCommands {
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-    private Action(
+    private Login(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
       this();
+      int mutable_bitField0_ = 0;
       try {
         boolean done = false;
         while (!done) {
@@ -801,6 +1134,18 @@ public final class PlayerCommands {
               if (!input.skipField(tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
               break;
             }
           }
@@ -817,14 +1162,156 @@ public final class PlayerCommands {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return network.message.PlayerCommands.internal_static_player_commands_Action_descriptor;
+      return network.message.PlayerCommands.internal_static_player_commands_Login_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return network.message.PlayerCommands.internal_static_player_commands_Action_fieldAccessorTable
+      return network.message.PlayerCommands.internal_static_player_commands_Login_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              network.message.PlayerCommands.Action.class, network.message.PlayerCommands.Action.Builder.class);
+              network.message.PlayerCommands.Login.class, network.message.PlayerCommands.Login.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code player.commands.Login.LoginType}
+     */
+    public enum LoginType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>PLAYER = 0;</code>
+       */
+      PLAYER(0, 0),
+      /**
+       * <code>SPECTATOR = 1;</code>
+       */
+      SPECTATOR(1, 1),
+      UNRECOGNIZED(-1, -1),
+      ;
+
+      /**
+       * <code>PLAYER = 0;</code>
+       */
+      public static final int PLAYER_VALUE = 0;
+      /**
+       * <code>SPECTATOR = 1;</code>
+       */
+      public static final int SPECTATOR_VALUE = 1;
+
+
+      public final int getNumber() {
+        if (index == -1) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      public static LoginType valueOf(int value) {
+        switch (value) {
+          case 0: return PLAYER;
+          case 1: return SPECTATOR;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<LoginType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          LoginType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<LoginType>() {
+              public LoginType findValueByNumber(int number) {
+                return LoginType.valueOf(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return network.message.PlayerCommands.Login.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final LoginType[] VALUES = values();
+
+      public static LoginType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int index;
+      private final int value;
+
+      private LoginType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:player.commands.Login.LoginType)
+    }
+
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private int type_;
+    /**
+     * <code>optional .player.commands.Login.LoginType type = 2;</code>
+     */
+    public int getTypeValue() {
+      return type_;
+    }
+    /**
+     * <code>optional .player.commands.Login.LoginType type = 2;</code>
+     */
+    public network.message.PlayerCommands.Login.LoginType getType() {
+      network.message.PlayerCommands.Login.LoginType result = network.message.PlayerCommands.Login.LoginType.valueOf(type_);
+      return result == null ? network.message.PlayerCommands.Login.LoginType.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -839,6 +1326,12 @@ public final class PlayerCommands {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      if (type_ != network.message.PlayerCommands.Login.LoginType.PLAYER.getNumber()) {
+        output.writeEnum(2, type_);
+      }
     }
 
     public int getSerializedSize() {
@@ -846,58 +1339,65 @@ public final class PlayerCommands {
       if (size != -1) return size;
 
       size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      if (type_ != network.message.PlayerCommands.Login.LoginType.PLAYER.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, type_);
+      }
       memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    public static network.message.PlayerCommands.Action parseFrom(
+    public static network.message.PlayerCommands.Login parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static network.message.PlayerCommands.Action parseFrom(
+    public static network.message.PlayerCommands.Login parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static network.message.PlayerCommands.Action parseFrom(byte[] data)
+    public static network.message.PlayerCommands.Login parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static network.message.PlayerCommands.Action parseFrom(
+    public static network.message.PlayerCommands.Login parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static network.message.PlayerCommands.Action parseFrom(java.io.InputStream input)
+    public static network.message.PlayerCommands.Login parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static network.message.PlayerCommands.Action parseFrom(
+    public static network.message.PlayerCommands.Login parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static network.message.PlayerCommands.Action parseDelimitedFrom(java.io.InputStream input)
+    public static network.message.PlayerCommands.Login parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static network.message.PlayerCommands.Action parseDelimitedFrom(
+    public static network.message.PlayerCommands.Login parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static network.message.PlayerCommands.Action parseFrom(
+    public static network.message.PlayerCommands.Login parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static network.message.PlayerCommands.Action parseFrom(
+    public static network.message.PlayerCommands.Login parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -908,7 +1408,7 @@ public final class PlayerCommands {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(network.message.PlayerCommands.Action prototype) {
+    public static Builder newBuilder(network.message.PlayerCommands.Login prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -923,25 +1423,25 @@ public final class PlayerCommands {
       return builder;
     }
     /**
-     * Protobuf type {@code player.commands.Action}
+     * Protobuf type {@code player.commands.Login}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:player.commands.Action)
-        network.message.PlayerCommands.ActionOrBuilder {
+        // @@protoc_insertion_point(builder_implements:player.commands.Login)
+        network.message.PlayerCommands.LoginOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return network.message.PlayerCommands.internal_static_player_commands_Action_descriptor;
+        return network.message.PlayerCommands.internal_static_player_commands_Login_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return network.message.PlayerCommands.internal_static_player_commands_Action_fieldAccessorTable
+        return network.message.PlayerCommands.internal_static_player_commands_Login_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                network.message.PlayerCommands.Action.class, network.message.PlayerCommands.Action.Builder.class);
+                network.message.PlayerCommands.Login.class, network.message.PlayerCommands.Login.Builder.class);
       }
 
-      // Construct using network.message.PlayerCommands.Action.newBuilder()
+      // Construct using network.message.PlayerCommands.Login.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -957,43 +1457,56 @@ public final class PlayerCommands {
       }
       public Builder clear() {
         super.clear();
+        name_ = "";
+
+        type_ = 0;
+
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return network.message.PlayerCommands.internal_static_player_commands_Action_descriptor;
+        return network.message.PlayerCommands.internal_static_player_commands_Login_descriptor;
       }
 
-      public network.message.PlayerCommands.Action getDefaultInstanceForType() {
-        return network.message.PlayerCommands.Action.getDefaultInstance();
+      public network.message.PlayerCommands.Login getDefaultInstanceForType() {
+        return network.message.PlayerCommands.Login.getDefaultInstance();
       }
 
-      public network.message.PlayerCommands.Action build() {
-        network.message.PlayerCommands.Action result = buildPartial();
+      public network.message.PlayerCommands.Login build() {
+        network.message.PlayerCommands.Login result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public network.message.PlayerCommands.Action buildPartial() {
-        network.message.PlayerCommands.Action result = new network.message.PlayerCommands.Action(this);
+      public network.message.PlayerCommands.Login buildPartial() {
+        network.message.PlayerCommands.Login result = new network.message.PlayerCommands.Login(this);
+        result.name_ = name_;
+        result.type_ = type_;
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof network.message.PlayerCommands.Action) {
-          return mergeFrom((network.message.PlayerCommands.Action)other);
+        if (other instanceof network.message.PlayerCommands.Login) {
+          return mergeFrom((network.message.PlayerCommands.Login)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(network.message.PlayerCommands.Action other) {
-        if (other == network.message.PlayerCommands.Action.getDefaultInstance()) return this;
+      public Builder mergeFrom(network.message.PlayerCommands.Login other) {
+        if (other == network.message.PlayerCommands.Login.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
+        }
         onChanged();
         return this;
       }
@@ -1006,17 +1519,130 @@ public final class PlayerCommands {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        network.message.PlayerCommands.Action parsedMessage = null;
+        network.message.PlayerCommands.Login parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (network.message.PlayerCommands.Action) e.getUnfinishedMessage();
+          parsedMessage = (network.message.PlayerCommands.Login) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int type_ = 0;
+      /**
+       * <code>optional .player.commands.Login.LoginType type = 2;</code>
+       */
+      public int getTypeValue() {
+        return type_;
+      }
+      /**
+       * <code>optional .player.commands.Login.LoginType type = 2;</code>
+       */
+      public Builder setTypeValue(int value) {
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .player.commands.Login.LoginType type = 2;</code>
+       */
+      public network.message.PlayerCommands.Login.LoginType getType() {
+        network.message.PlayerCommands.Login.LoginType result = network.message.PlayerCommands.Login.LoginType.valueOf(type_);
+        return result == null ? network.message.PlayerCommands.Login.LoginType.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>optional .player.commands.Login.LoginType type = 2;</code>
+       */
+      public Builder setType(network.message.PlayerCommands.Login.LoginType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .player.commands.Login.LoginType type = 2;</code>
+       */
+      public Builder clearType() {
+        
+        type_ = 0;
+        onChanged();
         return this;
       }
       public final Builder setUnknownFields(
@@ -1030,27 +1656,27 @@ public final class PlayerCommands {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:player.commands.Action)
+      // @@protoc_insertion_point(builder_scope:player.commands.Login)
     }
 
-    // @@protoc_insertion_point(class_scope:player.commands.Action)
-    private static final network.message.PlayerCommands.Action DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:player.commands.Login)
+    private static final network.message.PlayerCommands.Login DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new network.message.PlayerCommands.Action();
+      DEFAULT_INSTANCE = new network.message.PlayerCommands.Login();
     }
 
-    public static network.message.PlayerCommands.Action getDefaultInstance() {
+    public static network.message.PlayerCommands.Login getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Action>
-        PARSER = new com.google.protobuf.AbstractParser<Action>() {
-      public Action parsePartialFrom(
+    private static final com.google.protobuf.Parser<Login>
+        PARSER = new com.google.protobuf.AbstractParser<Login>() {
+      public Login parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         try {
-          return new Action(input, extensionRegistry);
+          return new Login(input, extensionRegistry);
         } catch (RuntimeException e) {
           if (e.getCause() instanceof
               com.google.protobuf.InvalidProtocolBufferException) {
@@ -1062,16 +1688,16 @@ public final class PlayerCommands {
       }
     };
 
-    public static com.google.protobuf.Parser<Action> parser() {
+    public static com.google.protobuf.Parser<Login> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Action> getParserForType() {
+    public com.google.protobuf.Parser<Login> getParserForType() {
       return PARSER;
     }
 
-    public network.message.PlayerCommands.Action getDefaultInstanceForType() {
+    public network.message.PlayerCommands.Login getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3188,10 +3814,10 @@ public final class PlayerCommands {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_player_commands_BaseCommand_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_player_commands_Action_descriptor;
+    internal_static_player_commands_Login_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_player_commands_Action_fieldAccessorTable;
+      internal_static_player_commands_Login_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_player_commands_AddSquadron_descriptor;
   private static
@@ -3222,17 +3848,22 @@ public final class PlayerCommands {
   static {
     java.lang.String[] descriptorData = {
       "\n3src/main/proto/network/message/PlayerC" +
-      "ommands.proto\022\017player.commands\"\206\001\n\013BaseC" +
-      "ommand\0223\n\013addSquadron\030\001 \001(\0132\034.player.com" +
-      "mands.AddSquadronH\000\0227\n\rplaceObstacle\030\002 \001" +
+      "ommands.proto\022\017player.commands\"\326\001\n\013BaseC" +
+      "ommand\022\020\n\010clientId\030\001 \001(\005\022\023\n\013sequenceNum\030" +
+      "\002 \001(\005\022\'\n\005login\030\003 \001(\0132\026.player.commands.L" +
+      "oginH\000\0223\n\013addSquadron\030\004 \001(\0132\034.player.com" +
+      "mands.AddSquadronH\000\0227\n\rplaceObstacle\030\005 \001" +
       "(\0132\036.player.commands.PlaceObstacleH\000B\t\n\007" +
-      "command\"\010\n\006Action\"m\n\013AddSquadron\022\017\n\007fact" +
-      "ion\030\001 \001(\005\022\035\n\025selectedObstacleTypes\030\002 \003(\005" +
-      "\022.\n\005units\030\003 \003(\0132\037.player.commands.UnitSu" +
-      "bmission\"8\n\rPlaceObstacle\022\024\n\014obstacleTyp" +
-      "e\030\001 \001(\005\022\021\n\ttransform\030\002 \003(\002\"\020\n\016UnitSubmis",
-      "sion\"\013\n\tPlaceShipB!\n\017network.messageB\016Pl" +
-      "ayerCommandsb\006proto3"
+      "command\"m\n\005Login\022\014\n\004name\030\001 \001(\t\022.\n\004type\030\002" +
+      " \001(\0162 .player.commands.Login.LoginType\"&" +
+      "\n\tLoginType\022\n\n\006PLAYER\020\000\022\r\n\tSPECTATOR\020\001\"m",
+      "\n\013AddSquadron\022\017\n\007faction\030\001 \001(\005\022\035\n\025select" +
+      "edObstacleTypes\030\002 \003(\005\022.\n\005units\030\003 \003(\0132\037.p" +
+      "layer.commands.UnitSubmission\"8\n\rPlaceOb" +
+      "stacle\022\024\n\014obstacleType\030\001 \001(\005\022\021\n\ttransfor" +
+      "m\030\002 \003(\002\"\020\n\016UnitSubmission\"\013\n\tPlaceShipB!" +
+      "\n\017network.messageB\016PlayerCommandsb\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3251,13 +3882,13 @@ public final class PlayerCommands {
     internal_static_player_commands_BaseCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_player_commands_BaseCommand_descriptor,
-        new java.lang.String[] { "AddSquadron", "PlaceObstacle", "Command", });
-    internal_static_player_commands_Action_descriptor =
+        new java.lang.String[] { "ClientId", "SequenceNum", "Login", "AddSquadron", "PlaceObstacle", "Command", });
+    internal_static_player_commands_Login_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_player_commands_Action_fieldAccessorTable = new
+    internal_static_player_commands_Login_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_player_commands_Action_descriptor,
-        new java.lang.String[] { });
+        internal_static_player_commands_Login_descriptor,
+        new java.lang.String[] { "Name", "Type", });
     internal_static_player_commands_AddSquadron_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_player_commands_AddSquadron_fieldAccessorTable = new

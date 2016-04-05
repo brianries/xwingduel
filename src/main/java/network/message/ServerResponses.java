@@ -18,9 +18,9 @@ public final class ServerResponses {
     int getClientId();
 
     /**
-     * <code>optional int32 messageId = 2;</code>
+     * <code>optional int32 sequenceNum = 2;</code>
      */
-    int getMessageId();
+    int getSequenceNum();
 
     /**
      * <code>optional .server.responses.Login login = 3;</code>
@@ -55,7 +55,7 @@ public final class ServerResponses {
     }
     private BaseResponse() {
       clientId_ = 0;
-      messageId_ = 0;
+      sequenceNum_ = 0;
     }
 
     @java.lang.Override
@@ -89,7 +89,7 @@ public final class ServerResponses {
             }
             case 16: {
 
-              messageId_ = input.readInt32();
+              sequenceNum_ = input.readInt32();
               break;
             }
             case 26: {
@@ -184,13 +184,13 @@ public final class ServerResponses {
       return clientId_;
     }
 
-    public static final int MESSAGEID_FIELD_NUMBER = 2;
-    private int messageId_;
+    public static final int SEQUENCENUM_FIELD_NUMBER = 2;
+    private int sequenceNum_;
     /**
-     * <code>optional int32 messageId = 2;</code>
+     * <code>optional int32 sequenceNum = 2;</code>
      */
-    public int getMessageId() {
-      return messageId_;
+    public int getSequenceNum() {
+      return sequenceNum_;
     }
 
     public static final int LOGIN_FIELD_NUMBER = 3;
@@ -248,8 +248,8 @@ public final class ServerResponses {
       if (clientId_ != 0) {
         output.writeInt32(1, clientId_);
       }
-      if (messageId_ != 0) {
-        output.writeInt32(2, messageId_);
+      if (sequenceNum_ != 0) {
+        output.writeInt32(2, sequenceNum_);
       }
       if (responseCase_ == 3) {
         output.writeMessage(3, (network.message.ServerResponses.Login) response_);
@@ -268,9 +268,9 @@ public final class ServerResponses {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, clientId_);
       }
-      if (messageId_ != 0) {
+      if (sequenceNum_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, messageId_);
+          .computeInt32Size(2, sequenceNum_);
       }
       if (responseCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
@@ -393,7 +393,7 @@ public final class ServerResponses {
         super.clear();
         clientId_ = 0;
 
-        messageId_ = 0;
+        sequenceNum_ = 0;
 
         responseCase_ = 0;
         response_ = null;
@@ -420,7 +420,7 @@ public final class ServerResponses {
       public network.message.ServerResponses.BaseResponse buildPartial() {
         network.message.ServerResponses.BaseResponse result = new network.message.ServerResponses.BaseResponse(this);
         result.clientId_ = clientId_;
-        result.messageId_ = messageId_;
+        result.sequenceNum_ = sequenceNum_;
         if (responseCase_ == 3) {
           if (loginBuilder_ == null) {
             result.response_ = response_;
@@ -454,8 +454,8 @@ public final class ServerResponses {
         if (other.getClientId() != 0) {
           setClientId(other.getClientId());
         }
-        if (other.getMessageId() != 0) {
-          setMessageId(other.getMessageId());
+        if (other.getSequenceNum() != 0) {
+          setSequenceNum(other.getSequenceNum());
         }
         switch (other.getResponseCase()) {
           case LOGIN: {
@@ -537,28 +537,28 @@ public final class ServerResponses {
         return this;
       }
 
-      private int messageId_ ;
+      private int sequenceNum_ ;
       /**
-       * <code>optional int32 messageId = 2;</code>
+       * <code>optional int32 sequenceNum = 2;</code>
        */
-      public int getMessageId() {
-        return messageId_;
+      public int getSequenceNum() {
+        return sequenceNum_;
       }
       /**
-       * <code>optional int32 messageId = 2;</code>
+       * <code>optional int32 sequenceNum = 2;</code>
        */
-      public Builder setMessageId(int value) {
+      public Builder setSequenceNum(int value) {
         
-        messageId_ = value;
+        sequenceNum_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 messageId = 2;</code>
+       * <code>optional int32 sequenceNum = 2;</code>
        */
-      public Builder clearMessageId() {
+      public Builder clearSequenceNum() {
         
-        messageId_ = 0;
+        sequenceNum_ = 0;
         onChanged();
         return this;
       }
@@ -885,14 +885,14 @@ public final class ServerResponses {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int32 clientId = 1;</code>
+     * <code>optional int32 assignedClientId = 1;</code>
      */
-    int getClientId();
+    int getAssignedClientId();
 
     /**
-     * <code>optional int32 playerNum = 2;</code>
+     * <code>optional int32 assignedPlayerNum = 2;</code>
      */
-    int getPlayerNum();
+    int getAssignedPlayerNum();
   }
   /**
    * Protobuf type {@code server.responses.Login}
@@ -906,8 +906,8 @@ public final class ServerResponses {
       super(builder);
     }
     private Login() {
-      clientId_ = 0;
-      playerNum_ = 0;
+      assignedClientId_ = 0;
+      assignedPlayerNum_ = 0;
     }
 
     @java.lang.Override
@@ -936,12 +936,12 @@ public final class ServerResponses {
             }
             case 8: {
 
-              clientId_ = input.readInt32();
+              assignedClientId_ = input.readInt32();
               break;
             }
             case 16: {
 
-              playerNum_ = input.readInt32();
+              assignedPlayerNum_ = input.readInt32();
               break;
             }
           }
@@ -968,22 +968,22 @@ public final class ServerResponses {
               network.message.ServerResponses.Login.class, network.message.ServerResponses.Login.Builder.class);
     }
 
-    public static final int CLIENTID_FIELD_NUMBER = 1;
-    private int clientId_;
+    public static final int ASSIGNEDCLIENTID_FIELD_NUMBER = 1;
+    private int assignedClientId_;
     /**
-     * <code>optional int32 clientId = 1;</code>
+     * <code>optional int32 assignedClientId = 1;</code>
      */
-    public int getClientId() {
-      return clientId_;
+    public int getAssignedClientId() {
+      return assignedClientId_;
     }
 
-    public static final int PLAYERNUM_FIELD_NUMBER = 2;
-    private int playerNum_;
+    public static final int ASSIGNEDPLAYERNUM_FIELD_NUMBER = 2;
+    private int assignedPlayerNum_;
     /**
-     * <code>optional int32 playerNum = 2;</code>
+     * <code>optional int32 assignedPlayerNum = 2;</code>
      */
-    public int getPlayerNum() {
-      return playerNum_;
+    public int getAssignedPlayerNum() {
+      return assignedPlayerNum_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -998,11 +998,11 @@ public final class ServerResponses {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (clientId_ != 0) {
-        output.writeInt32(1, clientId_);
+      if (assignedClientId_ != 0) {
+        output.writeInt32(1, assignedClientId_);
       }
-      if (playerNum_ != 0) {
-        output.writeInt32(2, playerNum_);
+      if (assignedPlayerNum_ != 0) {
+        output.writeInt32(2, assignedPlayerNum_);
       }
     }
 
@@ -1011,13 +1011,13 @@ public final class ServerResponses {
       if (size != -1) return size;
 
       size = 0;
-      if (clientId_ != 0) {
+      if (assignedClientId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, clientId_);
+          .computeInt32Size(1, assignedClientId_);
       }
-      if (playerNum_ != 0) {
+      if (assignedPlayerNum_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, playerNum_);
+          .computeInt32Size(2, assignedPlayerNum_);
       }
       memoizedSize = size;
       return size;
@@ -1130,9 +1130,9 @@ public final class ServerResponses {
       }
       public Builder clear() {
         super.clear();
-        clientId_ = 0;
+        assignedClientId_ = 0;
 
-        playerNum_ = 0;
+        assignedPlayerNum_ = 0;
 
         return this;
       }
@@ -1156,8 +1156,8 @@ public final class ServerResponses {
 
       public network.message.ServerResponses.Login buildPartial() {
         network.message.ServerResponses.Login result = new network.message.ServerResponses.Login(this);
-        result.clientId_ = clientId_;
-        result.playerNum_ = playerNum_;
+        result.assignedClientId_ = assignedClientId_;
+        result.assignedPlayerNum_ = assignedPlayerNum_;
         onBuilt();
         return result;
       }
@@ -1173,11 +1173,11 @@ public final class ServerResponses {
 
       public Builder mergeFrom(network.message.ServerResponses.Login other) {
         if (other == network.message.ServerResponses.Login.getDefaultInstance()) return this;
-        if (other.getClientId() != 0) {
-          setClientId(other.getClientId());
+        if (other.getAssignedClientId() != 0) {
+          setAssignedClientId(other.getAssignedClientId());
         }
-        if (other.getPlayerNum() != 0) {
-          setPlayerNum(other.getPlayerNum());
+        if (other.getAssignedPlayerNum() != 0) {
+          setAssignedPlayerNum(other.getAssignedPlayerNum());
         }
         onChanged();
         return this;
@@ -1205,54 +1205,54 @@ public final class ServerResponses {
         return this;
       }
 
-      private int clientId_ ;
+      private int assignedClientId_ ;
       /**
-       * <code>optional int32 clientId = 1;</code>
+       * <code>optional int32 assignedClientId = 1;</code>
        */
-      public int getClientId() {
-        return clientId_;
+      public int getAssignedClientId() {
+        return assignedClientId_;
       }
       /**
-       * <code>optional int32 clientId = 1;</code>
+       * <code>optional int32 assignedClientId = 1;</code>
        */
-      public Builder setClientId(int value) {
+      public Builder setAssignedClientId(int value) {
         
-        clientId_ = value;
+        assignedClientId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 clientId = 1;</code>
+       * <code>optional int32 assignedClientId = 1;</code>
        */
-      public Builder clearClientId() {
+      public Builder clearAssignedClientId() {
         
-        clientId_ = 0;
+        assignedClientId_ = 0;
         onChanged();
         return this;
       }
 
-      private int playerNum_ ;
+      private int assignedPlayerNum_ ;
       /**
-       * <code>optional int32 playerNum = 2;</code>
+       * <code>optional int32 assignedPlayerNum = 2;</code>
        */
-      public int getPlayerNum() {
-        return playerNum_;
+      public int getAssignedPlayerNum() {
+        return assignedPlayerNum_;
       }
       /**
-       * <code>optional int32 playerNum = 2;</code>
+       * <code>optional int32 assignedPlayerNum = 2;</code>
        */
-      public Builder setPlayerNum(int value) {
+      public Builder setAssignedPlayerNum(int value) {
         
-        playerNum_ = value;
+        assignedPlayerNum_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 playerNum = 2;</code>
+       * <code>optional int32 assignedPlayerNum = 2;</code>
        */
-      public Builder clearPlayerNum() {
+      public Builder clearAssignedPlayerNum() {
         
-        playerNum_ = 0;
+        assignedPlayerNum_ = 0;
         onChanged();
         return this;
       }
@@ -1714,14 +1714,15 @@ public final class ServerResponses {
   static {
     java.lang.String[] descriptorData = {
       "\n4src/main/proto/network/message/ServerR" +
-      "esponses.proto\022\020server.responses\"\227\001\n\014Bas" +
-      "eResponse\022\020\n\010clientId\030\001 \001(\005\022\021\n\tmessageId" +
-      "\030\002 \001(\005\022(\n\005login\030\003 \001(\0132\027.server.responses" +
-      ".LoginH\000\022,\n\007command\030\004 \001(\0132\031.server.respo" +
-      "nses.CommandH\000B\n\n\010response\",\n\005Login\022\020\n\010c" +
-      "lientId\030\001 \001(\005\022\021\n\tplayerNum\030\002 \001(\005\"\033\n\007Comm" +
-      "and\022\020\n\010accepted\030\001 \001(\010B\"\n\017network.message" +
-      "B\017ServerResponsesb\006proto3"
+      "esponses.proto\022\020server.responses\"\231\001\n\014Bas" +
+      "eResponse\022\020\n\010clientId\030\001 \001(\005\022\023\n\013sequenceN" +
+      "um\030\002 \001(\005\022(\n\005login\030\003 \001(\0132\027.server.respons" +
+      "es.LoginH\000\022,\n\007command\030\004 \001(\0132\031.server.res" +
+      "ponses.CommandH\000B\n\n\010response\"<\n\005Login\022\030\n" +
+      "\020assignedClientId\030\001 \001(\005\022\031\n\021assignedPlaye" +
+      "rNum\030\002 \001(\005\"\033\n\007Command\022\020\n\010accepted\030\001 \001(\010B" +
+      "\"\n\017network.messageB\017ServerResponsesb\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1740,13 +1741,13 @@ public final class ServerResponses {
     internal_static_server_responses_BaseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_server_responses_BaseResponse_descriptor,
-        new java.lang.String[] { "ClientId", "MessageId", "Login", "Command", "Response", });
+        new java.lang.String[] { "ClientId", "SequenceNum", "Login", "Command", "Response", });
     internal_static_server_responses_Login_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_server_responses_Login_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_server_responses_Login_descriptor,
-        new java.lang.String[] { "ClientId", "PlayerNum", });
+        new java.lang.String[] { "AssignedClientId", "AssignedPlayerNum", });
     internal_static_server_responses_Command_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_server_responses_Command_fieldAccessorTable = new
