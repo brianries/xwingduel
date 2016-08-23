@@ -1,5 +1,6 @@
 package sample;
 
+import gui.MovementSelectionPane;
 import gui.ObstacleSelectionPane;
 import gui.MainPanel;
 import javafx.application.Application;
@@ -227,6 +228,16 @@ public class Main extends Application {
         dialog.setScene(dialogScene);
         dialog.show();
         */
+
+        Stage selectionDialog = new Stage();
+        selectionDialog.initModality(Modality.NONE);
+        selectionDialog.initOwner(primaryStage);
+        selectionDialog.setTitle("Select Movement");
+
+        MovementSelectionPane movementSelectionPane = new MovementSelectionPane();
+        Scene selectionScene = new Scene(movementSelectionPane, 300, 300, true, SceneAntialiasing.BALANCED);
+        selectionDialog.setScene(selectionScene);
+        selectionDialog.show();
 
         ObstacleSelectionPane pane = new ObstacleSelectionPane(200);
         Scene asteroidScene = new Scene(pane, 300, 200);
